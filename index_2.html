@@ -1,0 +1,2764 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      CS180/280A Intro to Computer Vision and Computational Photography
+    </title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* Add your CSS styles here */
+    </style>
+    <link rel="themeData" href="./463_files/themedata.thmx" />
+    <link rel="colorSchemeMapping" href="./463_files/colorschememapping.xml" />
+  </head>
+  <body>
+    <div class="WordSection1">
+      <table class="MsoNormalTable" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr>
+            <td colspan="2" style="padding: 2.65pt">
+              <p class="MsoNormal" style="text-align: center" align="center">
+                <span style="font-size: 10pt">&nbsp;<o:p></o:p></span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 2.65pt" valign="top">
+              <p class="MsoNormal">
+                <span style="font-size: 10pt">
+                  <img
+                    id="_x0000_i1028"
+                    src="463_files/ucbseal_139_540.png"
+                    alt="Description: [SCS dragon logo]"
+                    height="75"
+                    width="75"
+                  />
+                </span>
+                <span style="font-size: 10pt"><o:p></o:p></span>
+              </p>
+            </td>
+            <td style="padding: 2.65pt" valign="top">
+              <p class="MsoNormal">
+                <b>
+                  <span
+                    style="
+                      font-size: 14pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    CS180/280A: Intro to Computer Vision and Computational
+                    Photography
+                  </span>
+                </b>
+                <span style="font-size: 10pt"><br /></span>
+                <span
+                  style="
+                    font-size: 11pt;
+                    font-family: 'Helvetica', 'sans-serif';
+                  "
+                  lang="RU"
+                >
+                  <a href="http://www.cs.berkeley.edu/"
+                    ><span lang="EN-US">Computer Science Division</span></a
+                  >
+                </span>
+                <span style="font-size: 8pt" lang="RU"> </span>
+                <span style="font-size: 11pt"><br /></span>
+                <span
+                  style="
+                    font-size: 11pt;
+                    font-family: 'Helvetica', 'sans-serif';
+                  "
+                  lang="RU"
+                >
+                  <a href="http://www.berkeley.edu/"
+                    ><span lang="EN-US"
+                      >University of California Berkeley</span
+                    ></a
+                  >
+                </span>
+                <span style="font-size: 10pt"><o:p></o:p></span>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            >INSTRUCTOR:</span
+          ></b
+        >
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'">
+          <a href="http://www.eecs.berkeley.edu/~efros/"
+            >Alexei (Alyosha) Efros</a
+          >
+          (Office hours: after lecture),
+         <br clear="all" />
+          <b>GSI: </b>
+          <a href="https://www.liruilong.cn/">Ruilong Li</a>
+          <span>(DIS: Tue. 1PM - 2PM, OH: Tue. 3PM - 4PM)</span>, Jake
+          Austin&nbsp;<span>(DIS: Tue 11AM - 12PM, OH: Thu. 2PM - 3PM)</span
+          ><br clear="all" />
+          <b>Tutors: </b>
+          <a href="https://www.mehvix.com/">Max Vogel</a>
+          <span>(OH: Mon. 10AM - 11AM)</span>, Morgan Lyu
+          <span>(OH: Tue. 4PM - 5PM)</span>, Preston McCrary&nbsp;<span
+            >(OH: Fri. 2PM - 3PM)</span
+          ><br clear="all" />
+          <b>UNIVERSITY UNITS:</b> 4<br />
+          <b>SEMESTER:</b> Fall 2023<br clear="all" />
+          <b style="font-weight: normal">WEB PAGE:</b>
+          <a href="https://inst.eecs.berkeley.edu/~180/fa23/"
+            >https://inst.eecs.berkeley.edu/~cs180/fa23/</a
+          >
+          <br clear="all" />
+          <b style="font-weight: normal">Google Calender: </b>
+          c_5e316e16608c028a04d3ab19f4cff1e73a6796ef0d559c549f9e1f8f14f30751@group.calendar.google.com
+          (<a
+            href="https://calendar.google.com/calendar/embed?src=c_5e316e16608c028a04d3ab19f4cff1e73a6796ef0d559c549f9e1f8f14f30751%40group.calendar.google.com&ctz=America%2FLos_Angeles"
+            >Public URL</a
+          >)<br />
+          <b style="font-weight: normal">Ed: </b>
+          <a href="https://edstem.org/us/courses/42166/"
+            >https://edstem.org/us/courses/42166/</a
+          ><br />
+          <b style="font-weight: normal">Gradescope Entry Code: </b>
+          57Y3YJ</span
+        ><span
+          ><br clear="all" />
+          <b style="font-weight: normal">Syllabus: </b>
+          <a href="./Syllabus.pdf">here</a></span
+        ><span
+          ><br clear="all" />
+          <b>LOCATION:</b>&nbsp;Li Ka Shing 245<br />
+          <b>TIME</b> </span
+        ><span
+          style="
+            font-size: 11pt;
+            font-size: 13.5pt;
+            font-family: 'Helvetica', 'sans-serif';
+          "
+          >: </span
+        ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+          >MW 5:00 PM-6:30 PM
+          <o:p></o:p>
+          <br />
+        </span>
+      </p>
+
+      <p>
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            >PREREQUISITES:</span
+          ></b
+        >
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'">
+          <br />
+          This is a heavily project-oriented class, therefore good programming
+          proficiency (at least <b>CS61B</b>) is absolutely essential. Moreover,
+          familiarity with linear algebra (<b>MATH 54</b> or <b>EE16A/B</b> or
+          Gilbert Strang's online
+          <a
+            href="https://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/video-lectures/"
+            >class</a
+          >) and calculus are vital. Experience with neural networks (e.g.
+          <b>CS182 or equivalent)</b> is strongly recommended. Due to the
+          open-endedness of this course, <b>creativity</b> is a class
+          requirement.
+        </span>
+      </p>
+
+      <p>
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            >COURSE DESCRIPTION:</span
+          ></b
+        >
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'">
+          <br />
+          The aim of this advanced undergraduate course is to introduce students
+          to computing with visual data (images and video). We will cover
+          acquisition, representation, and manipulation of visual information
+          from digital photographs (image processing), image analysis and visual
+          understanding (computer vision), and image synthesis (computational
+          photography). Key algorithms will be presented, ranging from classical
+          (e.g. Gaussian and Laplacian Pyramids) to contemporary (e.g. ConvNets,
+          GANs), with an emphasis on using these techniques to build practical
+          systems. This hands-on emphasis will be reflected in the programming
+          assignments, in which students will have the opportunity to acquire
+          their own images and develop, largely from scratch, the image analysis
+          and synthesis tools for solving applications.
+        </span>
+      </p>
+
+      <p class="MsoNormal">
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            >PROGRAMMING ASSIGNMENTS: TO BE ANNOUNCED.
+          </span></b
+        >
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'">
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+        </span>
+        <span><o:p></o:p></span>
+      </p>
+
+      <table
+        style="width: 100%; border: 0pt solid windowtext"
+        border="1"
+        cellpadding="0"
+        cellspacing="3"
+        width="847"
+      >
+        <tbody>
+          <tr>
+            <td
+              style="
+                width: 420.35pt;
+                border: 0pt solid windowtext;
+                padding: 7.5pt;
+              "
+              valign="top"
+              width="1682"
+            >
+              <!-- project 1 -->
+              <p class="MsoNormal">
+                <span
+                  style="
+                    font-size: 10pt;
+                    font-family: 'Helvetica', 'sans-serif';
+                  "
+                >
+                  <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/hw/proj1/"
+                    >Project 1: Images of the Russian Empire -- Colorizing the
+                    <span class="SpellE">Prokudin-Gorskii</span> Photo
+                    Collection</a
+                  >
+                  <br />
+                  <span>
+                    <img
+                      src="463_files/image004.jpg"
+                      alt="Description: http://www.cs.cmu.edu/afs/andrew/scs/cs/15-463/pub/www/images/3-8086-left.jpg"
+                      v:shapes="Picture_x0020_37"
+                      border="0"
+                      height="261"
+                      width="300"
+                      style="padding-top: 3px"
+                    />
+                  </span>
+                  <span style="font-family: Symbol"><o:p></o:p></span>
+                  <br />
+                </span>
+              </p>
+              <!-- project 1 runner ups. -->
+              <p>
+          <span style="font-size:10.0pt; font-family:'Arial','sans-serif'">
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_gold.png" style="width:20px; height:20px;">
+            <b>Class Choice Awards: <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj1/bryanli0/">Bryan Li</a></b>
+            <br>
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_silver.png" style="width:20px; height:20px;">
+            <b>Runner ups: 
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj1/tom5079/">Minseok Son</a>&nbsp;
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj1/tanjeffreyz02/">Jeffrey Tan</a>&nbsp;
+            </b>
+          </span>
+        </p>
+
+              <!-- Project 2 -->
+              <p class="MsoNormal">&nbsp;</p>
+        <p class="MsoNormal">
+          <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/hw/proj2/">Project 2: Fun with Filters and Frequencies</a></b>
+        </p>
+        <p class="MsoNormal">
+          <span class="MsoNormal">
+            <img src="463_files/hybrid.png" width="299" height="175">
+            <img src="463_files/orple.jpg" width="231" height="175" alt="orple">
+          </span>
+        </p>
+              <!-- Project 2 Runner ups -->
+              <p>
+          <span style="font-size:10.0pt; font-family:'Arial','sans-serif'">
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_gold.png" style="width:20px; height:20px;">
+            <b>Class Choice Awards: <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj2/tanjeffreyz02/">Jeffrey Tan</a></b>
+            <br>
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_silver.png" style="width:20px; height:20px;">
+            <b>Runner ups: 
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj2/mingxiaowei/submission/">Mingxiao Wei</a>&nbsp;
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj2/ntpham/">Nathalys Pham</a>&nbsp;
+            </b>
+          </span>
+        </p>
+
+              <!-- Project 3 -->
+              <p class="MsoNormal">&nbsp;</p>
+        <p class="MsoNormal">
+          <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/hw/proj3/">Project 3: Face Morphing and Modelling a Photo Collection</a>
+        </p>
+        <p class="MsoNormal">
+          <img src="463_files/morph.png" width="383" height="126" alt="morph">
+        </p>
+              <!-- Project 3 Runner ups -->
+              <p>
+          <span style="font-size:10.0pt; font-family:'Arial','sans-serif'">
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_gold.png" style="width:20px; height:20px;">
+            <b>Class Choice Awards: <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj3/czhongx4/">Chloe Zhong</a></b>
+            <br>
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_silver.png" style="width:20px; height:20px;">
+            <b>Runner ups: 
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj3/irenegeng2/">Irene Geng</a>&nbsp;
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj3/jai.s/">Jai Singh</a>&nbsp;
+            </b>
+          </span>
+        </p>
+
+              <!-- Project 4 -->
+              <p class="MsoNormal"></p>
+        <p class="MsoNormal">&nbsp;&nbsp;</p>
+        <p class="MsoNormal">
+          <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/hw/proj4/">Project 4: (Auto)stitching and photo mosaics</a>
+        </p>
+        <p class="MsoNormal">
+          <span>
+            <img src="463_files/image028.jpg" alt="stitching" height="150" border="0" style="padding-top: 3px;">
+          </span>
+        </p>
+
+        <!-- Project 4 Runner ups -->
+        <p>
+          <span style="font-size:10.0pt; font-family:'Arial','sans-serif'">
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_gold.png" style="width:20px; height:20px;">
+            <b>Class Choice Awards: <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj4B/alec.li/">Alec Li</a></b>
+            <br>
+            <img title="Trophy by Zeyana Musthafa : http://www.iconfinder.com/browse/iconset/fugue/" src="463_files/cup_silver.png" style="width:20px; height:20px;">
+            <b>Runner ups: 
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj4B/jyou12/">Joshua You</a>&nbsp;
+              <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/upload/files/proj4B/lmathias/">Lance Mathias</a>&nbsp;
+            </b>
+          </span>
+        </p>
+        <p class="MsoNormal">&nbsp;</p>
+
+              <!-- Project 5 -->
+              <p class="MsoNormal">
+          <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/hw/proj5/">Project 5: Neural Radiance Fields</a>
+        </p>
+        <p class="MsoNormal">
+          <img src="463_files/nerf_img.png" width="380" alt="morph">
+        </p>
+        <p class="MsoNormal">&nbsp;</p>
+
+              <!-- Final Project -->
+              <p class="MsoNormal">
+          <a href="https://inst.eecs.berkeley.edu/~cs180/fa23/hw/final-project/">Final Project</a>
+        </p>
+        <p class="MsoNormal">
+          <img src="463_files/multifredo.jpg" alt="multifredo" width="400" height="240">
+        </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Textbook -->
+      <p>
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            >TEXTBOOK:</span
+          ></b
+        >
+        <span
+          style="
+            font-size: 10pt;
+            font-family: 'Helvetica', 'sans-serif';
+            color: black;
+          "
+        >
+          <br />
+          We will be loosely using the new 2nd edition of
+          <a href="http://szeliski.org/Book/">
+            Rick Szeliski's Computer Vision textbook</a
+          >. You can purchase a hard copy or use a
+          <a href="http://szeliski.org/Book/download.php">free pdf</a>.
+          <u1:p></u1:p>
+        </span>
+        <span style="font-size: 13.5pt; color: black">
+          <o:p></o:p>
+        </span>
+      </p>
+      <p>
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'">
+          There <span class="GramE">is</span> a number of other fine texts that
+          you can use for general reference:
+          <o:p></o:p>
+        </span>
+      </p>
+
+      <p style="margin-left: 0.5in">
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'">
+          Computer Vision: A Modern Approach (2<sup>nd</sup> edition), Forsyth
+          and Ponce <i>(classic computer vision text)</i> <br clear="all" />
+          Vision Science: Photons to Phenomenology, Stephen Palmer
+          <i>(great book on human visual perception)</i> <br clear="all" />
+          Digital Image Processing, 2nd edition, Gonzalez and Woods
+          <i>(a good general image processing text)</i> <br clear="all" />
+          Linear Algebra and its Applications, Gilbert
+          <span class="SpellE">Strang</span>
+          <i>(a truly wonderful book on linear algebra)</i> <br clear="all" />
+          <i><o:p></o:p></i>
+        </span>
+      </p>
+
+      <!-- Class Notes -->
+      <p>
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            >CLASS NOTES</span
+          ></b
+        >
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'">
+          <br clear="all" />
+          The instructor is extremely grateful to a large number of researchers
+          for making their slides available for use in this course.
+          <a href="http://www.cs.washington.edu/homes/seitz/">Steve Seitz</a>
+          and
+          <a href="http://research.microsoft.com/%7Eszeliski/"
+            >Rick <span class="SpellE">Szeliski</span></a
+          >
+          have been particularly kind in letting me use their wonderful lecture
+          notes. In addition, I would like to thank
+          <a href="http://www.debevec.org/"
+            >Paul <span class="SpellE">Debevec</span></a
+          >, <a href="http://socrates.berkeley.edu/%7Eplab/">Stephen Palmer</a>,
+          <a href="http://www.cs.cmu.edu/%7Eph/"
+            >Paul <span class="SpellE">Heckbert</span></a
+          >, <a href="http://luthuli.cs.uiuc.edu/%7Edaf/">David Forsyth</a>,
+          <a href="http://www.cs.cornell.edu/%7Esrm/"
+            >Steve <span class="SpellE">Marschner</span></a
+          >
+          and others, as noted in the slides. The instructor gladly gives
+          permission to use and modify any of the slides for academic and
+          research purposes. However, please do also acknowledge the original
+          sources where appropriate.
+          <o:p></o:p>
+        </span>
+      </p>
+
+      <p class="MsoNormal">
+        <span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+          >&nbsp;&nbsp;&nbsp;</span
+        >
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            ><o:p></o:p></span
+        ></b>
+      </p>
+
+      <p class="MsoNormal">
+        <b
+          ><span style="font-size: 10pt; font-family: 'Helvetica', 'sans-serif'"
+            >CLASS SCHEDULE:
+          </span></b
+        >
+        <span><o:p></o:p></span>
+      </p>
+
+      <table style="border-collapse: collapse">
+        <tbody>
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background-color: #555555;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <b
+                  ><span
+                    style="font-family: 'Helvetica', 'sans-serif'; color: white"
+                    >CLASS DATE</span
+                  ></b
+                ><o:p></o:p>
+              </p>
+            </td>
+            <td
+              style="width: 62.46%; background-color: #555555; padding: 0.75pt"
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <b
+                  ><span
+                    style="font-family: 'Helvetica', 'sans-serif'; color: white"
+                    >TOPICS</span
+                  ></b
+                ><o:p></o:p>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background-color: #555555;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <b
+                  ><span
+                    style="font-family: 'Helvetica', 'sans-serif'; color: white"
+                    >Material</span
+                  ></b
+                ><o:p></o:p>
+              </p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Aug </span
+                ><span><o:p></o:p></span>23
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Introduction<br clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/image006.jpg"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides: <a href="./Lectures/Introduction2023.pptx">pptx</a>,
+                  <a href="./Lectures/Introduction2023.pdf">pdf</a>
+                </li>
+                <li>
+                  <a
+                    href="https://medium.com/@aaronhertzmann/how-photography-became-an-art-form-7b74da777c63"
+                    >How Photography Became an Art Form</a
+                  >
+                  by
+                  <a href="https://www.dgp.toronto.edu/~hertzman/"
+                    >Aaron Hertzmann</a
+                  >
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Aug </span
+                ><span><o:p></o:p></span>28
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Capturing Light... in man and machine<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/image011.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides: <a href="./Lectures/CapturingLight.pptx">pptx</a>,
+                  <a href="./Lectures/CapturingLight.pdf">pdf</a>
+                </li>
+                <li>
+                  Reading:
+                  <a href="https://youtu.be/6tTNgvAl1y4">Color in 5 minutes</a>
+                </li>
+                <li>
+                  Reading:
+                  <a href=" https://youtu.be/1albYPL9Cfg"
+                    >Displays in 5 minutes</a
+                  >
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Aug </span
+                ><span><o:p></o:p></span>30
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Image Processing I<br clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/point_processing.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides: <a href="./Lectures/ImageProcessingI.pptx">pptx</a>,
+                  <a href="./Lectures/ImageProcessingI.pdf">pdf</a>
+                </li>
+                <li>Szeliski Ch. 2</li>
+                <li>
+                  Images in 5 minutes: <a href="https://www.youtube.com/watch?v=xUzhKqf22mY">The Case of the Splotched Van Gogh, Part 1</a>
+                </li>  
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Sep </span
+                ><span><o:p></o:p></span>6
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Image Processing II: Convolution and Derivatives<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/convolution.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/ConvolutionAndDerivatives.pptx">pptx</a>,
+                  <a href="./Lectures/ConvolutionAndDerivatives.pdf">pdf</a>
+                </li>
+                <li>Szeliski Ch. 3</li>
+                <li>
+                  Image Filtering in 5 minutes: <a href="https://www.youtube.com/watch?v=6v8dNtknOSM&t=13s">The Case of the Splotched Van Gogh, Part 2</a>
+                </li> 
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Sep </span
+                ><span><o:p></o:p></span>11
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >The Frequency Domain<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/fourier.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/FreqDomain.pptx">pptx</a>,
+                  <a href="./Lectures/FreqDomain.pdf">pdf</a>
+                </li>
+                <li>Szeliski Ch 3.4</li>
+                <li>Fourier Transform in 5 minutes: 
+                <a href="https://www.youtube.com/watch?v=JciZYrh36LY">The Case of the Splotched Van Gogh, Part 3</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Sep </span
+                ><span><o:p></o:p></span>13
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Pyramid Blending, Templates, NL Filters<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/image033.gif"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="240"
+                      width="240"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/PyramidsBlending.pptx">pptx</a>,
+                  <a href="./Lectures/PyramidsBlending.pdf">pdf</a>
+                </li>
+                <li>Szeliski Ch 3.3, 3.5</li>
+                <li>Burt and Adelson, 
+                  <a href="http://persci.mit.edu/pub_pdfs/spline83.pdf">A multiresolution spline with application to image mosaics</a>
+                  , ACM ToG, 1983
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Sep </span
+                ><span><o:p></o:p></span>18
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Image Transformations<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/image_transformation.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/warping.pdf">pptx</a>,
+                  <a href="./Lectures/warping.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Sep </span
+                ><span><o:p></o:p></span>20
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Image Warping and Morphing<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/morphing.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/morphing.pptx">pptx</a>,
+                  <a href="./Lectures/morphing.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Sep </span
+                ><span><o:p></o:p></span>25
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Data-driven Methods: Faces<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/image037.jpg"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/faces.pptx">pptx</a>,
+                  <a href="./Lectures/faces.pdf">pdf</a>
+                </li>
+                <li>
+                  Galton, <a href="https://galton.org/essays/1870-1879/galton-1878-nature-composite.pdf">"Composite portraits made by combining those of many different persons into a single figure."</a>, Nature, 1878
+                </li>
+                <li>
+                  Rowland and Ferrett, <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa18/Papers/BlanzVetter99.pdf">"Manipulating Facial Appearance through Shape and Color"</a>, CG&A, 1995
+                </li>
+                  Blanz and Vetter, <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa18/Papers/BlanzVetter99.pdf">"A Morphable Model for the Synthesis of 3D Faces"</a>, SIGGRAPH 1999
+                <li>
+                  Cootes, Edwards, and Taylor, <a href="https://inst.eecs.berkeley.edu/~cs194-26/fa18/Papers/eccv98_aam.pdf">"Active Appearance Models"</a>, ECCV 1998
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Sep </span
+                ><span><o:p></o:p></span>27
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >The Camera<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/the_camera.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/camera.pptx">pptx</a>,
+                  <a href="./Lectures/camera.pdf">pdf</a>
+                </li>
+                <li>
+                  Perspective projection in 5 minutes: <a href="https://www.youtube.com/watch?v=F5WA26W4JaM">Video</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>02
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Homographies and Mosaics<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/mosaic.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/mosaic.pptx">pptx</a>,
+                  <a href="./Lectures/mosaic.pdf">pdf</a>
+                </li>
+                <li>Szeliski Ch 8</li>
+                <li>
+                  Reading: <a href="https://www.sccollege.edu/faculty/jisbell/english101/documents/lightofotherdays.doc">Light of Other Days</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>04
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >More Mosaics<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/more_mosaics.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/MoreMosaics.pptx">pptx</a>,
+                  <a href="./Lectures/MoreMosaics.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>09
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Automatic Image Alignment<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/feature_alignment.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/feature-alignment.pptx">pptx</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>11
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >3D Vision: Intro<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/3Dvision_intro.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/3Dvision_intro.pptx">pptx</a>,
+                  <a href="./Lectures/3Dvision_intro.pdf">pdf</a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/watch?v=F5WA26W4JaM">Perspective projection in 5 minutes</a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/watch?v=g7Pb8mrwcJ0">Perspective projection in 5 minutes: Part 2 -- the math!</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>16
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Stereo<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/stereo.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/stereo.pptx">pptx</a>,
+                  <a href="./Lectures/stereo.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>18
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Epipolar<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/epipolar.png"
+                      v:shapes="Picture_x0020_45"
+                      border="0"
+                      height="175"
+                      width="262"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/epipolar.pptx">pptx</a>,
+                  <a href="./Lectures/epipolar.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>23
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >SfM and MVS<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/colmap.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/sfmmvs.pptx">pptx</a>,
+                  <a href="./Lectures/sfmmvs.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>25
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >MVS & Neural Radiance Fields<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/nerf.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/nerf_lecture_intro.pptx">pptx</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Oct </span
+                ><span><o:p></o:p></span>30
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Neural Radiance Fields 2<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/nerf.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/nerf_part2.pptx">pptx</a>,
+                  <a href="./Lectures/nerf_part2.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Nov </span
+                ><span><o:p></o:p></span>1
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Neural Radiance Fields 3<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/nerf.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/nerf_part3.pptx">pptx</a>,
+                  <a href="./Lectures/nerf_part3.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Nov </span
+                ><span><o:p></o:p></span>6
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Visual Texture<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/visual_texture.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/Texture Models.pptx">pptx</a>,
+                  <a href="./Lectures/Texture Models.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Nov </span
+                ><span><o:p></o:p></span>8
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Sequence Models for Words and Pixels.<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/sequence_models.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/Sequence Models.pptx">pptx</a>,
+                  <a href="./Lectures/Sequence Models.pdf">pdf</a>
+                </li>
+              </ul>
+              <p>&nbsp;</p>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Nov </span
+                ><span><o:p></o:p></span>15
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Generative Models.<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/imgen.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/GenerativeModels.pptx">pptx</a>,
+                  <a href="./Lectures/GenerativeModels.pdf">pdf</a>
+                </li>
+                <li><a target="_blank" data-stringify-link="https://youtu.be/lyodbLwb2lY" delay="150" data-sk="tooltip_parent" href="https://youtu.be/lyodbLwb2lY" rel="noopener noreferrer">Steve Seitz 5-min Video</a></li>
+                <li><a target="_blank" data-stringify-link="https://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf" delay="150" data-sk="tooltip_parent" href="https://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf" rel="noopener noreferrer">Paper: Heeger &amp; Bergen</a><br></li>
+                <li><a target="_blank" data-stringify-link="https://arxiv.org/abs/1508.06576" delay="150" data-sk="tooltip_parent" href="https://arxiv.org/abs/1508.06576" rel="noopener noreferrer">Paper: Gatys et al</a><br></li>
+                <li><a target="_blank" data-stringify-link="https://arxiv.org/abs/2205.11487" delay="150" data-sk="tooltip_parent" href="https://arxiv.org/abs/2205.11487" rel="noopener noreferrer">Paper: Imagen</a><br></li>
+                <li><a target="_blank" data-stringify-link="https://arxiv.org/abs/2102.12092" delay="150" data-sk="tooltip_parent" href="https://arxiv.org/abs/2102.12092" rel="noopener noreferrer">Paper: DALL-E</a><br></li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Nov </span
+                ><span><o:p></o:p></span>20
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >HDR + IBL<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/hdr.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/HDR + IBL.ppt">pptx</a>,
+                  <a href="./Lectures/HDR + IBL.pdf">pdf</a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+
+          <tr style="border: solid; border-width: 1px 0">
+            <td
+              style="
+                width: 8.12%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-right: 1px solid #000;
+              "
+              valign="top"
+              width="8%"
+            >
+              <p class="MsoNormal" style="text-align: center">
+                <span
+                  class="fredo"
+                  style="font-family: 'Helvetica', 'sans-serif'"
+                  >Nov </span
+                ><span><o:p></o:p></span>27
+              </p>
+            </td>
+            <td
+              style="
+                width: 62.46%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+              "
+              valign="top"
+              width="62%"
+            >
+              <p class="MsoNormal">
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                    >Morden Art<br
+                      clear="all" /></span
+                ></b>
+                <b
+                  ><span
+                    style="
+                      font-size: 10pt;
+                      font-family: 'Helvetica', 'sans-serif';
+                    "
+                  >
+                    <img
+                      src="463_files/mordenart.png"
+                      height="175"
+                    /> </span></b
+                ><span><o:p></o:p></span>
+              </p>
+            </td>
+            <td
+              style="
+                width: 28.76%;
+                background: none repeat scroll 0% 0% silver;
+                padding: 0.75pt;
+                border-left: 1px solid #000;
+              "
+              valign="top"
+              width="28%"
+            >
+              <ul type="disc">
+                <li>
+                  Slides:
+                  <a href="./Lectures/postmodern.ppt">ppt</a>
+                </li>
+              </ul>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <p>
+        <b>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              text-decoration: none;
+            "
+          >
+            CAMERAS:
+          </span>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              font-weight: normal;
+              text-decoration: none;
+            "
+          >
+            <br />
+            Although it is not required, students are highly encouraged to
+            obtain a digital camera for use in the course.<o:p></o:p>
+          </span>
+        </b>
+      </p>
+
+      <p>
+        <b>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              text-decoration: none;
+            "
+          >
+            METHOD OF EVALUATION:
+          </span>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              font-weight: normal;
+              text-decoration: none;
+            "
+          >
+            <br />
+            Grading will be based on a set of programming and written
+            assignments (60%), a final exam + potentially some Pop Quizzes
+            (20%), and a final project (20%).<span>&nbsp;</span> For the
+            programming assignments, students will be allowed a total of 5
+            (five) late days per semester; each additional late day will incur a
+            10% penalty.<o:p></o:p>
+          </span>
+        </b>
+      </p>
+
+      <p>
+        <span
+          style="
+            font-size: 10pt;
+            font-family: 'Helvetica', 'sans-serif';
+            color: windowtext;
+            text-decoration: none;
+          "
+        >
+          Students taking CS280A will also be required to submit a
+          conference-style paper describing their final project.
+          <span
+            style="font-size: 12pt; color: windowtext; text-decoration: none"
+            ><o:p></o:p
+          ></span>
+        </span>
+      </p>
+
+      <p>
+        <b>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              text-decoration: none;
+            "
+          >
+            PROGRAMMING RESOURCES:
+            <span class="GramE">:</span><br clear="all" />
+          </span>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              font-weight: normal;
+              text-decoration: none;
+            "
+          >
+            Students will be encouraged to use either Python (with either
+            scikit-image or opencv) or MATLAB (with the Image Processing
+            Toolkit) as their primary computing platform.
+            <span>&nbsp;</span>
+            Specific libraries in both languages offer tons of built-in image
+            processing functions.
+            <span>&nbsp;</span>
+            Here is a link to some
+            <a href="./programming.html"
+              ><u
+                ><span style="color: blue"
+                  >useful MATLAB and Python resources</span
+                ></u
+              ></a
+            >
+            compiled for this class.
+          </span>
+        </b>
+      </p>
+
+      <p>
+        <b>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              text-decoration: none;
+            "
+          >
+            PREVIOUS OFFERINGS OF THIS COURSE:
+            <span class="GramE">:</span>
+          </span>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              font-weight: normal;
+              text-decoration: none;
+            "
+          >
+            <br />
+            Previous offerings of this course can be found
+            <a href="http://inst.eecs.berkeley.edu/~cs194-26/fa20/"
+              ><u><span style="color: blue">here</span></u></a
+            >.<o:p></o:p>
+          </span>
+        </b>
+      </p>
+
+      <p>
+        <b>
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              text-decoration: none;
+            "
+          >
+            SIMILAR COURSES IN OTHER UNIVERSITIES:
+            <o:p></o:p>
+          </span>
+        </b>
+      </p>
+
+      <ul type="disc">
+        <li
+          style="
+            font-size: 10pt;
+            font-family: 'Arial', 'sans-serif';
+            color: windowtext;
+            text-decoration: none;
+          "
+        >
+          <a href="http://courses.engr.illinois.edu/cs498dh3/"
+            ><u
+              ><span style="color: blue">Computational Photography</span></u
+            ></a
+          >
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Arial', 'sans-serif';
+              color: windowtext;
+            "
+          >
+            (Hoiem, UIUC)</span
+          ><o:p></o:p>
+        </li>
+        <li
+          style="
+            font-size: 10pt;
+            font-family: 'Arial', 'sans-serif';
+            color: windowtext;
+            text-decoration: none;
+          "
+        >
+          <a href="http://www.cs.brown.edu/courses/csci1290/"
+            ><u
+              ><span style="color: blue">Computational Photography</span></u
+            ></a
+          >
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Arial', 'sans-serif';
+              color: windowtext;
+            "
+          >
+            (Hays, Brown)</span
+          ><o:p></o:p>
+        </li>
+        <li
+          style="
+            font-size: 10pt;
+            font-family: 'Arial', 'sans-serif';
+            color: windowtext;
+            text-decoration: none;
+          "
+        >
+          <a href="http://stellar.mit.edu/S/course/6/sp12/6.815/"
+            ><u
+              ><span style="color: blue"
+                >Digital and Computational Photography</span
+              ></u
+            ></a
+          >
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Arial', 'sans-serif';
+              color: windowtext;
+            "
+          >
+            (Durand, MIT)</span
+          ><o:p></o:p>
+        </li>
+        <li
+          style="
+            font-size: 10pt;
+            font-family: 'Arial', 'sans-serif';
+            color: windowtext;
+            text-decoration: none;
+          "
+        >
+          <a href="http://www.cs.washington.edu/education/courses/cse576/05sp/"
+            ><u><span style="color: blue">Computer Vision</span></u></a
+          >
+          <span
+            style="
+              font-size: 10pt;
+              font-family: 'Arial', 'sans-serif';
+              color: windowtext;
+            "
+          >
+            (Seitz &amp; Szeliski, UWashington)</span
+          ><o:p></o:p>
+        </li>
+      </ul>
+
+      <p
+        style="
+          font-size: 10pt;
+          font-family: 'Arial', 'sans-serif';
+          color: windowtext;
+          text-decoration: none;
+        "
+      >
+        <span
+          style="
+            font-size: 10pt;
+            font-family: 'Arial', 'sans-serif';
+            color: windowtext;
+          "
+          ><o:p>&nbsp;</o:p></span
+        >
+      </p>
+
+      <div
+        style="
+          border: none;
+          border-top: solid windowtext 1pt;
+          padding: 1pt 0in 0in 0in;
+        "
+      >
+        <p
+          style="border: none; border-top: solid windowtext 0.5pt; padding: 0in"
+        >
+          <span
+            style="
+              font-size: 8pt;
+              font-family: 'Helvetica', 'sans-serif';
+              color: windowtext;
+              text-decoration: none;
+            "
+          >
+            Page design courtesy of
+            <a href="http://www.cs.cmu.edu/~djames/"
+              ><u><span style="color: blue">Doug James</span></u></a
+            ><o:p></o:p>
+          </span>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
