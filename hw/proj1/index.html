@@ -1,0 +1,381 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>CS180: Intro to Computer Vision and Computational Photography</title>
+  <style>
+    body {
+      background: white;
+      color: black;
+    }
+
+    h1 {
+      font-size: x-large;
+    }
+
+    h1 a {
+      font-size: medium;
+    }
+
+    h1 img {
+      float: left;
+      padding-right: 1em;
+    }
+
+    h2 {
+      font-size: x-large;
+      text-align: center;
+      font-variant: small-caps;
+    }
+
+    h2 b {
+      font-size: large;
+      font-variant: normal;
+      color: red;
+    }
+
+    h2 i {
+      font-size: large;
+      font-variant: normal;
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    h3 {
+      font-size: large;
+      font-variant: small-caps;
+      margin: 1em 0 0 0;
+    }
+
+    p {
+      margin: 0 1em 0.5em 1em;
+    }
+
+    ul,
+    ol {
+      margin: 0.5em 0 0.5em 1em;
+    }
+
+    li {
+      margin: 0;
+    }
+
+  </style>
+</head>
+
+<body class="vsc-initialized">
+  <h1>
+    <img src="https://inst.eecs.berkeley.edu/~cs180/fa24/463_files/ucbseal_139_540.png" alt="berkeley logo" height="75"
+      width="75">
+    Programming Project #1 (<code>proj1</code>)<br>
+    <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/">CS180: Intro to Computer Vision and Computational
+      Photography</a>
+  </h1>
+  <h2>
+    <img src="proj1_files/image001.jpg" alt="Red-Green-Blue Example"><br>
+    Images of the Russian Empire:<br>
+    <i>Colorizing the
+      <a href="https://www.loc.gov/collections/prokudin-gorskii/">Prokudin-Gorskii</a>
+      photo collection</i><br>
+    <b>Due Date: Monday, September 9th, 2024 at 11:59PM</b>
+  </h2>
+  <h3>Background</h3>
+  <p>
+    <a href="http://en.wikipedia.org/wiki/Prokudin-Gorskii">Sergei Mikhailovich Prokudin-Gorskii</a>
+    (1863-1944) [Сергей
+    Михайлович
+    Прокудин-Горский,
+    to his Russian friends] was a man well ahead of his time. Convinced, as
+    early as 1907, that color photography was the wave of the future, he won
+    Tzar's special permission to travel across the vast Russian Empire and
+    take color photographs of everything he saw including the only color
+    portrait of
+    <a href="http://en.wikipedia.org/wiki/Leo_Tolstoy">Leo Tolstoy</a>. And he
+    really photographed everything: people, buildings, landscapes, railroads,
+    bridges... thousands of color pictures! His idea was simple: record three
+    exposures of every scene onto a glass plate using a red, a green, and a
+    blue filter. Never mind that there was no way to print color photographs
+    until much later -- he envisioned special projectors to be installed in
+    "multimedia" classrooms all across Russia where the children would be able
+    to learn about their vast country. Alas, his plans never materialized: he
+    left Russia in 1918, right after the revolution, never to return again.
+    Luckily, his RGB glass plate negatives, capturing the last years of the
+    Russian Empire, survived and were purchased in 1948 by the Library of
+    Congress. The LoC has recently digitized the negatives and made them
+    available on-line.
+  </p>
+  <h3>Overview</h3>
+  <p>
+    The goal of this assignment is to take the digitized Prokudin-Gorskii
+    glass plate images and, using image processing techniques, automatically
+    produce a color image with as few visual artifacts as possible. In order
+    to do this, you will need to extract the three color channel images, place
+    them on top of each other, and align them so that they form a single RGB
+    color image. A cool explanation on how the Library of Congress created the
+    color images on their site is available
+    <a href="http://www.loc.gov/exhibits/empire/making.html">here</a>.
+  </p>
+  <p>
+    Some starter code is available in
+    <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj1/data/colorize_skel.py">Python</a> and
+    <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj1/data/colorize_skel.m">MATLAB</a>; do not feel obligated
+    to use it.
+    We will assume that a simple x,y translation model is sufficient for
+    proper alignment. However, the full-size glass plate images (i.e. <code>.tif</code> files) are very
+    large, so your alignment procedure will need to be relatively fast and
+    efficient.
+    When you begin your naive implementation, you should start with the smaller files
+    <code>monastery.jpg</code> and <code>cathedral.jpg</code> provided, or by downsizing the larger files.
+    Your submission should be ran on the full-size images.
+  </p>
+  <h3>Details</h3>
+  <img src="./proj1_files/image003.jpg" alt="example negative" style="float: right">
+  <p>
+    A few of the digitized glass plate images (both hi-res and low-res
+    versions) will be placed in the following directory (note that the filter
+    order from top to bottom is BGR, not RGB!):
+    <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj1/data">data/</a> (download all at
+    <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj1/data.zip">data.zip</a>).
+
+    Your program will take a glass plate
+    image as input and produce a single color image as output. The program
+    should divide the image into three equal parts and align the second and
+    the third parts (e.x. G and R) to the first (B). For each image, you will need
+    to print the (x,y) displacement vector that was used to align the parts.
+  </p>
+  <p>
+    The easiest way to align the parts is to exhaustively search over a window
+    of possible displacements (say <code>[-15,15]</code> pixels), score each one using some
+    image matching metric, and take the displacement with the best score.
+    There is a number of possible metrics that one could use to score how well
+    the images match. The simplest one is just the L2 norm also known as the
+    <b>Euclidean Distance</b> which is simply
+    <code>sqrt(sum(sum((image1-image2).^2)))</code> where the sum is taken over the
+    pixel values. Another is <b>Normalized Cross-Correlation</b> (NCC), which is
+    simply a dot product between two normalized vectors: (<code>image1./||image1||</code>
+    and <code>image2./||image2||</code>).
+
+    <br>
+    Note that in the case like the Emir of
+    Bukhara (show on right), the images to be matched do not actually have the
+    same brightness values (they are different color channels), so you might
+    have to use a cleverer metric, or different features than the raw pixels.
+  </p>
+  <p>
+    Exhaustive search will become prohibitively expensive if the pixel
+    displacement is too large (which will be the case for high-resolution
+    glass plate scans). In this case, you will need to implement a faster
+    search procedure such as an image pyramid. An image pyramid represents the
+    image at multiple scales (usually scaled by a factor of 2) and the
+    processing is done sequentially starting from the coarsest scale (smallest
+    image) and going down the pyramid, updating your estimate as you go. It is
+    very easy to implement by adding recursive calls to your original
+    single-scale implementation. Do not use MATLAB's impyramid function but
+    you can use imresize.
+  </p>
+  <p>
+    Your job will be to implement an algorithm that, given a 3-channel image,
+    produces a color image as output. Implement a simple single-scale version
+    first, using for loops, searching over a user-specified window of
+    displacements. The above directory has skeleton Python/MATLAB code that
+    will help you get started and you should pick one of the smaller <code>.jpg</code>
+    images in the directory to test this version of the code. Next, add a
+    coarse-to-fine pyramid speedup to handle large images like the <code>.tif</code> ones
+    provided in the directory.
+  </p>
+  <h3>Bells & Whistles (Extra Credit)</h3>
+  <p>
+    Although the color images resulting from this automatic procedure will
+    often look strikingly real, they are still a far cry from the manually
+    restored versions available on the LoC website and from other professional
+    photographers. Of course, each such photograph takes days of painstaking
+    Photoshop work, adjusting the color levels, removing the blemishes, adding
+    contrast, etc. Can we make some of these adjustments automatically,
+    without the human in the loop? Feel free to come up with your own
+    approaches or talk to me about your ideas. There is no right answer here
+    -- just try out things and see what works. For example, the borders of the
+    photograph will have strange colors since the three channels won't exactly
+    align. See if you can devise an automatic way of cropping the border to
+    get rid of the bad stuff. One possible idea is that the information in the
+    good parts of the image generally agrees across the color channels,
+    whereas at borders it does not.
+  </p>
+  <p>Here are some ideas, but we will give credit for other clever ideas:</p>
+  <ul>
+    <li>
+      Automatic cropping. Remove white, black or other color borders. Don't
+      just crop a predefined margin off of each side -- actually try to detect
+      the borders or the edge between the border and the image.
+    </li>
+    <li>
+      Automatic contrasting. It is usually safe to rescale image intensities
+      such that the darkest pixel is zero (on its darkest color channel) and
+      the brightest pixel is 1 (on its brightest color channel). More drastic
+      or non-linear mappings may improve perceived image quality.
+    </li>
+    <li>
+      Automatic white balance. This involves two problems -- 1) estimating the
+      illuminant and 2) manipulating the colors to counteract the illuminant
+      and simulate a neutral illuminant. Step 1 is difficult in general, while
+      step 2 is simple (see the Wikipedia page on
+      <a href="http://en.wikipedia.org/wiki/Color_balance">Color Balance</a>
+      and section 2.3.2 in the <a href="https://szeliski.org/Book/">Szeliski book</a>). There exist some simple
+      algorithms for step 1, which don't necessarily work well -- assume that
+      the average color or the brightest color is the illuminant and shift
+      those to gray or white.
+    </li>
+    <li>
+      Better color mapping. There is no reason to assume (as we have) that the
+      red, green, and blue lenses used by Produkin-Gorskii correspond directly
+      to the R, G, and B channels in RGB color space. Try to find a mapping
+      that produces more realistic colors (and perhaps makes the automatic
+      white balancing less necessary).
+    </li>
+    <li>
+      Better features. Instead of aligning based on RGB similarity, try using
+      gradients or edges.
+    </li>
+    <li>
+      Better transformations. Instead of searching for the best x and y
+      translation, additionally search over small scale changes and rotations.
+      Adding two more dimensions to your search will slow things down, but the
+      same course to fine progression should help alleviate this.
+    </li>
+    <li>
+      Aligning and processing data from other sources. In many domains, such
+      as astronomy, image data is still captured one channel at a time. Often
+      the channels don't correspond to visible light, but NASA artists stack
+      these channels together to create false color images. For example,
+      <a href="http://www.wikihow.com/Process-Your-Own-Colour-Images-from-Hubble-Data">here is a tutorial</a>
+      on how to process Hubble Space Telescope imagery yourself. Also,
+      consider images like
+      <a href="http://www.flickr.com/photos/gsfc/7931831962/in/set-72157631408160534">this one of a coronal mass
+        ejection</a>
+      built by combining
+      <a href="http://www.nasa.gov/mission_pages/sunearth/news/News090412-filament.html">ultraviolet images</a>
+      from the Solar Dynamics Observatory. To get full credit for this, you
+      need to demonstrate that your algorithm found a non-trivial alignment
+      and color correction.
+    </li>
+  </ul>
+  <p>
+    To earn full extra credit, on your web page/submission be sure to describe your method comprehensively and
+    demonstrate cases where your extra credit has improved image quality.
+  </p>
+  <h3>Deliverables</h3>
+  For this project you must turn in both your code and a project webpage as
+  described <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/submitting.html">here</a>.
+  <!-- <ul>
+    <li>
+      For every assignment you should create a main.py, main.ipynb, or main.m
+      that can be used to run all your code for the assignment, and a
+      README.txt file that contains a description of each code file, your
+      name, SID, school email. Submit all source code used to generate your
+      results, as well as the README.txt file, to Gradescope (Entry Code:
+      KZNDRJ). Please be sure to appropriately comment your code so that the
+      graders can appropriately identify where your implementations lie and
+      what they do.
+    </li>
+    <li>Additionally, upload a web page index.html as the report:</li>
+    <ul>
+      <li>
+        Text giving a brief overview of the project, and text describing your
+        approach. If you ran into problems on images, describe how you tried
+        to solve them. The website does not need to be pretty; you just need
+        to explain what you did.
+      </li>
+      <li>
+        The result of your algorithm on <b>all</b> of our
+        <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj1/data">example images</a>. List the offsets you
+        calculated.
+        <b>Do not turn in the large <code>.tif</code> images. </b>Your web page should
+        only display compressed images (e.g. jpg or png or gif if you want to
+        animate something).
+      </li>
+      <li>
+        The result of your algorithm on a few examples of your own choosing,
+        downloaded from the Prokudin-Gorskii collection.
+      </li>
+      <li>
+        If your algorithm failed to align any image, provide a brief
+        explanation of why.
+      </li>
+      <li>
+        Describe any bells and whistles you implemented. For maximum credit,
+        show before and after images.
+      </li>
+      <li>
+        Remember<strong> not to use any absolute links</strong> to images etc
+        on your computer, as these will not work online. Only use relative
+        links within your folder.
+      </li>
+    </ul>
+  </ul> -->
+  <h3>Final Advice</h3>
+  <ul>
+    <li>
+      For the main assignment, you need to implement almost everything from
+      scratch (except the functions for reading, writing, resizing, shifting
+      and displaying images: e.g. imread, imresize, cirshift.). In particular,
+      you are not allowed to use high level functions, such as these for
+      constructing Laplacian/Gaussian pyramids, automatically aligning images,
+      etc. If in doubt, ask on piazza.
+    </li>
+
+    <li>
+      The average running time is expected to be less than 1 minute per image.
+      If it takes hours for your program to finish, you should further
+      optimize the code.
+    </li>
+    <li>
+      A lot of the suggested MATLAB code will be in the Image Processing
+      Toolbox.
+    </li>
+    <li>
+      Try to vectorize/parallelize your code, and avoid using too many FOR
+      loops. (See more details for
+      <a href="https://wiki.python.org/moin/PythonSpeed/PerformanceTips#Loops">Python</a>
+      and
+      <a
+        href="https://www.mathworks.com/help/matlab/matlab_prog/vectorization.html?requestedDomain=www.mathworks.com">MATLAB</a>)
+    </li>
+    <li>
+      For all projects, don't get bogged down tweaking input parameters. Most,
+      but not all images will line up using the same parameters. Your final
+      results should be the product of a fixed set of parameters (if you have
+      free parameters). Don't worry if one or two of the handout images don't
+      align properly using the simpler metrics suggested here.
+    </li>
+    <li>
+      The input images can be in jpg (uint8) or tiff format (uint16), remember
+      to convert all the formats to the same scale
+      (see&nbsp;im2double&nbsp;andim2uint8).
+    </li>
+    <li>Shifting a matrix is easy to do in MATLAB by using circshift.</li>
+    <li>
+      The borders of the images will probably hurt your results, try computing
+      your metric on the internal pixels only.
+    </li>
+    <li>
+      Output all of your images to jpg, it'll save you a lot of disk space.
+    </li>
+  </ul>
+  <p>&nbsp;</p>
+  <p>This assignment will be graded out of <b>100</b> points, as follows:</p>
+  <ul>
+    <li>
+      <b>60 points</b> for a single-scale implementation with successful
+      results on low-res images.
+    </li>
+    <li>
+      <b>40 points</b> for a multiscale pyramid version that works on the
+      large images.
+    </li>
+  </ul>
+
+
+</body>
+
+</html>
