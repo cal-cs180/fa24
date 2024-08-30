@@ -1,100 +1,136 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
-  <head>
-    <title>How to submit assignments for CS180 (CS280A)</title>
-  </head>
-  <body>
-    <h1>How to submit assignments for CS180 (CS280A).</h1>
-    <p>
-      For each assignment, you will be required to submit two deliverables to
-      Gradescope (Entry Code:  KZNDRJ):
-    </p>
-    <p><strong>1. Your code:</strong></p>
-    <p>
-      For every assignment you should create a main.py, or main.ipynb, or main.m
-      that can be used to run all your code for the assignment, and a README.txt
-      file that contains the descriptions of each code file, your name, SID,
-      school email, and the link to your web page submission. Submit all source
-      code used to generate your results, as well as the README.txt file. Please
-      be sure to appropriately comment your code so that the graders can
-      appropriately identify where your implementations lie and what they do.
-    </p>
 
-    <p><strong>2. Your webpage:</strong></p>
-    <ul>
-      <li>
-        Make sure that your main report page is called <tt>index.html</tt> so
-        browsers open it automatically.
-      </li>
-      <li>
-        Make sure that you include all the images that are referenced from your
-        report in your zip file.
-      </li>
-      <li>
-        Remember<strong> not to use any absolute links</strong> to images etc,
-        as these will not work online. Only use relative links.
-      </li>
-      <li>
-        Zip up all your files and images, as well as the code and README.txt to
-        one zip file. You may put the code under a folder named code, alongside
-        the index.html.
-      </li>
-      <li>
-        The top (zipped) folder should include your index.html file. Do not add
-        any additional directories between the zipped folder and the index page,
-        as this will cause your website to be displayed incorrectly. Please
-        verify that when you unzip the submitted file, you can find the
-        index.html right away.
-      </li>
-      <li>
-        If you have problems with images not appearing on your page, check that
-        the permissions are correct and the filenames match your html files
-        (e.g. .JPG vs .jpeg).
-      </li>
-      <li>
-        If you are submitting the notebook file, make sure you clean the cell
-        outputs before submitting it. If you keep those intermediate
-        visualizations in the notebook it can easily become dozens of MB but
-        with only the code you should expect it to be less than 1MB.
-      </li>
-      <li>
-        For all your images shown on the web page, please save them into ".jpg"
-        or ".jpeg" format. You should expect hundreds of KB for a image in jpg
-        format (it's a compression format), but it can be dozens of MB in png
-        format. They look visually the same so you should always use jpg for web
-        page. And it's also recommended to only put medium-size (less than 1k
-        resolution) images on the web page so your total file size would not hit
-        the submission limit (100MB)
-      </li>
-    </ul>
+<head>
+  <title>How to submit assignments for CS180/CS280A</title>
+</head>
 
-    <p><strong>3. Suggested File structure:</strong></p>
+
+<body>
+  <h1>How to submit assignments for CS180/CS280A.</h1>
+  <p>
+    For each assignment, you will be required to submit two deliverables to
+    Gradescope (Entry Code: KZNDRJ). <br>
+    Please upload a <code>.zip</code> adhering to the following structure:
+  </p>
+  <code>
     submission.zip<br />
-    &nbsp;&nbsp;|-README.txt<br />
-    &nbsp;&nbsp;|-index.html<br />
-    &nbsp;&nbsp;|-images/<br />
-    &nbsp;&nbsp;|----result1.jpg<br />
-    &nbsp;&nbsp;|----result2.jpg<br />
-    &nbsp;&nbsp;|-code/<br />
-    &nbsp;&nbsp;|---main.ipynb <br />
-    &nbsp;&nbsp;|---lib.py
+    ├─code/<br />
+    │ ├─main.ipynb <br />
+    │ ├─lib.py<br />
+    │ └─README.txt<br />
+    └─web/<br />
+    &nbsp;&nbsp;├─page.pdf <br />
+    &nbsp;&nbsp;└─sites.txt <br />
+  </code>
 
-    <h1>Labs Available<br /></h1>
-    <p>
-      Matlab is available on all of the Instructional UNIX and Windows<br />
-      computers. All students enrolled students can get accounts<br />
-      on EECS computers. Students can use any of the the labs in<br />
-      Soda (UNIX) as well as 199 Cory (Windows). EECS also has login servers.
-    </p>
-    <p>
-      Here are some references:<br />
-      <a href="http://inst.eecs.berkeley.edu/connecting.html#accounts"
-        >http://inst.eecs.berkeley.edu/connecting.html#accounts</a
-      ><br />
-      <a href="http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=matlab.help"
-        >http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=matlab.help</a
-      >
-    </p>
-    <h1>&nbsp;</h1>
-  </body>
+  <br>
+  <h1>1. Code</code></h1>
+  <ul>
+    <li>
+      All of your project code should be contained in some
+      <code>main.py</code>/<code>main.ipynb</code>/<code>main.m</code> that the grader(s) can run to reproduce your
+      results. If you have a complex workflow, make sure to upload all the necessary files and include a
+      <code>README.txt</code> file describing how we can run your code.
+    </li>
+    <li>
+      Please be sure to appropriately comment your code so that the graders can appropriately identify where your
+      implementations lie and what they do.
+    </li>
+    <li>
+      Place all of your coding files in the <code>code/</code> directory. They should be distinct from your web files.
+    </li>
+  </ul>
+
+  <br>
+  <h1>2. Webpage Report</h1>
+  <p>
+    If you do not already have a webpage set up, we recommend using GitHub Pages (<a href="./gh-pages.html">tutorial</a>).
+  </p>
+  <ul>
+    <li>
+      You should upload a <code>web/</code> folder containing two files: <code>page.pdf</code> and <code>sites.txt</code>.
+    </li>
+    <li>
+      <code>page.pdf</code> should be a PDF of your webpage (i.e. printing the page and saving it as a PDF). If you
+      include any animations/interactivity that cannot be captured in a PDF, please include a note in your README.txt
+      file.
+    </li>
+    <li>
+      <code>sites.txt</code> should be a have two lines (and nothing else!):
+    </li>
+    <ol>
+      <li>
+        Webpage report URL (i.e. <code>[gh-user].github.io/[repo-name]/[proj#]</code>)
+      </li>
+      <li>
+        GitHub Pages repo URL (i.e. <code>github.com/[gh-user]/[repo-name]</code>)
+      </li>
+    </ol>
+  </ul>
+
+
+  <ul>
+    <!-- <li>
+      Make sure that your main report page is called <tt>index.html</tt> so
+      browsers open it automatically.
+    </li> -->
+    <!-- <li>
+      Make sure that you include all the images that are referenced from your
+      report in your zip file.
+    </li> -->
+    <!-- <li>
+      Remember<strong> not to use any absolute links</strong> to images etc,
+      as these will not work online. Only use relative links.
+    </li> -->
+    <!-- <li>
+      Zip up all your files and images, as well as the code and README.txt to
+      one zip file. You may put the code under a folder named code, alongside
+      the index.html.
+    </li> -->
+    <!-- <li>
+      The top (zipped) folder should include your index.html file. Do not add
+      any additional directories between the zipped folder and the index page,
+      as this will cause your website to be displayed incorrectly. Please
+      verify that when you unzip the submitted file, you can find the
+      index.html right away.
+    </li>
+    <li>
+      If you have problems with images not appearing on your page, check that
+      the permissions are correct and the filenames match your html files
+      (e.g. .JPG vs .jpeg).
+    </li>
+    <li>
+      If you are submitting the notebook file, make sure you clean the cell
+      outputs before submitting it. If you keep those intermediate
+      visualizations in the notebook it can easily become dozens of MB but
+      with only the code you should expect it to be less than 1MB.
+    </li>
+    <li>
+      For all your images shown on the web page, please save them into ".jpg"
+      or ".jpeg" format. You should expect hundreds of KB for a image in jpg
+      format (it's a compression format), but it can be dozens of MB in png
+      format. They look visually the same so you should always use jpg for web
+      page. And it's also recommended to only put medium-size (less than 1k
+      resolution) images on the web page so your total file size would not hit
+      the submission limit (100MB)
+    </li> -->
+  </ul>
+
+  <!-- <h1>Labs Available<br /></h1>
+  <p>
+    Matlab is available on all of the Instructional UNIX and Windows<br />
+    computers. All students enrolled students can get accounts<br />
+    on EECS computers. Students can use any of the the labs in<br />
+    Soda (UNIX) as well as 199 Cory (Windows). EECS also has login servers.
+  </p>
+  <p>
+    Here are some references:<br />
+    <a
+      href="http://inst.eecs.berkeley.edu/connecting.html#accounts">http://inst.eecs.berkeley.edu/connecting.html#accounts</a><br />
+    <a
+      href="http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=matlab.help">http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=matlab.help</a>
+  </p> -->
+</body>
+
 </html>
