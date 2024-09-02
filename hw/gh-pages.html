@@ -1,13 +1,177 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <title>How to setup GitHub pages</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Pages Tutorial</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    p,
+    li {
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: #333;
+    }
+
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+    code:not(.no-style) {
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+  </style>
 </head>
 
-
 <body>
-  <h1>How to setup GitHub pages.</h1>
+
+  <h1>Creating a CS180/280A Portfolio with GitHub Pages</h1>
+
+  <p>
+    <b>TL;DR: </b>If you make a repo called <code>&lt;your_github_username&gt;.github.io</code>, GitHub will host your
+    site for free! Then it's as simple as adding an <code>index.html</code> file to the repo and building on top of it.
+  </p>
+
+  <h2>Step 1: Create a GitHub Repository</h2>
+  <ol>
+    <li><b>Log in to GitHub:</b> </li>
+    <li><b>Create a New Repository:</b>
+      <ul>
+        <li>Go <a href="https://github.com/new">here</a>, or to your GitHub dashboard and click the green "New" button
+          to create a new repository.</li>
+        <li>Name your repository <code>&lt;your_github_username&gt;.github.io</code> (replace
+          <code>&lt;your_github_username&gt;</code> with your actual GitHub username).
+        </li>
+        <li>Set the repository to be <b>public</b> -- course staff will need access when grading.</li>
+        <li>Start with a README file so the repo isn't empty.</li>
+        <li>Click the "Create repository" button.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>Step 2: Add an <code>index.html</code> File</h2>
+  <ol>
+    <li><b>Navigate to Your New Repository:</b> After creating the repository, you'll be redirected to the
+      repository page.</li>
+    <li><b>Create an <code>index.html</code> File:</b>
+      <ul>
+        <li>Click the "Add file" button, then select "Create new file."</li>
+        <li>Name the file <code>index.html</code>.</li>
+        <li>In the file editor, you can start with something simple like:
+          <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My Portfolio&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to My CS180 Portfolio!&lt;/h1&gt;
+    &lt;a href="./1/index.html"&gt;Project 1&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        </li>
+        <li>Scroll down and commit your new file by clicking "Commit new file."</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>Step 3: Access Your Website</h2>
+  <ol>
+    <li><b>Wait a Few Minutes:</b> GitHub will automatically deploy your site. They say this may take up to 10 minutes.
+      This is your time to brew some tea.</li>
+    <li><b>Visit Your New Site:</b>
+      <ul>
+        <li>Go to <code>https://&lt;your_github_username&gt;.github.io</code> in your web browser.</li>
+        <li>You should see the content of your <code>index.html</code> file displayed as your website.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>Step 4: Project Pages</h2>
+  <p>
+    Right now, if you copied the example HTML above, you'll notice the 'Project 1' URL returns 404 as it links
+    to a page that doesn't (yet) exist.
+    <br>
+    For each project, you should create a separate directory/subpage that you'll link to from the main page.
+    An example directory structure is below:
+  </p>
+  <code class="no-style">
+    &lt;your_github_username&gt;.github.io/<br />
+    ├─index.html&nbsp;&nbsp;&nbsp;&nbsp;(<i>main page</i>)<br />
+    ├─1/<br />
+    │ ├─index.html<br>
+    │ └─media/<br />
+    │ &nbsp;&nbsp;├─img1.jpg<br />
+    │ &nbsp;&nbsp;├─ ⋮ <br />
+    │ &nbsp;&nbsp;└─imgN.jpg<br />
+    └─2/<br />
+      &nbsp;&nbsp;├─⋮<br>
+  </code>
+
+  <p>
+    Each time you commit changes, GitHub Pages will update your site in up to 10 minutes.
+    For this reason, we recommend cloning and editing locally so you can witness your modifications real-time and then
+    push once satisfied.
+  </p>
+
+  <h2>Step 5: Customization</h2>
+  <ul>
+    <li> You can customize the look of your site by modifying the CSS <code>&lt;style&gt;</code> tag in the
+      <code>&lt;head&gt;</code>
+      of your <code>index.html</code> file.
+    </li>
+    <li>Alternatively, you could create a separate <code>style.css</code> file; if you wanted to re-use this styling
+      across projects pages, you'd place it in the root directory and import it <i>absolutely</i> with
+      <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> in the <code>&lt;head&gt;</code> tag.
+    </li>
+    <li>Otherwise, you could place the style file in the project directory and reference the <i>relative</i> path as
+      <code>&lt;link rel="stylesheet" href="./style.css"&gt;</code>.
+    </li>
+    <ul>
+      <li>This is similar to images: <code>&lt;img src="./media/img1.jpg"&gt;</code></li>
+    </ul>
+  </ul>
+  <p>
+    We aren't going to be sticklers about the design of your site, but it should be easy to navigate and understand.
+    You shouldn't bog the site with deliverable images that take up the whole page, for example.
+  </p>
+
+  <span><b style="font-size: 110%">Extras</b> -- <i>These are in no way required!</i></span>
+  <ul>
+    <li>If you have a domain, you could use it for GitHub pages (<a
+        href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site">tutorial</a>)
+    </li>
+    <li>If you already have a personal <code>&lt;your_github_username&gt;.github.io</code> page/repo, you could set up a
+      new repository named "cs180" and configure it to publish to
+      <code>&lt;your_github_username&gt;.github.io/cs180</code> (<a
+        href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site#creating-your-site">tutorial</a>,
+      starting step 4)
+    </li>
+  </ul>
+
+  <br>
+  <br>
+  <br>
 </body>
 
 </html>
