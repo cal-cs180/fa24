@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "files": "hw/**/*.html",
+      "options": {
+        "printWidth": 140
+      }
+    }
+  ]
+}

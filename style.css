@@ -1,0 +1,85 @@
+.fredo {
+  font-family: "Arial", sans-serif;
+  font-size: 10pt;
+}
+
+h1 {
+  margin-top: 12pt;
+  margin-right: 0;
+  margin-bottom: 3pt;
+  margin-left: 0;
+  page-break-after: avoid;
+  font-size: 16pt;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+}
+
+h2 {
+  margin-top: 12pt;
+  margin-right: 0;
+  margin-bottom: 3pt;
+  margin-left: 0;
+  page-break-after: avoid;
+  font-size: 14pt;
+  font-family: "Arial", sans-serif;
+  font-weight: bold;
+  font-style: italic;
+}
+
+a:link,
+span.MsoHyperlink,
+a:visited,
+span.MsoHyperlinkFollowed {
+  color: blue;
+  text-decoration: underline;
+}
+
+p {
+  margin-right: 0;
+  margin-left: 0;
+  font-size: 12pt;
+  font-family: "Times New Roman", serif;
+}
+
+p.MsoNormal,
+li.MsoNormal,
+div.MsoNormal {
+  margin: 0in;
+  margin-bottom: 0.0001pt;
+  font-size: 12pt;
+  font-family: "Times New Roman", serif;
+}
+
+.table-container {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+}
+
+.table-cell {
+  padding: 2.65pt;
+  vertical-align: top;
+}
+
+.logo-img {
+  font-size: 10pt;
+}
+
+.header {
+  font-size: 14pt;
+  font-family: "Helvetica", sans-serif;
+}
+
+.division {
+  font-size: 11pt;
+  font-family: "Helvetica", sans-serif;
+}
+
+.university {
+  font-size: 11pt;
+  font-family: "Helvetica", sans-serif;
+}
+
+.university-link {
+  font-size: 10pt;
+}
