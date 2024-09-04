@@ -1,0 +1,4 @@
+<Files "upload_v2.cgi">
+        AuthType None
+        Require all granted
+</Files>

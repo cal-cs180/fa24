@@ -1,3 +1,10 @@
+#463_files/
+Lectures/
+hw_old/
+data/
+data.zip
+upload/ssl/
+
 # Visual Studio Code configs.
 .vscode/
 
@@ -117,8 +124,3 @@ venv.bak/
 # vscode
 .vsocde
 
-#463_files/
-Lectures/
-hw_old/
-data/
-data.zip
