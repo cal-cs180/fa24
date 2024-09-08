@@ -124,3 +124,4 @@ venv.bak/
 # vscode
 .vsocde
 
+./upload/
