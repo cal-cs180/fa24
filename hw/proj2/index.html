@@ -1,0 +1,234 @@
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CS180: Intro to Computer Vision and Computational Photography</title>
+<link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
+</head>
+<body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
+<h1>
+<img src="./files/ucbseal_139_540.png" alt="berkeley logo" height="75" width="75">Programming Project #2 (<tt>proj2</tt>)<br>
+<a href="https://inst.eecs.berkeley.edu/~cs180/fa24/">CS180: Intro to Computer Vision and Computational Photography
+</a>
+</h1>
+
+<h2><b>Due Date: 11:59pm on Monday, Sep 23, 2024 [START EARLY]</b></h2>
+
+<center>
+<h1>&nbsp;</h1>
+<h1>Fun with Filters and Frequencies!</h1>
+</center>
+
+<p><b>Important Note</b>: This project requires you to show many image results. However, the website submission size limit is 100 MB per student. We suggest using medium-size images (less than 0.8 MB per image) as your testing cases for all questions in this project.  </p>
+<h1>Part 1: Fun with Filters </h1>
+
+<p class="text">
+
+In this part, we will build intuitions about 2D convolutions and filtering.
+</p>
+
+<h3>Part 1.1: Finite Difference Operator</h3>
+
+  <p class="text">
+
+<br>We will begin by using the humble finite difference as our filter in the x and y directions. <br>
+
+
+
+<img style="max-width:30%;" src="./files/diff_op.png">
+
+<br>
+
+First, show the partial derivative in x and y of the <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj2/cameraman.png">cameraman image</a>  by convolving the image with finite difference operators <b>D_x</b> and <b> D_y </b> (you can use convolve2d from scipy.signal library). Now compute and show the gradient magnitude image. To turn this into an edge image, lets binarize the gradient magnitude image by picking the appropriate threshold (trying to suppress the noise while showing all the real edges; it will take you a few tries to find the right threshold; This threshold is meant to be assessed qualitatively).
+
+</p><h3>Part 1.2: Derivative of Gaussian (DoG) Filter</h3>
+
+  <p class="text">
+<p>
+  We noted that the results with just the difference operator were rather noisy. Luckily, we have a smoothing operator handy: the Gaussian filter <b>G</b>. Create a blurred version of the original image by convolving with a gaussian and repeat the procedure in the previous part (one way to create a 2D gaussian filter is by using cv2.getGaussianKernel() to create a 1D gaussian and then taking an outer product with its transpose to get a 2D gaussian kernel). 
+</p>
+<ul>
+  <li>
+    What differences do you see?
+  </li>
+</ul>
+<p>
+  Now we can do the same thing with a single convolution instead of two by creating a derivative of gaussian filters. Convolve the gaussian with D_x and D_y and display the resulting DoG filters as images. 
+</p>
+<ul>
+  <li>
+    Verify that you get the same result as before.
+  </li>
+</ul>
+
+<p></p>
+<h1> Part 2: Fun with Frequencies!</h1>
+
+<h3>Part 2.1: Image "Sharpening"</h3>
+
+<div align="left">
+  <p class="text">
+
+Pick your favorite blurry image and get ready to "sharpen" it! We will derive the unsharp masking technique. Remember our favorite Gaussian filter from class. This is a low pass filter that retains only the low frequencies. We can subtract the blurred version from the original image to get the high frequencies of the image. An image often looks sharper if it has stronger high frequencies. So, lets add a little bit more high frequencies to the image! Combine this into a single convolution operation which is called the unsharp mask filter. Show your result on the following image (download <a href="./files/taj.jpg">here</a>) plus other images of your choice -- </p></div><br>
+<center>
+  <h1>&nbsp;</h1>
+
+<img src="./files/taj.jpg"><br>
+  <h1>&nbsp;</h1>
+
+</center>
+
+  <p class="text">
+
+Also for evaluation, pick a sharp image, blur it and then try to sharpen it again. Compare the original and the sharpened image and report your observations.
+
+</p><h3>Part 2.2: Hybrid Images</h3>
+  <center>
+  <img src="./files/teaser.jpg" width="500px"><br>
+  <span class="text" style="font-size:12.0pt">(Look at image on right from very close, then from far away.)
+</span></center>
+<br>
+<h3>Overview</h3>
+
+<p class="text">The goal of this part of the assignment is to create <a href="http://olivalab.mit.edu/hybrid_gallery/gallery.html">hybrid images</a> using the approach
+described in the SIGGRAPH 2006 <a href="http://olivalab.mit.edu/publications/OlivaTorralb_Hybrid_Siggraph06.pdf">paper</a>
+by Oliva, Torralba, and Schyns. <i>Hybrid images</i> are static images that
+change in interpretation as a function of the viewing distance. The basic idea is that high frequency tends
+to dominate perception when it is available, but, at a distance, only the low
+frequency (smooth) part of the signal can be seen. By blending the high frequency portion of one image with the low-frequency portion of another, you get a hybrid image that leads to different interpretations at different distances.
+</p>
+
+<h3>Details</h3>
+
+<p class="text"><a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj2/hybrid.zip">Here</a>, we have included two sample images (of Derek and his former cat Nutmeg) and  some matlab
+starter code that can be used to load two images and align them. <a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj2/hybrid_python.zip">Here</a> is the python version. The alignment is important because it affects
+the perceptual grouping (read the paper for details).</p>
+
+<ol>
+  <li>
+    First, you'll need to get a few pairs of images that you want to make into
+    hybrid images.  You can use the sample
+    images for debugging, but you should use your own images in your results.  Then, you will need to write code to low-pass
+    filter one image, high-pass filter the second image, and add (or average) the
+    two images.  For a low-pass filter, Oliva et al. suggest using a standard 2D Gaussian filter. For a high-pass filter, they suggest using
+    the impulse filter minus the Gaussian filter (which can be computed by subtracting the Gaussian-filtered image from the original).
+    The <a href="http://en.wikipedia.org/wiki/Cutoff_frequency">cutoff-frequency</a> of
+    each filter should be chosen with some experimentation.</li>
+  <li>For your favorite result, you should also illustrate the process through frequency analysis.  Show the log magnitude of the Fourier transform of the two input images, the filtered images, and the
+    hybrid image.  In MATLAB, you can compute and display the 2D Fourier transform with
+    with:
+  <span style="font-size:11.0pt;font-family:Courier New">imagesc(log(abs(fftshift(fft2(gray_image)))))</span>and in Python it's <span style="font-size:11.0pt;font-family:Courier New">plt.imshow(np.log(np.abs(np.fft.fftshift(np.fft.fft2(gray_image)))))</span> </li>
+  <li>Try creating 2-3 hybrid images (change of expression,
+    morph between different objects, change over time, etc.). Show the input image and hybrid result per example. (No need to show the intermediate results as in step 2.)
+    </li>
+</ol>
+<h3> Cookie Points</h3>
+
+<p class="text">Try using color to enhance the effect.
+Does it work better to use color for the high-frequency component, the
+low-frequency component, or both? (2 points)
+</p><h3 align="left">&nbsp;</h3>
+<p class="text">
+<h2>Multi-resolution Blending and the Oraple journey</h3>
+</p><p class="text">
+</p><h3>Overview</h3>
+<p class="text">The goal of this part of the assignment is to blend two images seamlessly using a multi resolution blending as described in the 1983 <a href="http://persci.mit.edu/pub_pdfs/spline83.pdf">paper</a> by Burt and Adelson. An <em>image spline</em> is a smooth seam joining two image together by gently distorting them. <em>Multiresolution blending </em> computes a gentle seam between the two images seperately at each band of image frequencies, resulting in a much smoother seam.</p>  
+<p align="left" class="text">We'll approach this section in two steps: 
+  <ol>
+    <li>creating and visualizing the Gaussian and Laplacian stacks and</li>
+    <li>blending together images with the help of the completed stacks, and exploring creative outcomes </li>
+  </ol>
+</p>
+</p><h3>Part 2.3: Gaussian and Laplacian Stacks</h3>
+<p align="center"><img src="./stackvis.png" width="390" height="500" alt="lincoln"></p>
+<p class="text"><br>
+</p><center>
+  <h3 align="left">Overview</h3>
+  <p align="left" class="text">In this part you will implement Gaussian and Laplacian stacks, which are kind of like pyramids but without the downsampling. This will prepare you for the next step for Multi-resolution blending.</p>
+  <h3 align="left">Details</h3>
+</center>
+<ol>
+  <li>
+    <div align="left"> Implement a Gaussian and a Laplacian <strong>stack</strong>. The different between a stack and a pyramid is that in each level of the pyramid the image is downsampled, so that the result gets smaller and smaller.
+      In a stack the images are never downsampled so the results are all the same dimension as the original image, and can all be saved in one 3D matrix (if the original image was a grayscale image).
+      To create the successive levels of the Gaussian Stack, just apply the Gaussian filter at each level, but do not subsample.
+    In this way we will get a stack that behaves similarly to a pyramid that was downsampled to half its size at each level. If you would rather work with pyramids, you may implement pyramids other than stacks. However, in any case, you are <strong>NOT</strong> allowed to use matlab's<span style="font-family: Courier New; font-size: 11.0pt"> impyramid() </span>and its equivalents in this project. You must implement your stacks from scratch!</div>
+  </li>
+  <li>Apply your Gaussian and Laplacian stacks to the Oraple and recreate the outcomes of Figure 3.42 in <a href="https://www.dropbox.com/s/bzt69u4azxyfpjo/SzeliskiBookDraft_20210828.pdf?dl=0">Szelski (Ed 2)</a> page 167, as you can see in the image above. Review the 1983 <a href="http://persci.mit.edu/pub_pdfs/spline83.pdf">paper</a> for more information.</li>
+</ol>
+<p class="text">
+</p><p class="text">
+</p><h3 align="left">Part 2.4: Multiresolution Blending (a.k.a. the oraple!)</h3>
+<p align="center" class="text"><img src="./files/orple.jpg" alt="half apple half orange" width="406" height="285" align="middle">
+</p><p class="text">
+</p><h3>Overview</h3>
+<p class="text">Review the 1983 <a href="http://persci.mit.edu/pub_pdfs/spline83.pdf">paper</a> by Burt and Adelson, if you haven't! This will provide you with the context to continue. In this part, we'll focus on actually blending two images together.</p>
+<h3>Details</h3>
+<p class="text"><a href="https://inst.eecs.berkeley.edu/~cs180/fa24/hw/proj2/spline.zip">Here</a>, we have included the two sample images from the paper (of an apple and an orange).</p>
+<ol>
+  <li> First, you'll need to get a few pairs of images that you want blend together with a vertical or horizontal seam.  You can use the sample
+  images for debugging, but you should use your own images in your results. Then you will need to write some code in order to use your Gaussian and Laplacian stacks from part 2 in order to blend the images together. Since we are using stacks instead of pyramids like in the paper, the algorithm described on page 226 will not work as-is. If you try it out, you will find that you end up with a very clear seam between the apple and the orange since in the pyramid case the downsampling/blurring/upsampling hoopla ends up blurring the abrupt seam proposed in this algorithm. Instead, you should always use a mask as is proposed in the algorithm on page 230,
+  and remember to create a Gaussian stack for your mask image as well as for the two input images. The Gaussian blurring of the mask in the pyramid will smooth out the transition between the two images. For the vertical or horizontal seam, your mask will simply be a step function of the same size as the original images.</li>
+  <li>Now that you've made yourself an oraple (a.k.a your vertical or horizontal seam is nicely working), pick two pairs of images to blend together with an irregular mask, as is demonstrated in figure 8 in the paper.<span style="font-size:11.0pt;font-family:Courier New"></span></li>
+  <li>Blend together some crazy ideas of your own!</li>
+  <li>Illustrate the process by applying your  Laplacian stack and displaying it for your favorite result and the masked input images that created it.  This should look similar to Figure 10 in the paper.</li>
+</ol>
+<h3> Cookie Points </h3>
+<ul>
+  <li>Try using color to enhance the effect. (2 points)
+  </li>
+</ul>
+
+<p><span class="text">Tell us what is the coolest/most interesting thing you learned from this assignment!</span></p>
+
+<h3>Deliverables</h3>
+For this project you must turn in both your code and a project webpage as described <a href="../submitting.html">here</a>.
+
+<h3>Scoring</h3> --&gt;
+
+<p class="text">The first part of the assignment is worth <b>30</b> points. The following things need to be answered in the html webpage <i>along</i> with the <b>visualizations</b> mentioned in the problem statement. The distribution is as follows: </p>
+
+<ul>
+<li class="text"> (<b>15 points</b>) Include a brief description of gradient magnitude computation.</li>
+<li class="text"> (<b>15 points</b>) Answer the questions asked in part 1.2</li>
+</ul>
+<p></p>
+
+<p class="text">The second part of the assignment is worth <b>65</b> points, as follows: </p>
+
+<ul>
+ <li class="text"> <b>20 points</b> for the implementation of all four parts of the project. </li>
+ <li class="text"> The following are the points for the project html page description as well as results:
+   <br> <b> 15 points</b> for the Unsharp Masking: Show the progression of the original image to the sharpened image for the given image and an image of your choice.
+   <br> <b>5 points</b> for hybrid images and the Fourier analysis;
+    <br><b> 5 points </b>for including at least two hybrid image examples beyond the first (including at least one failure);
+    <br><b> 15 points</b> for multiresolution blending;
+    <br><b> 5 points</b> for including at least two multiresolution blending examples beyond the apple+orange,
+    one of them with an irregular mask.
+   <o:p></o:p>
+ </li>
+</ul>
+
+  <p class="text">
+ <b> 5 points</b> for clarity.
+
+</p>
+
+<p><br>
+
+For this project, you can also earn up to <b>10 extra points</b> for the Cookie Points mentioned above
+     or suggest your own  extensions (check with prof first).<br>
+Tell us about the most important thing you learned from this project!
+  </p>
+
+   
+  <h3>Acknowledgements</h3>
+
+  <p class="text">
+  The hybrid images part of this assignment is borrowed
+  from Derek Hoiem's
+  <a href="http://courses.engr.illinois.edu/cs498dh/fa2011/">Computational Photography class</a>.
+  </p>
+
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>

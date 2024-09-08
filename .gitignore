@@ -124,4 +124,6 @@ venv.bak/
 # vscode
 .vsocde
 
+# upload
+/home/ff/cs180/public_html/fa24/upload/
 ./upload/
