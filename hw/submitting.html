@@ -3,6 +3,12 @@
 
 <head>
   <title>How to submit assignments for CS180/CS280A</title>
+  <style>
+    code i {
+      color: rgb(107, 107, 107);
+    }
+
+  </style>
 </head>
 
 
@@ -16,16 +22,19 @@
   <code>
     submission.zip<br />
     ├─code/<br />
-    │ ├─main.ipynb <br />
-    │ ├─utils.py<br />
-    │ └─README.txt<br />
+    │ ├─main.ipynb &nbsp;&nbsp;<i># or main.py or main.m</i><br />
+    │ ├─utils.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i># generic example file, not needed</i><br />
+    │ └─README.txt&nbsp;&nbsp;&nbsp;<i># or markdown</i><br />
     └─web/<br />
     &nbsp;&nbsp;├─page.pdf <br />
     &nbsp;&nbsp;└─sites.txt <br />
   </code>
 
   <br>
-  <h1>1. Code</code></h1>
+  <h2>1. Code</h2>
+  <p>
+    You should upload your code <i>only</i> to Gradescope; do not upload it to your webpage repository.
+  </p>
   <ul>
     <li>
       All of your project code should be contained in some
@@ -43,7 +52,7 @@
   </ul>
 
   <br>
-  <h1>2. Webpage Report</h1>
+  <h2>2. Webpage Report</h2>
   <p>
     If you do not already have a webpage set up, we recommend using GitHub Pages (<a
       href="./gh-pages.html">tutorial</a>).
@@ -79,69 +88,9 @@
       </li>
     </ol>
   </ul>
-
-
-  <ul>
-    <!-- <li>
-      Make sure that your main report page is called <tt>index.html</tt> so
-      browsers open it automatically.
-    </li> -->
-    <!-- <li>
-      Make sure that you include all the images that are referenced from your
-      report in your zip file.
-    </li> -->
-    <!-- <li>
-      Remember<strong> not to use any absolute links</strong> to images etc,
-      as these will not work online. Only use relative links.
-    </li> -->
-    <!-- <li>
-      Zip up all your files and images, as well as the code and README.txt to
-      one zip file. You may put the code under a folder named code, alongside
-      the index.html.
-    </li> -->
-    <!-- <li>
-      The top (zipped) folder should include your index.html file. Do not add
-      any additional directories between the zipped folder and the index page,
-      as this will cause your website to be displayed incorrectly. Please
-      verify that when you unzip the submitted file, you can find the
-      index.html right away.
-    </li>
-    <li>
-      If you have problems with images not appearing on your page, check that
-      the permissions are correct and the filenames match your html files
-      (e.g. .JPG vs .jpeg).
-    </li>
-    <li>
-      If you are submitting the notebook file, make sure you clean the cell
-      outputs before submitting it. If you keep those intermediate
-      visualizations in the notebook it can easily become dozens of MB but
-      with only the code you should expect it to be less than 1MB.
-    </li>
-    <li>
-      For all your images shown on the web page, please save them into ".jpg"
-      or ".jpeg" format. You should expect hundreds of KB for a image in jpg
-      format (it's a compression format), but it can be dozens of MB in png
-      format. They look visually the same so you should always use jpg for web
-      page. And it's also recommended to only put medium-size (less than 1k
-      resolution) images on the web page so your total file size would not hit
-      the submission limit (100MB)
-    </li> -->
-  </ul>
-
-  <!-- <h1>Labs Available<br /></h1>
   <p>
-    Matlab is available on all of the Instructional UNIX and Windows<br />
-    computers. All students enrolled students can get accounts<br />
-    on EECS computers. Students can use any of the the labs in<br />
-    Soda (UNIX) as well as 199 Cory (Windows). EECS also has login servers.
+    If you have any comments, even if they're about web and not code, please include them in <code>./code/README.txt</code>
   </p>
-  <p>
-    Here are some references:<br />
-    <a
-      href="http://inst.eecs.berkeley.edu/connecting.html#accounts">http://inst.eecs.berkeley.edu/connecting.html#accounts</a><br />
-    <a
-      href="http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=matlab.help">http://inst.eecs.berkeley.edu/cgi-bin/pub.cgi?file=matlab.help</a>
-  </p> -->
 </body>
 
 </html>
