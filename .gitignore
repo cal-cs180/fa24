@@ -4,6 +4,7 @@ hw_old/
 data/
 data.zip
 upload/ssl/
+upload/files/
 
 # Visual Studio Code configs.
 .vscode/
