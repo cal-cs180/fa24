@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correspondence Tool</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<style>
+  .mark {
+    cursor: pointer;
+  }
+  .crosshair {
+    cursor: crosshair;
+  }
+</style>
+<body>
+
+<div id="app" class="mt-5">
+  <nav class="container-fluid text-center navbar fixed-top pt-3 bg-white border-b" style="max-width: 1400px;">
+    <div class="container-fluid">
+      <h2 class="font-weight-heavy mb-0" href="#">Correspondence Tool</h2>
+    </div>
+  </nav>
+  <div class="container-fluid text-center pt-4" style="max-width: 1400px;">
+    <div class="alert alert-warning" role="alert" v-if="!readyToSelectPoints">
+      Please select two images
+    </div>
+    <div class="row justify-content-center">
+      <div class="col py-4">
+        <div class="mb-3">
+          <input type="file" @change="uploadImage1" ref="im1" class="form-control mb-3 mx-auto" :style="{ width: width + 'px' }">
+        </div>        
+        <div :style="{ width: width + 'px', height: height + 'px' }" style="position: relative; overflow:hidden;" :class="{ 'border-primary': isLHS, 'border-danger': isDeleting, 'crosshair': !isDeleting }" class="border rounded border-4 mx-auto">
+          <img :style="{ width: width + 'px', height: height + 'px' }" v-on:click="imageClicked" id="im1">
+          <div v-for="(item, index) in lhsPoints" :class="{ mark: isDeleting }" v-on:click="deleteMark(index)">
+            <img v-if="showIndex" src="xmark.svg" v-bind:style="{ left: (item[0] - 6) + 'px', top: (item[1] - 6) + 'px'}" style="width:12px; position: absolute;">
+            <div v-else v-bind:style="{ left: (item[0] - 6) + 'px', top: (item[1] - 10) + 'px'}" style="width:12px; position: absolute; color: red; font-size:8px;">{{ index  }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="col py-4">
+        <div class="mb-3">
+          <input type="file"  @change="uploadImage2" ref="im2" class="form-control mb-3 mx-auto" :style="{ width: width + 'px' }">
+        </div> 
+        <div :style="{ width: width + 'px', height: height + 'px' }" style="position: relative; overflow:hidden;" :class="{ 'border-primary': !isLHS, 'border-danger': isDeleting, 'crosshair': !isDeleting  }" class="border rounded border-4 mx-auto ">
+          <img :style="{ width: width + 'px', height: height + 'px' }" v-on:click="imageClicked" id="im2">
+          <div v-for="(item, index) in rhsPoints" :class="{ mark: isDeleting}" v-on:click="deleteMark(index)">
+            <img src="xmark.svg" v-bind:style="{ left: (item[0] - 6) + 'px', top: (item[1] - 6) + 'px'}" style="width:12px; position: absolute;">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-primary text-left" role="alert" style="text-align: left;">
+          Instructions
+          <ul class="list-disc pl-8 mt-2 text-left">
+            <li>Press "d" to toggle delete</li>
+            <li>Press "n" to toggle show nubers on lhs image</li>
+            <li>Import correspondeces by importing .json file below</li>
+            <li>Export correspondeces by pressing export</li>
+          </ul> 
+        </div>
+      </div>
+      <div class="col py-4">
+        <label for="basic-url" class="form-label">Import Correspondences</label>
+        <div class="input-group mb-3">
+          <input type="file" @change="import_correspondences" ref="imp" class="form-control" >
+          <button class="btn btn-primary" type="button" @click="export_correspondences()">Export Correspondences</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+  const { createApp } = Vue
+  createApp({
+    data() {
+      return {
+        im1IsSet: false,
+        im2IsSet: false,
+        lhsPoints: [],
+        rhsPoints: [],
+        isDeleting: false,
+        width: 640,
+        height: 640,
+        showIndex: false
+      }
+    },
+    created() {
+      window.addEventListener('keydown', (e) => {
+        console.log(e)
+        if (e.key == "d") {
+          this.isDeleting = !this.isDeleting;
+        }
+        if (e.key == "n") {
+          this.showIndex = !this.showIndex;
+        }
+      });
+    },
+    computed: {
+      readyToSelectPoints() {
+        return this.im1IsSet && this.im2IsSet
+      },
+      isLHS() {
+        if (this.lhsPoints.length > this.rhsPoints.length) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    },
+    methods: {
+      deleteMark(index) {
+        if (!this.isDeleting) {
+          return;
+        }
+        if (this.lhsPoints.length == this.rhsPoints.length) {
+          this.lhsPoints.splice(index, 1);
+          this.rhsPoints.splice(index, 1);
+        } else {
+          this.lhsPoints.splice(index, 1);
+        }
+      },
+      export_correspondences() {
+        im1_name = this.$refs.im1.files[0].name.split(".")[0];
+        im2_name = this.$refs.im2.files[0].name.split(".")[0];
+        
+        exp_file_name = im1_name + "_" + im2_name + ".json";
+        exp_file = {
+          im1_name: im1_name,
+          im2_name: im2_name,
+          im1Points: this.lhsPoints,
+          im2Points: this.rhsPoints
+        };
+        this.download(exp_file_name, JSON.stringify(exp_file));
+      },
+      import_correspondences() {
+        var selectedFile = this.$refs.imp.files[0];
+        var reader = new FileReader();
+        reader.onload = function(event) {
+          var obj = JSON.parse(event.target.result);
+          this.lhsPoints = obj.im1Points;
+          this.rhsPoints = obj.im2Points;
+          console.log(event);
+          console.log("hitt")
+        }.bind(this);
+        reader.readAsText(selectedFile);
+      },
+      download(filename, text) {
+        // Citation: https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server
+        
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+      
+        element.style.display = 'none';
+        document.body.appendChild(element);
+      
+        element.click();
+      
+        document.body.removeChild(element);
+      },
+      imageClicked(event) {
+        if (this.isDeleting) {
+          return;
+        }
+        im1Clicked = event.target.id == "im1";
+        if (!this.isLHS && im1Clicked) {
+          return;
+        }
+        if (this.isLHS && !im1Clicked) {
+          return;
+        }
+
+        if (!this.readyToSelectPoints) {
+          return;
+        }
+
+        x_coord = event.offsetX;
+        y_coord = event.offsetY;
+
+        console.log(x_coord, y_coord)
+
+        if (this.isLHS) {
+          this.lhsPoints.push([x_coord, y_coord])
+        } else {
+          this.rhsPoints.push([x_coord, y_coord])
+        }
+      },
+      uploadImage1() {
+        var selectedFile = this.$refs.im1.files[0];
+        var reader = new FileReader();
+        var imgtag = document.getElementById("im1");
+        imgtag.title = selectedFile.name;
+        console.log(selectedFile)
+        reader.onload = function(event) {
+          img = new Image()
+          img.src = event.target.result;
+          img.onload = function() {
+            console.log(img)
+            this.width = img.width;
+            this.height = img.height;
+            imgtag.src = event.target.result;
+          }.bind(this);
+          
+        }.bind(this);
+        reader.readAsDataURL(selectedFile);
+        this.im1IsSet = true;
+      },
+      uploadImage2() {
+        var selectedFile = this.$refs.im2.files[0];
+        var reader = new FileReader();
+        var imgtag = document.getElementById("im2");
+        imgtag.title = selectedFile.name;
+        reader.onload = function(event) {
+          imgtag.src = event.target.result;
+        };
+        reader.readAsDataURL(selectedFile);
+        this.im2IsSet = true;
+      },
+      save() {
+        var im1File = this.$refs.im1.files[0];
+        var reader = new FileReader();
+      }
+    }
+  }).mount('#app')
+</script>
+
+<script src="index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+</body>
+</html>

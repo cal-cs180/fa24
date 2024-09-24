@@ -1,0 +1,44 @@
+body {
+	background: white;
+	color: black;
+}
+h1 {
+	font-size: x-large;
+}
+h1 a {
+	font-size: medium;
+}
+h1 img {
+	float:left;
+	padding-right:1em;
+}
+h2 {
+	font-size: x-large;
+	text-align:center;
+	font-variant:small-caps;
+}
+h2 b {
+	font-size: large;
+	font-variant:normal;
+	color: red;
+}
+h2 i {
+	font-size: large;
+	font-variant:normal;
+	font-style: italic;
+	font-weight: normal;
+}
+h3 {
+	font-size: large;
+	font-variant:small-caps;
+	margin: 1em 0 0 0;
+}
+p {
+	margin: 0 1em 0.5em 1em;
+}
+ul, ol {
+	margin: 0.5em 0 0.5em 1em;
+}
+li {
+	margin: 0;
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>15-463: Computational Photography</title>
+<link rel="StyleSheet" href="../style.css" type="text/css" media="all" />
+</head>
+<body>
+<h1>
+<img src="../../463_files/ucbseal_139_540.png" alt="berkeley logo" height="75" width="75"/>Programming Project #4 (<tt>proj4</tt>)<br />
+<a href="../../">CS194-26: Image Manipulation and Computational Photography</a></h1>
+<h2>
+<img src="proj2_files/image004.gif" alt="Face Morph Example" /><br />
+Face Morphing<br />
+<!-- <b>Face Labeling Due Date: 11:59pm on Th, October 6, 2011</b> -->
+<b>Project Due Date: 11:59pm on Thursday, October 18, 2018</b>
+</h2>
+<h3>Overview</h3>
+<p>In this assignment you
+will produce a &quot;morph&quot; animation of your face into someone else's face, compute the mean of a population of faces and extrapolate from a population mean to create a caricature of yourself.</p>
+<p>A morph is a
+  simultaneous warp of the image shape and a cross-dissolve of the image colors.
+  The cross-dissolve is the easy part; controlling and doing the warp is the hard
+  part. The warp is controlled by defining a correspondence between the two
+  pictures. The correspondence should map eyes to eyes, mouth to mouth, chin to
+chin, ears to ears, etc., to get the smoothest transformations possible.</p>
+<p>To start with, you should take a pictures of yourself on a uniform background (for instance, white). Your image should be the same size and aspect ratio as your target face (for instance, this beautiful portrait of <a href="george_small.jpg">George</a>, taken by <a href="http://en.wikipedia.org/wiki/Martin_Schoeller">Martin Schoeller</a>). Treat your target face as a passport photo template -- your face in the picture should be about where their face is. This will make your morphing result more pleasing to the eye.<br />
+  <br />
+  Use your photo as Picture A and your target person's photo  as Picture B. You'll morph still
+  picture A into still picture B and produce 45 frames of animation numbered
+  0-45, where frame 0 must be identical to picture A and frame 45 must be
+  identical to picture B. In the video, each frame will be displayed for 1/30 of
+  a second. Create a video from your sequence of frames, either a YouTube or an animated gif. </p>
+<h3>Defining Correspondences</h3>
+
+<p>
+First, you will need to
+define pairs of corresponding points on the two images by hand (the more
+points, the better the morph, generally).
+The simplest way is probably to use the
+<tt>cpselect</tt> (matlab)
+tool or write your own little tool using
+<tt>ginput</tt> (matlab or python)
+and
+<tt>plot</tt>
+commands (with
+<tt>hold on</tt>
+and
+<tt>hold off</tt>
+).
+In order for the morph to work you will need a <u>consistent</u> labeling of the two faces.
+  So label your faces A and B in a consistent
+  manner using the same ordering of keypoints in the two faces. It's strongly recommended that you
+  save the points once you obtain something you are happy with so that you don't have to do all that
+   clicking more than once!</p>
+<p>Now, you need to provide a triangulation of these points that will be
+  used for morphing. You can compute a
+  triangulation any way you like, or even define it by hand.
+  A Delaunay triangulation (see <tt>dalaunay</tt> and related functions) is a
+  good choice since it does not produce overly skinny triangles.
+  You can compute the Delaunay triangulation on
+  either of the point sets (but not both -- the triangulation has to be the
+  same throughout the morph!).
+  But the
+  best approach would probably be to compute the triangulation at midway shape
+  (i.e. mean of the two point sets) to lessen the potential triangle
+  deformations.</p>
+<h3>Computing the &quot;Mid-way Face&quot;</h3>
+<p>Before computing the whole morph sequence, compute the mid-way face of your images A and B. This would involve: 1) computing the average
+  shape (a.k.a the average of each keypoint location in the two faces), 2) warping both faces into that shape, and 3) averaging the colors
+  together. The main task in warping the faces into the average shape is implementing an affine warp for each triangle in the triangulation
+from the original images into this new shape.
+This will involve computing an affine transformation matrix A between
+two triangles:</p>
+<pre>
+A = computeAffine(tri1_pts,tri2_pts)
+</pre>
+<p>(You will write this function.)</p>
+<p>A set
+  of these transformation matrices will then need to be used to implement an
+  inverse warp (as discussed in class) of all pixels. Functions <tt>tsearch</tt> (matlab and python) and <tt>interp2</tt> (matlab) or <tt>interp2d</tt> (python) can come very handy here.
+  But note that you are not allowed to use any built-in offerings for computing transformations, (e.g. <tt>imtransform</tt>, <tt>cp2tform</tt>, <tt>maketform</tt> (for matlab), and scikit's <tt>warp</tt> or any of the transformation matrix generating functions (for python).
+  etc).
+  Note, however, that <tt>tsearch</tt> assumes that your triangulation is always Delaunay.
+  In our case, this might not always be true --
+  you may start with a Delaunay triangulation, but through the course of
+  the morph it might produce skinny triangles and stop being Delaunay.
+  To do non-Delaunay tsearch in MATLAB, <a href="http://research.google.com/pubs/DavidMartin.html">David Martin</a> (who is now at Google)
+  has kindly given access to his versions of <tt>tsearch</tt> that work on any triangulation: <a
+href="mytsearch.m">mytsearch.m</a> and <a href="mytsearch.c">mytsearch.c</a> (compile by typing &quot;<tt>mex mytsearch.c</tt>&quot; in Matlab;
+if you get compiler errors try replacing mytsearch.c with <a href="mytsearch_mod.c">this one</a>. If you get lots of type errors, try <a href="mytsearch1.c">this one</a>.) Python has a similar method called contains_point for Path objects in matplotlib. <a href="pointInTriangle.py">Here</a> is an example.</p>
+<p>An alternative method (which may actually be faster) is to generate the mask directly using <tt><a href="http://scikit-image.org/docs/dev/api/skimage.draw.html#polygon">draw_polygon</a></tt> in python or <tt>roipoly</tt> in MATLAB. This method performs the same calculation as <tt>mytsearch</tt> above, but only on those pixels inside the bounding box of the polygon. Although you will end up testing each pixel more than once, you only need to check it against nearby triangles rather than all the triangles.</p>
+<p>Show us the original A and B images as well as the image of the mid-way face that you got.</p>
+<h3>The Morph Sequence</h3>
+<p>You need to write a function:</p>
+
+<pre>
+morphed_im = morph(im1, im2, im1_pts, im2_pts, tri, warp_frac, dissolve_frac);
+</pre>
+
+<p>that
+produces a warp between
+<tt>im1</tt>
+and
+<tt>im2</tt>
+using point correspondences defined in
+<tt>im1_pts</tt>
+and
+<tt>im2_pts</tt>
+(which
+are both n-by-2 matrices of (x,y) locations) and the triangulation structure
+<tt>tri</tt>
+.
+The parameters
+<tt>warp_frac</tt>
+and
+<tt>dissolve_frac</tt>
+control shape warping and
+cross-dissolve, respectively.
+ In particular, images
+<tt>im1</tt>
+and
+<tt>im2</tt>
+are
+first warped into an intermediate shape configuration controlled by
+<tt>warp_frac</tt>, and
+then cross-dissolved according to
+<tt>dissolve_frac</tt>.
+For interpolation, both
+parameters lie in the range [0,1]. They are the only parameters that will vary
+from frame to frame in the animation. For your starting frame, they will both
+equal 0, and for your ending frame, they will both equal 1.</p>
+<p>The output of this part should be a video sequence of a morph from your image A to image B. Please do NOT put a video file on your website! Either include a link to a YouTube video, or create an animated gif.</p>
+<h3>The &quot;Mean face&quot; of a population</h3>
+<p>Pick a freely available dataset of annotated faces (for instance the <a href="http://www2.imm.dtu.dk/~aam/datasets/datasets.html">Danes</a> or <a href="http://fei.edu.br/~cet/facedatabase.html">this one</a> or <a href="http://www.face-rec.org/databases/">something from here</a> or ask for permission to use <a href="http://www2.ece.ohio-state.edu/~aleix/ARdatabase.html">this one</a>). Using the keypoints already annotated on the data:</p>
+<ol>
+  <li>Compute the average face shape of the whole population or some subset of the population - say, all the girls or all the old/young/white/asian/blond etc. However, if you pick a subpopulation - make sure it contains enough faces for this to be interesting.</li>
+  <li>Morph each of the faces in the dataset into the average shape. Show us some examples.</li>
+<li>Compute the average face of the population and display it.</li></ol>
+<p>Show the mean image that you got, as well as
+  1) your face warped into the average geometry, and 2) the average face warped
+into your geometry.</p>
+<h3>caricatures: Extrapolating from the mean</h3>
+<p>Produce a caricature of your face by extrapolating from the population mean you calculated in the last step.  This might work better if you have gender-specific mean or a mean of a subset of the population that look similar to you.</p>
+<h3>Bells and Whistles - (you will have to do at least one in order to get full crediT)</h3>
+
+<ul>
+ <li> (up to <b>3 points</b>)
+     Change age/gender/ethnicity/smile/etc of your (or your friend's) face.  You can use average images off the web for this, no need to recompute the averages yourself (unless you want to).  Show morphing just the shape, just the appearance, and both.</li>
+ <li> (up to <b>3 points</b>) Make a morphing music video on a theme. For instance, you can pick a photo of yourself from different ages and make a movie that shows how your face changed over time. Or you can morph between your friends/dorm mates etc.</li>
+ <li>(up to <strong>3 points</strong>) Produce a face-morphing music video of the students in the class! Something like <a href="project3_demo1.mov">this</a> but waaaayyyy cooler. In order to do this successfully you will have to gang up with other students in the class and organize yourselves in one big chain of students. Each student in the chain will have to create a morph video sequence from their face to the next students face - just like you did for the main part of the homework. In order to end up with something visually appealing it is advisable that all the backgrounds for everyone's photographs are the same -- for instance white. Another trick is to get everyone's face roughly in the same place. For this you can use <a href="george_small.jpg">George</a> as a   <a href="http://travel.state.gov/content/passports/english/passports/photos/photo-composition-template.html">passport photo template</a> -- your image should be the same size and aspect ratio as George's and your face in the picture should be about where his face is. Finally, everyone should label their keypoints in a consistent manner with one another. For instance, you can use the point labeles  in the following two images as a guide for everyone's labelling:<a href="efros_points.jpg"> points</a>, <a href="efros_point_numbers.jpg">point_labels</a>. At the end, pick a volunteer to put everyone's videos together in order and add some music. Here are a coule of good tunes, but obviously you can come up with your own!: <a href="https://www.youtube.com/watch?v=UW6EP3-Q-DA">Kate Nash</a>, <a href="https://www.youtube.com/watch?v=0mYBSayCsH0">Smash Mouth</a>, <a href="https://www.youtube.com/watch?v=lPXWt2ESxVY">The Flaming Lips</a>, <a href="https://www.youtube.com/watch?v=DohRa9lsx0Q">Steelers Wheel</a>, <a href="https://www.youtube.com/watch?v=UiN_E4SQs_A&index=17&list=LLm0uPl4j6PYEelzLXA-n73w">Asian historical period drama</a> etc. Everyone in the movie gets 0.2 points for each student participating.</li>
+ <li> (up to <b>3 points</b>)
+   Use  one of the datasets to
+   compute a PCA basis for the face space.
+   Try performing caricatures and other transformations in the new
+   basis. Compare your results to doing this in normal basis.
+   Are the results better? </li>
+ <li> (up to <b>3 points</b>)
+   Do something else that is fun in this space, e.g. a different morphing algorithm, automatic morphing, &quot;visual lip-syncing&quot;, whatever else your imagination comes up with.</li>
+</ul>
+
+<h3>Scoring</h3>
+
+<p>To get
+full credit, you will need to implement a warping algorithm and turn in a video
+morph (submit a link to Youtube or animated gif) as well as the mid-way face. You will also need to compute the mean face of a population and show results of warping
+faces into the mean face and producing caricatures. This time you are required to also do <strong>at least one</strong> bells and whistles option. Doing other
+Bells &amp; Whistles will earn you extra points.
+</p>
+
+<p> For turn-in, as usual, code goes to bCourses and websites use the upload utility as per the <a href="../submitting.html">submission
+instructions</a>.</p>
+
+</body>
+</html>
