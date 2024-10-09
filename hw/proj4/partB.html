@@ -1,0 +1,926 @@
+<html
+  xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:w="urn:schemas-microsoft-com:office:word"
+  xmlns:p="urn:schemas-microsoft-com:office:powerpoint"
+  xmlns:oa="urn:schemas-microsoft-com:office:activation"
+  xmlns="http://www.w3.org/TR/REC-html40"
+>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="ProgId" content="Word.Document" />
+    <meta name="Generator" content="Microsoft Word 11" />
+    <meta name="Originator" content="Microsoft Word 11" />
+    <link rel="File-List" href="proj4_files/filelist.xml" />
+    <link rel="Edit-Time-Data" href="proj4_files/editdata.mso" />
+    <!--[if !mso]>
+      <style>
+        v\:* {
+          behavior: url(#default#VML);
+        }
+        o\:* {
+          behavior: url(#default#VML);
+        }
+        w\:* {
+          behavior: url(#default#VML);
+        }
+        .shape {
+          behavior: url(#default#VML);
+        }
+      </style>
+    <![endif]-->
+    <title>
+      CS180/280A: Intro to Computer Vision and Computational Photography
+    </title>
+    <!--[if gte mso 9
+      ]><xml>
+        <o:DocumentProperties>
+          <o:Author>efros</o:Author>
+          <o:Template>Normal</o:Template>
+          <o:LastAuthor>efros</o:LastAuthor>
+          <o:Revision>10</o:Revision>
+          <o:TotalTime>6434</o:TotalTime>
+          <o:Created>2005-11-01T03:48:00Z</o:Created>
+          <o:LastSaved>2006-10-27T02:17:00Z</o:LastSaved>
+          <o:Pages>1</o:Pages>
+          <o:Words>449</o:Words>
+          <o:Characters>2564</o:Characters>
+          <o:Company>Carnegie Mellon University</o:Company>
+          <o:Lines>21</o:Lines>
+          <o:Paragraphs>6</o:Paragraphs>
+          <o:CharactersWithSpaces>3007</o:CharactersWithSpaces>
+          <o:Version>11.8107</o:Version>
+        </o:DocumentProperties>
+      </xml><!
+    [endif]-->
+    <!--[if gte mso 9
+      ]><xml>
+        <w:WordDocument>
+          <w:ValidateAgainstSchemas />
+          <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+          <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+          <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+          <w:Compatibility>
+            <w:UseFELayout />
+          </w:Compatibility>
+          <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+        </w:WordDocument>
+      </xml><!
+    [endif]-->
+    <!--[if gte mso 9
+      ]><xml>
+        <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+        </w:LatentStyles> </xml
+    ><![endif]-->
+    <style>
+      <!--
+       /* Font Definitions */
+       @font-face
+      	{font-family:Helvetica;
+      	panose-1:2 11 6 4 2 2 2 2 2 4;
+      	mso-font-charset:204;
+      	mso-generic-font-family:swiss;
+      	mso-font-pitch:variable;
+      	mso-font-signature:536902279 -2147483648 8 0 511 0;}
+      @font-face
+      	{font-family:Batang;
+      	panose-1:2 3 6 0 0 1 1 1 1 1;
+      	mso-font-alt:Batang;
+      	mso-font-charset:129;
+      	mso-generic-font-family:auto;
+      	mso-font-format:other;
+      	mso-font-pitch:fixed;
+      	mso-font-signature:1 151388160 16 0 524288 0;}
+      @font-face
+      	{font-family:"\@Batang";
+      	panose-1:0 0 0 0 0 0 0 0 0 0;
+      	mso-font-charset:129;
+      	mso-generic-font-family:auto;
+      	mso-font-format:other;
+      	mso-font-pitch:fixed;
+      	mso-font-signature:1 151388160 16 0 524288 0;}
+       /* Style Definitions */
+       p.MsoNormal, li.MsoNormal, div.MsoNormal
+      	{mso-style-parent:"";
+      	margin:0in;
+      	margin-bottom:.0001pt;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      h3
+      	{mso-margin-top-alt:auto;
+      	margin-right:0in;
+      	mso-margin-bottom-alt:auto;
+      	margin-left:0in;
+      	mso-pagination:widow-orphan;
+      	mso-outline-level:3;
+      	font-size:13.5pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:Batang;
+      	font-weight:bold;}
+      a:link, span.MsoHyperlink
+      	{color:blue;
+      	text-decoration:underline;
+      	text-underline:single;}
+      a:visited, span.MsoHyperlinkFollowed
+      	{color:blue;
+      	text-decoration:underline;
+      	text-underline:single;}
+      p
+      	{mso-margin-top-alt:auto;
+      	margin-right:0in;
+      	mso-margin-bottom-alt:auto;
+      	margin-left:0in;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      @page Section1
+      	{size:8.5in 11.0in;
+      	margin:1.0in 1.25in 1.0in 1.25in;
+      	mso-header-margin:.5in;
+      	mso-footer-margin:.5in;
+      	mso-paper-source:0;}
+      div.Section1
+      	{page:Section1;}
+       /* List Definitions */
+       @list l0
+      	{mso-list-id:125511038;
+      	mso-list-type:hybrid;
+      	mso-list-template-ids:752488060 67698689 67698689 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+      @list l0:level1
+      	{mso-level-number-format:bullet;
+      	mso-level-text:\F0B7;
+      	mso-level-tab-stop:.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;
+      	font-family:Symbol;}
+      @list l0:level2
+      	{mso-level-number-format:bullet;
+      	mso-level-text:\F0B7;
+      	mso-level-tab-stop:1.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;
+      	font-family:Symbol;}
+      @list l0:level3
+      	{mso-level-tab-stop:1.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l0:level4
+      	{mso-level-tab-stop:2.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l0:level5
+      	{mso-level-tab-stop:2.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l0:level6
+      	{mso-level-tab-stop:3.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l0:level7
+      	{mso-level-tab-stop:3.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l0:level8
+      	{mso-level-tab-stop:4.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l0:level9
+      	{mso-level-tab-stop:4.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l1
+      	{mso-list-id:391781878;
+      	mso-list-type:hybrid;
+      	mso-list-template-ids:1287024552 67698689 67698689 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+      @list l1:level1
+      	{mso-level-number-format:bullet;
+      	mso-level-text:\F0B7;
+      	mso-level-tab-stop:.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;
+      	font-family:Symbol;}
+      @list l1:level2
+      	{mso-level-number-format:bullet;
+      	mso-level-text:\F0B7;
+      	mso-level-tab-stop:1.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;
+      	font-family:Symbol;}
+      @list l1:level3
+      	{mso-level-tab-stop:1.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l1:level4
+      	{mso-level-tab-stop:2.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l1:level5
+      	{mso-level-tab-stop:2.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l1:level6
+      	{mso-level-tab-stop:3.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l1:level7
+      	{mso-level-tab-stop:3.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l1:level8
+      	{mso-level-tab-stop:4.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l1:level9
+      	{mso-level-tab-stop:4.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2
+      	{mso-list-id:471364713;
+      	mso-list-type:hybrid;
+      	mso-list-template-ids:1990613318 67698703 67698689 67698715 67698703 67698713 67698715 67698703 67698713 67698715;}
+      @list l2:level1
+      	{mso-level-tab-stop:.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2:level2
+      	{mso-level-number-format:bullet;
+      	mso-level-text:\F0B7;
+      	mso-level-tab-stop:1.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;
+      	font-family:Symbol;}
+      @list l2:level3
+      	{mso-level-tab-stop:1.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2:level4
+      	{mso-level-tab-stop:2.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2:level5
+      	{mso-level-tab-stop:2.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2:level6
+      	{mso-level-tab-stop:3.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2:level7
+      	{mso-level-tab-stop:3.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2:level8
+      	{mso-level-tab-stop:4.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l2:level9
+      	{mso-level-tab-stop:4.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3
+      	{mso-list-id:821890241;
+      	mso-list-type:hybrid;
+      	mso-list-template-ids:-406682824 67698689 67698691 67698693 67698689 67698691 67698693 67698689 67698691 67698693;}
+      @list l3:level1
+      	{mso-level-number-format:bullet;
+      	mso-level-text:\F0B7;
+      	mso-level-tab-stop:.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;
+      	font-family:Symbol;}
+      @list l3:level2
+      	{mso-level-tab-stop:1.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3:level3
+      	{mso-level-tab-stop:1.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3:level4
+      	{mso-level-tab-stop:2.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3:level5
+      	{mso-level-tab-stop:2.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3:level6
+      	{mso-level-tab-stop:3.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3:level7
+      	{mso-level-tab-stop:3.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3:level8
+      	{mso-level-tab-stop:4.0in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      @list l3:level9
+      	{mso-level-tab-stop:4.5in;
+      	mso-level-number-position:left;
+      	text-indent:-.25in;}
+      ol
+      	{margin-bottom:0in;}
+      ul
+      	{margin-bottom:0in;}
+      div.MsoNormal1 {mso-style-parent:"";
+      	margin:0in;
+      	margin-bottom:.0001pt;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      li.MsoNormal1 {mso-style-parent:"";
+      	margin:0in;
+      	margin-bottom:.0001pt;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      p.MsoNormal1 {mso-style-parent:"";
+      	margin:0in;
+      	margin-bottom:.0001pt;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      div.MsoNormal2 {mso-style-parent:"";
+      	margin:0in;
+      	margin-bottom:.0001pt;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      li.MsoNormal2 {mso-style-parent:"";
+      	margin:0in;
+      	margin-bottom:.0001pt;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      p.MsoNormal2 {mso-style-parent:"";
+      	margin:0in;
+      	margin-bottom:.0001pt;
+      	mso-pagination:widow-orphan;
+      	font-size:12.0pt;
+      	font-family:"Times New Roman";
+      	mso-fareast-font-family:"Times New Roman";}
+      -->
+    </style>
+    <!--[if gte mso 10]>
+      <style>
+        /* Style Definitions */
+        table.MsoNormalTable {
+          mso-style-name: "Table Normal";
+          mso-tstyle-rowband-size: 0;
+          mso-tstyle-colband-size: 0;
+          mso-style-noshow: yes;
+          mso-style-parent: "";
+          mso-padding-alt: 0in 5.4pt 0in 5.4pt;
+          mso-para-margin: 0in;
+          mso-para-margin-bottom: 0.0001pt;
+          mso-pagination: widow-orphan;
+          font-size: 10pt;
+          font-family: "Times New Roman";
+          mso-fareast-font-family: "Times New Roman";
+          mso-ansi-language: #0400;
+          mso-fareast-language: #0400;
+          mso-bidi-language: #0400;
+        }
+      </style>
+    <![endif]-->
+    <!--[if gte mso 9
+      ]><xml> <o:shapedefaults v:ext="edit" spidmax="17410" /> </xml
+    ><![endif]-->
+    <!--[if gte mso 9
+      ]><xml>
+        <o:shapelayout v:ext="edit">
+          <o:idmap v:ext="edit" data="1" /> </o:shapelayout></xml
+    ><![endif]-->
+  </head>
+
+  <body lang="EN-US" link="blue" vlink="blue" style="tab-interval: 0.5in">
+    <div class="Section1">
+      <table
+        class="MsoNormalTable"
+        border="0"
+        cellspacing="0"
+        cellpadding="0"
+        style="
+          mso-cellspacing: 0in;
+          mso-padding-alt: 2.65pt 2.65pt 2.65pt 2.65pt;
+        "
+      >
+        <tr style="mso-yfti-irow: 0; mso-yfti-firstrow: yes">
+          <td colspan="2" style="padding: 2.65pt 2.65pt 2.65pt 2.65pt">
+            <p class="MsoNormal1" align="center" style="text-align: center">
+              <span style="font-size: 10pt; mso-bidi-font-size: 12pt"
+                >&nbsp;
+                <o:p></o:p>
+              </span>
+            </p>
+          </td>
+        </tr>
+        <tr style="mso-yfti-irow: 1; mso-yfti-lastrow: yes">
+          <td valign="top" style="padding: 2.65pt 2.65pt 2.65pt 2.65pt">
+            <p class="MsoNormal1">
+              <span style="font-size: 10pt; mso-bidi-font-size: 12pt"
+                ><img
+                  src="./ucbseal_139_540.png"
+                  alt="berkeley logo"
+                  height="75"
+                  width="75"
+                />
+                <o:p></o:p>
+              </span>
+            </p>
+          </td>
+          <td valign="top" style="padding: 2.65pt 2.65pt 2.65pt 2.65pt">
+            <p class="MsoNormal1">
+              <strong
+                >Programming Project #4 (<tt>proj4B</tt>) (second part)</strong
+              ><br />
+              <a href="../../"
+                >CS180/280A: Intro to Computer Vision and Computational
+                Photography</a
+              ><span style="font-size: 10pt; mso-bidi-font-size: 12pt"
+                ><br style="mso-special-character: line-break" />
+                <![if !supportLineBreakNewLine]>
+                <br style="mso-special-character: line-break" />
+                <![endif]> </span
+              ><span
+                style="
+                  font-size: 11pt;
+                  mso-bidi-font-size: 12pt;
+                  font-family: Helvetica;
+                  mso-bidi-font-family: Arial;
+                "
+              >
+                <o:p></o:p>
+              </span>
+            </p>
+          </td>
+        </tr>
+      </table>
+      <p
+        class="MsoNormal"
+        align="center"
+        style="
+          mso-margin-top-alt: auto;
+          mso-margin-bottom-alt: auto;
+          text-align: center;
+        "
+      >
+        <b style="mso-bidi-font-weight: normal"
+          ><span style="font-family: Helvetica"
+            ><!--[if gte vml 1
+              ]><v:shapetype
+                id="_x0000_t75"
+                coordsize="21600,21600"
+                o:spt="75"
+                o:preferrelative="t"
+                path="m@4@5l@4@11@9@11@9@5xe"
+                filled="f"
+                stroked="f"
+              >
+                <v:stroke joinstyle="miter" />
+                <v:formulas>
+                  <v:f eqn="if lineDrawn pixelLineWidth 0" />
+                  <v:f eqn="sum @0 1 0" />
+                  <v:f eqn="sum 0 0 @1" />
+                  <v:f eqn="prod @2 1 2" />
+                  <v:f eqn="prod @3 21600 pixelWidth" />
+                  <v:f eqn="prod @3 21600 pixelHeight" />
+                  <v:f eqn="sum @0 0 1" />
+                  <v:f eqn="prod @6 1 2" />
+                  <v:f eqn="prod @7 21600 pixelWidth" />
+                  <v:f eqn="sum @8 21600 0" />
+                  <v:f eqn="prod @7 21600 pixelHeight" />
+                  <v:f eqn="sum @10 21600 0" />
+                </v:formulas>
+                <v:path
+                  o:extrusionok="f"
+                  gradientshapeok="t"
+                  o:connecttype="rect"
+                />
+                <o:lock v:ext="edit" aspectratio="t" /> </v:shapetype
+              ><v:shape
+                id="_x0000_i1025"
+                type="#_x0000_t75"
+                style="width: 193.9pt; height: 153.4pt"
+              >
+                <v:imagedata
+                  src="proj4_files/image001.png"
+                  o:title=""
+                /> </v:shape><!
+            [endif]--><![if !vml]><img
+              border="0"
+              width="259"
+              height="205"
+              src="./image002.gif"
+              v:shapes="_x0000_i1025" /><![endif]><span
+              style="mso-spacerun: yes"
+            >
+            </span
+            ><!--[if gte vml 1
+              ]><v:shape
+                id="_x0000_i1026"
+                type="#_x0000_t75"
+                style="width: 193.9pt; height: 153.4pt"
+              >
+                <v:imagedata
+                  src="proj4_files/image003.png"
+                  o:title=""
+                /> </v:shape><!
+            [endif]--><![if !vml]><img
+              border="0"
+              width="259"
+              height="205"
+              src="./image003.gif"
+              v:shapes="_x0000_i1026" /><![endif]><o:p
+            ></o:p></span
+        ></b>
+      </p>
+
+      <p
+        class="MsoNormal"
+        style="mso-margin-top-alt: auto; mso-margin-bottom-alt: auto"
+      >
+        <b style="mso-bidi-font-weight: normal"
+          ><span style="font-family: Helvetica"><o:p>&nbsp;</o:p></span></b
+        >
+      </p>
+
+      <p
+        class="MsoNormal"
+        align="center"
+        style="
+          mso-margin-top-alt: auto;
+          mso-margin-bottom-alt: auto;
+          text-align: center;
+        "
+      >
+        <b style="mso-bidi-font-weight: normal"
+          ><span
+            style="
+              font-size: 16pt;
+              mso-bidi-font-size: 12pt;
+              font-family: Helvetica;
+            "
+            >FEATURE MATCHING for AUTOSTITCHING<o:p></o:p></span
+        ></b>
+      </p>
+
+      <p
+        class="MsoNormal"
+        align="center"
+        style="
+          mso-margin-top-alt: auto;
+          mso-margin-bottom-alt: auto;
+          text-align: center;
+        "
+      >
+        <b style="mso-bidi-font-weight: normal"
+          ><span
+            style="
+              font-size: 16pt;
+              mso-bidi-font-size: 12pt;
+              font-family: Helvetica;
+            "
+            >(second part of a <a href="index.html">larger project</a>)
+            <o:p></o:p></span
+        ></b>
+      </p>
+
+      <p
+        class="MsoNormal"
+        align="center"
+        style="
+          mso-margin-top-alt: auto;
+          mso-margin-bottom-alt: auto;
+          text-align: center;
+        "
+      >
+        <!-- <b style='mso-bidi-font-weight:normal'><span
+style='font-family:Helvetica;color:red'>Due time: by 11:59pm on the due date</span></b> --><b
+          style="mso-bidi-font-weight: normal"
+          ><span style="font-family: Helvetica"><o:p></o:p></span
+        ></b>
+      </p>
+
+      <p class="MsoNormal">
+        <a name="papers"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            ><o:p>&nbsp;</o:p></span
+          ></a
+        >
+      </p>
+
+      <p class="MsoNormal">
+        <span style="mso-bookmark: papers"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            >The goal of this project is to create a system for automatically
+            stitching images into a mosaic.<span style="mso-spacerun: yes">
+            </span
+            >A secondary goal is to learn how to read and implement a research
+            paper.<span style="mso-spacerun: yes"> </span>The project will
+            consist of the following steps:<o:p></o:p></span
+        ></span>
+      </p>
+
+      <ol style="margin-top: 0in" start="1" type="1">
+        <li
+          class="MsoNormal"
+          style="mso-list: l2 level1 lfo1; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Detecting corner features in an image (10 pts)<o:p></o:p></span
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l2 level1 lfo1; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Extracting a Feature Descriptor for each feature point (10
+              pts)<o:p></o:p></span
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l2 level1 lfo1; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Matching these feature descriptors between two images (20
+              pts)<o:p></o:p></span
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l2 level1 lfo1; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Use a robust method (RANSAC) to compute a homography (30 pts)<o:p
+              ></o:p></span
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l2 level1 lfo1; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Proceed as in the first part to produce a mosaic (30 pts; you may
+              use the same images from part A, but show both manually and
+              automatically stitched results side by side) [produce at least
+              <b>three</b> mosaics]<o:p></o:p></span
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l2 level1 lfo1; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Submit your results<o:p></o:p></span
+          ></span>
+        </li>
+      </ol>
+
+      <p class="MsoNormal">
+        <span style="mso-bookmark: papers"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            ><o:p>&nbsp;</o:p></span
+          ></span
+        >
+      </p>
+
+      <h3>Steps 1-3</h3>
+      <p class="MsoNormal">
+        <span style="mso-bookmark: papers"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            >For steps 1-3, we will follow the paper
+          </span></span
+        ><a href="./Papers/MOPS.pdf"
+          ><span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >&#8220;Multi-Image Matching using Multi-Scale Oriented
+              Patches&#8221; by Brown et al.</span
+            ></span
+          ><span style="mso-bookmark: papers"></span></a
+        ><span style="mso-bookmark: papers"
+          ><span style="font-size: 10pt; font-family: Helvetica">
+            but with several simplifications. Read the paper first and make sure
+            you understand it.<span style="mso-spacerun: yes"> </span>Then
+            implement the algorithm:<o:p></o:p></span
+        ></span>
+      </p>
+
+      <ul style="margin-top: 0in" type="disc">
+        <li
+          class="MsoNormal"
+          style="mso-list: l0 level1 lfo2; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Start with Harris Interest Point Detector (Section 2).<span
+                style="mso-spacerun: yes"
+              >
+              </span
+              >We won&#8217;t worry about muti-scale &#8211; just do a single
+              scale.<span style="mso-spacerun: yes"> </span>Also, don&#8217;t
+              worry about sub-pixel accuracy.<span style="mso-spacerun: yes">
+              </span
+              >Re-implementing Harris is a thankless task &#8211; so you can use
+              my sample code:
+            </span></span
+          >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica">
+            </span></span
+          ><a href="harris.py"
+            ><span style="mso-bookmark: papers"
+              ><span style="font-size: 10pt; font-family: Helvetica"
+                >harris.py</span
+              ></span
+            ><span style="mso-bookmark: papers"></span
+          ></a>
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica">
+              . Include on your webpage a figure of the Harris corners overlaid
+              on the image.
+              <o:p></o:p></span
+          ></span>
+        </li>
+        <li class="MsoNormal">
+          Implement Adaptive Non-Maximal Suppression (Section 3). Include on
+          your webpage a figure of the chosen corners overlaid on the image. The
+          paper section is confusing; you may need to read it a few times. You
+          may want to skip this step and come back to it; just choose a random
+          set of corners instead in the meantime.
+        </li>
+      </ul>
+
+      <ul style="margin-top: 0in" type="disc">
+        <li
+          class="MsoNormal"
+          style="mso-list: l1 level1 lfo3; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Implement Feature Descriptor extraction (Section 4).<span
+                style="mso-spacerun: yes"
+              >
+              </span
+              >Don&#8217;t worry about rotation-invariance &#8211; just extract
+              axis-aligned 8x8 patches.<span style="mso-spacerun: yes"> </span
+              >Note that it&#8217;s extremely important to sample these patches
+              from the larger 40x40 window to have a nice big blurred
+              descriptor.<span style="mso-spacerun: yes"> </span>Don&#8217;t
+              forget to bias/gain-normalize the descriptors. Ignore the wavelet
+              transform section. <o:p></o:p></span
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l1 level1 lfo3; tab-stops: list 0.5in"
+        >
+          <span style="mso-bookmark: papers"
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >Implement Feature Matching (Section 5). That is, you will need to
+              find pairs of features that look similar and are thus likely to be
+              good matches. For thresholding, use the simpler approach due to
+              Lowe of thresholding on the ratio between the first and the second
+              nearest neighbors. Consult Figure 6b in the paper for picking the
+              threshold.<span style="mso-spacerun: yes"> </span>Ignore Section
+              6.<o:p></o:p></span
+          ></span>
+        </li>
+      </ul>
+
+      <p class="MsoNormal">
+        <span style="mso-bookmark: papers"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            ><o:p>&nbsp;</o:p></span
+          ></span
+        >
+      </p>
+
+      <h3>Step 4</h3>
+      <p class="MsoNormal">
+        <span style="mso-bookmark: papers"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            >For step 4, use 4-point RANSAC as described in class to compute a
+            robust homography estimate.<o:p></o:p></span
+        ></span>
+      </p>
+      <p class="MsoNormal">&nbsp;</p>
+      <h3>What have you learned?</h3>
+      <p class="MsoNormal">
+        <span style="font-size: 10pt; font-family: Helvetica"
+          >Tell us whats the coolest thing you have learned from this
+          project.</span
+        >
+      </p>
+
+      <p class="MsoNormal">
+        <span style="mso-bookmark: papers"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            ><o:p>&nbsp;</o:p></span
+          ></span
+        >
+      </p>
+
+      <h3>Submit Your Results</h3>
+
+      <p class="MsoNormal">
+        <span style="font-size: 10pt; font-family: Helvetica"
+          >You will need to submit all your code. Please include a README with
+          your code describing where each of the steps was implemented. If you
+          skipped a step, say so, to save your GSI some time!</span
+        >
+      </p>
+
+      <p class="MsoNormal">
+        <span style="font-size: 10pt; font-family: Helvetica"
+          ><o:p>&nbsp;</o:p></span
+        >
+      </p>
+
+      <p class="MsoNormal">
+        <span style="font-size: 10pt; font-family: Helvetica"
+          ><o:p>&nbsp;</o:p></span
+        >
+      </p>
+
+      <p class="MsoNormal">
+        <b style="mso-bidi-font-weight: normal"
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            >Bells &amp; Whistles<o:p></o:p></span
+        ></b>
+      </p>
+
+      <ul style="margin-top: 0in" type="disc">
+        <li
+          class="MsoNormal"
+          style="mso-list: l3 level1 lfo4; tab-stops: list 0.5in"
+        >
+          <i
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >(<b>0.125 cookie points</b>)</span
+            ></i
+          ><span style="font-size: 10pt; font-family: Helvetica">
+            Add multiscale processing for corner detection and feature
+            description.<o:p></o:p
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l3 level1 lfo4; tab-stops: list 0.5in"
+        >
+          <i
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >(<b>0.125 cookie points</b>)
+            </span></i
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            >Add rotation invariance to the descriptors.<span
+              style="mso-spacerun: yes"
+            >
+            </span
+            ><o:p></o:p
+          ></span>
+        </li>
+        <li
+          class="MsoNormal"
+          style="mso-list: l3 level1 lfo4; tab-stops: list 0.5in"
+        >
+          <i
+            ><span style="font-size: 10pt; font-family: Helvetica"
+              >(<b>0.25 cookie points</b>)
+            </span></i
+          ><span style="font-size: 10pt; font-family: Helvetica"
+            >Implement panorama recognition.<span style="mso-spacerun: yes">
+            </span
+            >Given an unordered set of images, some of which might form
+            panoramas, you need to automatically discover and stitch these
+            panoramas together.<span style="mso-spacerun: yes"> </span
+            >Don&#8217;t worry about bundle adjustment, just see how far you can
+            get with pair-wise homography estimation.<span
+              style="mso-spacerun: yes"
+            >
+            </span
+            ><o:p></o:p
+          ></span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
