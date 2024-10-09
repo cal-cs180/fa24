@@ -505,16 +505,14 @@ steps of the assignment are:<o:p></o:p></span></p>
 what is needed.<span style='mso-spacerun:yes'>  </span>However, we want you to
 write your own code.<span style='mso-spacerun:yes'>  </span>Therefore, you are
 not allowed to use the following functions in your solution: </span><span
-style='font-size:10.0pt;font-family:Courier'>cp2tform</span><span
+style='font-size:10.0pt;font-family:Courier'>cv2.findHomography</span><span
 style='font-size:10.0pt;font-family:Helvetica'>, </span><span style='font-size:
-10.0pt;font-family:Courier'>imtransform</span><span style='font-size:10.0pt;
-font-family:Helvetica'>, </span><span style='font-size:10.0pt;font-family:Courier'>tformarray</span><span
+10.0pt;font-family:Courier'>cv2.warpPerspective</span><span style='font-size:10.0pt;
+font-family:Helvetica'>, </span><span style='font-size:10.0pt;font-family:Courier'>cv2.getPerspectiveTransform</span><span
 style='font-size:10.0pt;font-family:Helvetica'>, </span><span style='font-size:
-10.0pt;font-family:Courier'>tformfwd</span><span style='font-size:10.0pt;
-font-family:Helvetica'>, </span><span style='font-size:10.0pt;font-family:Courier'>tforminv</span><span
-style='font-size:10.0pt;font-family:Helvetica'>, and </span><span
-style='font-size:10.0pt;font-family:Courier'>maketform</span><span
-style='font-size:10.0pt;font-family:Helvetica'>, or their python equivalents. On the other hand, there are
+10.0pt;font-family:Courier'>skimage.transform.ProjectiveTransform</span><span style='font-size:10.0pt;
+font-family:Helvetica'>, </span><span style='font-size:10.0pt;font-family:Courier'>skimage.transform.warp</span><span
+style='font-size:10.0pt;font-family:Helvetica'>, and similar high-level homography or warping functions. On the other hand, there are
 a number of very helpful functions (e.g. for solving linear systems, inverting
 matrices, linear interpolation, etc) that you are welcome to use. If there is a
 question whether a particular function is allowed, ask us.
@@ -533,21 +531,9 @@ style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></b></p>
 
 <p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'>Shoot
 two or more photographs so that the transforms between them are projective (a.k.a.
-perspective). One way to do this is to shoot from the same point of view but
-with different view directions, and with overlapping fields of view. Another
-way to do this is to shoot pictures of a planar surface (e.g. a wall) or a very
-far away scene (i.e. plane at infinity) from different points of view. <o:p></o:p></span></p>
+perspective). The most common way is to fix the center of projection (COP) and rotate your camera while capturing photos.  <o:p></o:p></span></p>
 
 <p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'>The
-easiest way to acquire pictures is using a digital camera. Make sure to use the
-highest resolution setting (important for homography calculation; you can
-always downsample it later). Matlab&#8217;s </span><span style='font-size:10.0pt;
-font-family:Courier'>imread</span><span style='font-size:10.0pt;font-family:
-Helvetica'> can take most popular image formats; use unix </span><span
-style='font-size:10.0pt;font-family:Courier'>convert</span><span
-style='font-size:10.0pt;font-family:Helvetica'> for the more obscure ones. <o:p></o:p></span></p>
 
 <p class=MsoNormal><a name=scanner><span style='font-size:10.0pt;font-family:
 Helvetica'><o:p>&nbsp;</o:p></span></a></p>
@@ -581,16 +567,6 @@ we recommend: <o:p></o:p></span></span></p>
      artistic reasons).<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></span></li>
  <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
      mso-list:l5 level1 lfo6;tab-stops:list .5in'><span style='mso-bookmark:
-     scanner'><span style='font-size:10.0pt;font-family:Helvetica'>Use
-     identical aperture &amp; exposure settings, if possible. On most
-     &quot;idiot cameras&quot; you don't have control of this, unfortunately.
-     It's nice to use identical exposures so that the images will have
-     identical brightness in the overlap region. <o:p></o:p></span></span></li>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     mso-list:l5 level1 lfo6;tab-stops:list .5in'><span style='mso-bookmark:
-     scanner'><span style='font-size:10.0pt;font-family:Helvetica'> You can use your smartphone camera, but please make sure the camera setting does not change. To do this, you can use exposure and focus locking (AE/AF) (e.g. in iPhone, you can press and hold to do this). You can also use a camera app. Please check the EXIF data of the photos once they are taken. <o:p></o:p></span></span></li>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     mso-list:l5 level1 lfo6;tab-stops:list .5in'><span style='mso-bookmark:
      scanner'><span style='font-size:10.0pt;font-family:Helvetica'>Overlap the
      fields of view significantly. 40% to 70% overlap is recommended. Too
      little overlap makes registration harder. <o:p></o:p></span></span></li>
@@ -598,12 +574,6 @@ we recommend: <o:p></o:p></span></span></p>
      mso-list:l5 level1 lfo6;tab-stops:list .5in'><span style='mso-bookmark:
      scanner'><span style='font-size:10.0pt;font-family:Helvetica'>It's OK to
      vary the zoom (change focal length) between pictures. <o:p></o:p></span></span></li>
- <li class=MsoNormal style='mso-margin-top-alt:auto;mso-margin-bottom-alt:auto;
-     mso-list:l5 level1 lfo6;tab-stops:list .5in'><span style='mso-bookmark:
-     scanner'><span style='font-size:10.0pt;font-family:Helvetica'>If you're
-     shooting a non-planar scene, then shoot pictures from the same position
-     (turn camera, but don't translate it). A tripod can help in this,
-     particularly if objects are close. <o:p></o:p></span></span></li>
 </ul>
 
 <p><span style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:
@@ -611,10 +581,6 @@ Helvetica'>Good scenes are: building interiors with lots of detail, inside a
 canyon or forest, tall waterfalls, panoramas. The mosaic can extend
 horizontally, vertically, or can tile a sphere. You might want to shoot several
 such image sets and choose the best. <o:p></o:p></span></span></p>
-
-<p><span style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:
-Helvetica'>Shoot and digitize your pictures early - leave time to re-shoot in
-case they don't come out! <o:p></o:p></span></span></p>
 
 <h3><span style='mso-bookmark:scanner'><span style='font-size:10.0pt;
 font-family:Helvetica'>Recover Homographies<o:p></o:p></span></span></h3>
@@ -672,18 +638,7 @@ providing point matches is with a mouse-clicking interface.<span
 style='mso-spacerun:yes'>  </span>You can write your own using the bare-bones </span></span><span
 style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:Courier'>ginput</span></span><span
 style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:Helvetica'>
-function.<span style='mso-spacerun:yes'>  </span>Or you can use a nifty (but often
-flaky). You can also use tools like Gimp or Photoshop to read off the pixel coordinates of the mouse cursor.  </span></span><span style='mso-bookmark:scanner'><span style='font-size:
-10.0pt;font-family:Courier'>cpselect</span></span><span style='mso-bookmark:
-scanner'><span style='font-size:10.0pt;font-family:Helvetica'>.<span
-style='mso-spacerun:yes'>  </span>After defining the correspondences by hand,
-it&#8217;s often useful to fine-tune them automatically.<span
-style='mso-spacerun:yes'>  </span>This can be done by SSD or
-normalized-correlation matching of the patches surrounding the clicked points
-in the two images (see </span></span><span style='mso-bookmark:scanner'><span
-style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Helvetica'>cpcorr</span></span><span
-style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:Helvetica'>),
-although sometimes it can produce undesirable results.<span
+function, or use the one that we provided in project 3. </span></span><span style='mso-bookmark:scanner'><span
 style='mso-spacerun:yes'>  </span><o:p></o:p></span></span></p>
 
 <p class=MsoNormal><span style='mso-bookmark:scanner'><span style='font-size:
@@ -700,7 +655,7 @@ normal'><span style='font-size:10.0pt;font-family:Helvetica'>Warp the Images<o:p
 
 <p class=MsoNormal><span style='mso-bookmark:scanner'><span style='font-size:
 10.0pt;font-family:Helvetica'>Now that you know the parameters of the
-homography, you need to warp your images using this homography. Write a
+homography, you can use this homography to warp each image towards the reference image. Write a
 function of the form:<o:p></o:p></span></span></p>
 
 <p class=MsoNormal><span style='mso-bookmark:scanner'><span style='font-size:
@@ -722,10 +677,9 @@ style='mso-spacerun:yes'>  </span>You can use either forward of inverse warping
 (but remember that for inverse warping you will need to compute H<sup> </sup>in
 the right &#8220;direction&#8221;). You will need to avoid aliasing when
 resampling the image.<span style='mso-spacerun:yes'>  </span>Consider using </span></span><span
-style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:Courier'>interp2</span></span><span
+style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:Courier'>scipy.interpolate.griddata</span></span><span
 style='mso-bookmark:scanner'><span style='font-size:10.0pt;font-family:Helvetica'>,
-and see if you can write the whole function without any loops,
-Matlab-style.<span style='mso-spacerun:yes'>  </span>One thing you need to pay
+and see if you can write the whole function without any loops (vectorized).<span style='mso-spacerun:yes'>  </span>One thing you need to pay
 attention to is the size of the resulting image (you can predict the bounding
 box by piping the four corners of the image through H, or use extra input
 parameters).<span style='mso-spacerun:yes'>  </span>Also pay attention to how
@@ -744,10 +698,8 @@ Rectification<o:p></o:p></span></b></span></p>
 10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></span></p>
 
 <p class=MsoNormal><span style='mso-bookmark:scanner'><span style='font-size:
-10.0pt;font-family:Helvetica'>Once you get this far, you should be able to
-&#8220;rectify&#8221; an image.<span style='mso-spacerun:yes'>   </span>Take a
-few sample images with some planar surfaces, and warp them so that the plane is
-frontal-parallel (e.g. the night street examples above).<span
+10.0pt;font-family:Helvetica'>Once you get this far, you should be able to test all of your code by performing
+&#8220;rectification&#8221; on an image.<span style='mso-spacerun:yes'>   </span>Take a photo containing paintings, posters, or any other known rectangular objects and make one of them rectangular - using a homography. <span
 style='mso-spacerun:yes'>  </span>You should do this before proceeding further
 to make sure your homography/warping is working.<span
 style='mso-spacerun:yes'>  </span>Note that since here you only have one image
@@ -757,7 +709,7 @@ using something you know about the image.<span style='mso-spacerun:yes'>
 </span>E.g. if you know that the tiles on the floor are square, you can click
 on the four corners of a tile and store them in im1_pts while im2_pts you
 define by hand to be a square, e.g.<span style='mso-spacerun:yes'>  </span>[0
-0; 0 1; 1 0; 1 1].<o:p></o:p></span></span></p>
+0; 0 1; 1 0; 1 1]. This is a deliverable. <o:p></o:p></span></span></p>
 
 <p class=MsoNormal><span style='mso-bookmark:scanner'><span style='font-size:
 10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></span></p>
@@ -809,17 +761,6 @@ should be enough.
 <p />
 <p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'>At least one of your mosaics must be from outside the Berkeley campus. Cross the bridge to SF! Hike through Tilden Park!
     <o:p></o:p></span></p> -->
-<p class=MsoNormal>&nbsp;</p>
-<p class=MsoNormal>&nbsp;</p>
-<p class=MsoNormal1><b style='mso-bidi-font-weight:normal'><span
-style='font-size:10.0pt;font-family:Helvetica'>Tell us what you've learned
-      <o:p></o:p>
-</span></b></p>
-<p class=MsoNormal1><span style='font-size:10.0pt;font-family:Helvetica'>
-  <o:p>&nbsp;</o:p>
-</span></p>
-<p class=MsoNormal1 style="font-family: Helvetica; font-size: 10.0pt">Whats the most important/coolest thing you have learned from this part?</p>
-<p class=MsoNormal>&nbsp;</p>
 
 <p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
 
@@ -891,80 +832,6 @@ style='font-size:10.0pt;font-family:Helvetica'>Bells &amp; Whistles<o:p></o:p></
 <p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
 
 <p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
-style='font-size:10.0pt;font-family:Helvetica'>Appendix<o:p></o:p></span></b></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
-style='font-size:10.0pt;font-family:Helvetica'>Video Processing:<span
-style='mso-spacerun:yes'>  </span></span></b><span style='font-size:10.0pt;
-font-family:Helvetica'>Processing video in Matlab is a bit tricky.<span
-style='mso-spacerun:yes'>  </span>Theoretically, there is </span><span
-style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Helvetica'>aviread</span><span
-style='font-size:10.0pt;font-family:Helvetica'> but, under linux, it will only
-ready uncompressed AVIs. <span style='mso-spacerun:yes'> </span>Most current
-digital cameras produce video in DV AVI format.<span style='mso-spacerun:yes'>
-</span>One way to deal with this is to splice up the video into individual
-frames and then read them into Matlab one by one.<span
-style='mso-spacerun:yes'>  </span>On the graphics cluster, you can do (some
-variant of) the following to produce the frames from a video:<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Courier;
-mso-bidi-font-family:Helvetica'>mplayer -vo jpeg -jpeg quality=100 -fps 30
-mymovie.avi<o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Courier;
-mso-bidi-font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'>Also
-note that handling video is a time-consuming thing (not just for you, but for
-the computer as well).<span style='mso-spacerun:yes'>  </span>If you shoot a
-minute of video, that&#8217;s already 60*30=1800 images!<span
-style='mso-spacerun:yes'>  </span>So, start early and don&#8217;t be afraid to
-let Matlab crunch numbers overnight.<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><o:p>&nbsp;</o:p></span></p>
-
-<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
-style='font-size:10.0pt;font-family:Helvetica'>Extracting camera
-parameters:<span style='mso-spacerun:yes'>  </span></span></b><span
-style='font-size:10.0pt;font-family:Helvetica'>For producing cylindrical or
-spherical mosaics, you will need to know more about your camera.<span
-style='mso-spacerun:yes'>  </span>The most important thing to know is the focal
-length f (in pixels, not mm).<span style='mso-spacerun:yes'>  </span>One way to
-obtain an educated guess about this value is to use the <a
-href="http://www.digital-photo-secrets.com/tip/38/what-is-exif/">EXIF
-data field</a> associated with images produced by most digital cameras.<span
-style='mso-spacerun:yes'>  </span>There are several programs for extracting
-EXIF data from a JPG image, such as <a
-href="http://www.tawbaware.com/exifread.htm">this one</a>. EXIF&#8217;s </span><span
-style='font-size:10.0pt;font-family:Courier;mso-bidi-font-family:Helvetica'>FocalLength</span><span
-style='font-size:10.0pt;font-family:Helvetica'> gives you focal length in mm,
-so you will also need to know the pixel density (see </span><span
-style='font-size:10.0pt;font-family:Courier'>FocalPlaneXResolution</span><span
-style='font-size:10.0pt;font-family:Helvetica'> and<span
-style='mso-spacerun:yes'>  </span></span><span style='font-size:10.0pt;
-font-family:Courier;mso-bidi-font-family:Helvetica'>FocalPlaneYResolution</span><span
-style='font-size:10.0pt;font-family:Courier'>, </span><span style='font-size:
-10.0pt;font-family:Helvetica'>but it&#8217;s usually in inches). <span style='mso-spacerun:yes'>
-</span>Note that this is only an estimate (in reality, due to different lenses,
-etc each particular camera (even of the same model!) will have slightly
-different parameters.<span style='mso-spacerun:yes'>  </span></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'>Besides
-the focal length, other useful things to know are the optical center of the
-camera (for nothing better, assume it&#8217;s at the center of the image), and
-the distortion coefficients of the lens, k1 and k2.<span
-style='mso-spacerun:yes'>  </span>As a very simple hack, take a picture with
-lots of straight lines, hold k2=0 and try to find k1 that makes the lines in
-the image straight.<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
-
-<p class=MsoNormal><span style='font-size:10.0pt;font-family:Helvetica'><span
-style='mso-spacerun:yes'>   </span><o:p></o:p></span></p>
 
 </div>
 
