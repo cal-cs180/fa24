@@ -19,7 +19,7 @@ def get_harris_corners(im, edge_discard=20):
 
     # find harris corners
     h = corner_harris(im, method='eps', sigma=1)
-    coords = peak_local_max(h, min_distance=1, indices=True)
+    coords = peak_local_max(h, min_distance=1)
 
     # discard points on edge
     edge = edge_discard  # pixels
