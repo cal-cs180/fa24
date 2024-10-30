@@ -1,0 +1,163 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>CS180: Intro to Computer Vision and Computational Photography</title>
+    <link rel="StyleSheet" href="../style.css" type="text/css" media="all" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true
+          }
+        };
+      </script>
+
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+        
+    <style>
+      code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.image-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  max-width: 200px;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+}
+
+.image-container p {
+  text-align: center;
+  margin-top: 10px;
+}
+      /* Two image containers */
+      .column {
+        float: left;
+        width: 45%;
+        padding: 5px;
+      }
+
+      /* Clear floats after image containers */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+    </style>
+  </head>
+  <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
+    <h1>
+      <img
+        src="assets/ucbseal.png"
+        alt="berkeley logo"
+        height="75"
+        width="75"
+      />Programming Project #5 (<tt>proj5</tt>)<br />
+      <a href="https://cal-cs180.github.io/fa23/index.html"
+        >CS180: Intro to Computer Vision and Computational Photography
+      </a>
+    </h1>
+    <div class="image-container">
+      <div>
+        <img src="assets/reading.png" alt="Lion">
+        <p>reading between the lions</p>
+      </div>
+      <div>
+        <img src="assets/baby.png" alt="Baby">
+        <p>bear with me</p>
+      </div>
+      <div>
+        <img src="assets/skull.png" alt="Skull">
+        <p>a lithograph of a skull</p>
+      </div>
+    </div>
+    <div>
+      <video id="video5" width="640" height="320" muted style="display: block; margin-left: auto; margin-right: auto;">
+        <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
+      </video>
+    </div>
+
+    <br />
+    <h1 style="text-align: center">Diffusion Models!</h1>
+    <h2 style="text-align: center">
+      <b style="color: red">Part A Due: 11/06/24 11:59pm</b>
+      <br />
+      <b style="color: red">Part B Due: 11/18/24 11:59pm</b>
+    </h2>
+    <h4 style="text-align: center">
+      <b
+        >We recommend using GPUs from
+        <a href="https://colab.research.google.com/">Colab</a> to finish this
+        project!</b
+      >
+    </h4>
+
+    <h2>Overview</h2>
+    In this project you will implement and deploy diffusion models for
+    conditional image generation. It is divided into two parts
+    <b>with two separate due dates</b> (see below).
+
+    <h2>Deliverables</h2>
+    There are several due dates:
+    <ol>
+      <li>
+        <b style="color: red">Nov. 06 2024</b>: Code and project webpage for
+        <a href="parta.html">the first part</a> should be complete and submitted
+        to gradescope, along with any bells and whistles. Late days will be
+        counted the usual way. If you turn in the first part late, late days
+        will be used.
+      </li>
+      <li>
+        <b style="color: red">Nov. 18 2024</b>: Code and project webpage for
+        <a href="partb.html">the second part</a> should be complete and
+        submitted to gradescope, along with any bells and whistles. Note: the
+        webpage for part 2 should be the same as the webpage for part 1, you
+        should append your results to the webpage for part 1.
+      </li>
+    </ol>
+  </body>
+  <grammarly-desktop-integration
+    data-grammarly-shadow-root="true"
+  ></grammarly-desktop-integration>
+  <script>
+    window.addEventListener('load', function() {
+      var videos = document.querySelectorAll('video');
+      videos.forEach(function(video) {
+        video.play();
+      });
+    });
+  </script>
+</html>
