@@ -91,18 +91,20 @@
     </h1>
     <div class="image-container">
       <div>
-        <img src="assets/reading.png" alt="Lion">
-        <p>reading between the lions</p>
+        <img src="assets/reading.png" alt="Reading">
+        <p>Reading Between the Lions</p>
       </div>
       <div>
-        <img src="assets/baby.png" alt="Baby">
-        <p>bear with me</p>
+        <img src="assets/man_wearing_hat.png" alt="Man Wearing Hat">
+        <p>A Man Wearing a Hat</p>
       </div>
       <div>
-        <img src="assets/skull.png" alt="Skull">
-        <p>a lithograph of a skull</p>
+        <img src="assets/goldenbear_dancing.png" alt="Bear Dancing">
+        <p>A Golden Bear Dancing</p>
       </div>
     </div>
+
+
     <br />
     <h1 style="text-align: center">Part A: The Power of Diffusion Models!</h1>
     <h3 style="text-align: center;">The first part of a <a
@@ -172,15 +174,20 @@
         At the end of part A of the project, we provide you code if you want to
         try your own text prompts.</p>
 
-      <h3>Deliverable: </h3>
-      In the notebook, we instantiate DeepFloyd's <code>stage_1</code> and
-      <code>stage_2</code> objects used for generation, as well as several text
-      prompts for sample generation.
+        <p>
+          In the notebook, we instantiate DeepFloyd's <code>stage_1</code> and
+          <code>stage_2</code> objects used for generation, as well as several text
+          prompts for sample generation.
+        </p>
+
+      <b>Deliverables </b>
+      
       <ul>
         <li>For the 3 text prompts that we provide, display the caption and the
           output of the model. Reflect on the quality of the outputs and their
           relationships to the text prompts. Make sure to try at least 2
           different <code>num_inference_steps</code> values.</li>
+          <li>Report the random seed that you're using here. You should use the same seed all subsequent parts.</li>
       </ul>
 
       <h1> Part 1: Sampling Loops</h1>
@@ -805,6 +812,10 @@
           <img src="assets/1.7_start_20.png" alt="Noisy Campanile at t=90">
           <p>SDEdit with <code>i_start=20</code></p>
         </div>
+        <div>
+          <img src="assets/campanile_resized.png" alt="Original Campanile">
+          <p>Campanile</p>
+        </div>
       </div>
       <h4>1.7.1 Editing Hand-Drawn and Web Images</h4>
       <p>We provide code in the notebook to
@@ -1118,14 +1129,14 @@
       reasons as above). We recommend that you use a gaussian blur of kernel size 33 and sigma 2.
     </p>
 
-    <h3>Deliverables</h3>
+    <b>Deliverables</b>
     <ul>
       <li>Correctly implemented <code>make_hybrids</code> function</li>
       <li>An image that looks like a <code>skull</code> from far away but a <code>waterfall</code> from close up</li>
       <li>2 more hybrid images of your choosing.</li>
     </ul>
 
-    Hints
+    <b>Hints</b>
     <ul>
       <li>use torchvision.transforms.functional.gaussian_blur. The
         documentation can be found <a

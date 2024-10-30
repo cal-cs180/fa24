@@ -132,7 +132,7 @@
       [1] Ronneberger, O., Fischer, P., & Brox, T. (2015). U-Net: Convolutional networks for biomedical image segmentation. In International Conference on Medical image computing and computer-assisted intervention (pp. 234-241). Springer, Cham.
     </p>
 
-    <h3>Deliverables</h3>
+    <b>Deliverables</b>
     <ul>
       <li> Implement the operations that we defined by following the previous figure closely.</li>
     </ul>
@@ -148,7 +148,7 @@
         <img src="assets/unet.png" alt="U-Net Architecture" height="500" style="display: block; margin-left: auto; margin-right: auto" />
         <p class="text">Figure 2: Unconditional UNet</p>
     </div>
-    <h3>Deliverables</h3>
+    <b>Deliverables</b>
     <ul>
       <li> Implement the UNet by following the figure above.</li>
     </ul>
@@ -511,42 +511,39 @@ $$\implies \mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}(\mathbf{x}_t - \frac{1 -
   Note: you do not need to generate gifs (this can be done as B&W below).
 <p class="text">
 </p>
-<div class="image-container">
-  <div>
+<!-- First row with 2 videos -->
+<div class="image-container" style="justify-content: center;">
+  <div style="width: 100%;">
     <p style="text-align: left;">Epoch 1</p>
-    <video id="video1" width="640" height="320" muted loop style="display: block; margin-left: 0;">
+    <video id="video1" width="100%" muted loop style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch1.mp4" />
     </video>
   </div>
-</div>
-<div class="image-container">
-  <div>
+  <div style="width: 50%;">
     <p style="text-align: left;">Epoch 5</p>
-    <video id="video2" width="640" height="320" muted loop style="display: block; margin-left: 0;">
+    <video id="video2" width="100%" muted loop style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch5.mp4" />
     </video>
   </div>
 </div>
-<div class="image-container">
-  <div>
+
+<!-- Second row with 3 videos -->
+<div class="image-container" style="justify-content: center; margin-top: 20px;">
+  <div style="width: 100%;">
     <p style="text-align: left;">Epoch 10</p>
-    <video id="video3" width="640" height="320" muted loop style="display: block; margin-left: 0;">
+    <video id="video3" width="100%" muted loop style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch10.mp4" />
     </video>
   </div>
-</div>
-<div class="image-container">
-  <div>
+  <div style="width: 100%;">
     <p style="text-align: left;">Epoch 15</p>
-    <video id="video4" width="640" height="320" muted loop style="display: block; margin-left: 0;">
+    <video id="video4" width="100%" muted loop style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch15.mp4" />
     </video>
   </div>
-</div>
-<div class="image-container">
-  <div>
+  <div style="width: 100%;">
     <p style="text-align: left;">Epoch 20</p>
-    <video id="video5" width="640" height="320" muted loop style="display: block; margin-left: 0;">
+    <video id="video5" width="100%" muted loop style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
     </video>
   </div>
