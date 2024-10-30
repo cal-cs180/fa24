@@ -4,14 +4,18 @@
     <title>CS180: Intro to Computer Vision and Computational Photography</title>
     <link rel="StyleSheet" href="../style.css" type="text/css" media="all" />
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
 
     <script>
       hljs.initHighlightingOnLoad();
     </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>
         MathJax = {
           tex: {
@@ -25,7 +29,7 @@
     <script>
       hljs.initHighlightingOnLoad();
     </script>
-        
+
     <style>
       code {
             background-color: #f4f4f4;
@@ -78,10 +82,12 @@
       }
     </style>
   </head>
-  <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
+  <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed>
     <h1>
-      <img src="assets/ucbseal.png" alt="berkeley logo" height="75" width="75" />Programming Project #5 (<tt>proj5</tt>)<br />
-      <a href="https://cal-cs180.github.io/fa23/index.html">CS180: Intro to Computer Vision and Computational Photography </a>
+      <img src="assets/ucbseal.png" alt="berkeley logo" height="75"
+        width="75" />Programming Project #5 (<tt>proj5</tt>)<br />
+      <a href="https://cal-cs180.github.io/fa24/index.html">CS180: Intro to
+        Computer Vision and Computational Photography </a>
     </h1>
     <div class="image-container">
       <div>
@@ -99,36 +105,1053 @@
     </div>
     <br />
     <h1 style="text-align: center">Part A: The Power of Diffusion Models!</h1>
-    <h3 style="text-align: center;">The first part of a <a href="./index.html">larger project</a>.</h3>
+    <h3 style="text-align: center;">The first part of a <a
+        href="./index.html">larger project</a>.</h3>
     <h2 style="text-align: center">
-      <b style="color: red;">Due: 11/06/24 11:59pm</b>
+      <b style="color: red;">Due: 11/07/24 11:59pm</b>
     </h2>
     <h4 style="text-align: center">
-      <b>We recommend using GPUs from <a href="https://colab.research.google.com/">Colab</a> to finish this project!</b>
+      <b>We recommend using GPUs from <a
+          href="https://colab.research.google.com/">Colab</a> to finish this
+        project!</b>
     </h4>
 
     <h2>Overview</h2>
-    <p>In part A you will use an off-the-shelf, pretrained text-to-image diffusion model to generate images from text prompts. Instructions can be found below and in the <a href="./parta.html">provided notebook</a>.</p>
+    <p>In part A you will play around with diffusion models, implement diffusion
+      sampling loops, and use them for other tasks such as inpainting and
+      creating optical illusions.
+      Instructions can be found below and in the <a href="./parta.html">provided
+        notebook</a>.</p>
 
-    <p>Because part A is simply to get your feet wet with pre-trained diffusion models, all deliverables should be completed in <a href="./parta.html">this notebook</a>. You will still submit a webpage with your results.</p>
+    <p>Because part A is simply to get your feet wet with pre-trained diffusion
+      models, all deliverables should be completed in the notebook. You will
+      still submit a webpage with your results.</p>
 
     <h1> Part 0: Setup</h1>
     <h3>Gaining Access to DeepFloyd</h3>
-  <p class="text">
-    We are going to use the <a href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">DeepFloyd IF</a> diffusion model. DeepFloyd is a two stage model trained by Stability AI. The first stage produces images of size $64 \times 64$ and the second stage takes the outputs of the first stage and generates images of size $256 \times 256$. Before using DeepFloyd, you must accept its usage conditions. To do so:
-  </p>
-  <ol>
-    <li>Make a <a href="https://huggingface.co/join">Hugging Face account</a> and log in.</li>
-    <li>Accept the license on the model card of <a href="https://huggingface.co/DeepFloyd/IF-I-XL-v1.0">DeepFloyd/IF-I-XL-v1.0</a>. Accepting the license on the stage I model card will auto accept for the other IF models.</li>
-    <li>Log in locally by entering your <a href="https://huggingface.co/docs/hub/security-tokens#what-are-user-access-tokens">Hugging Face Hub access token</a> below. You should be able to find and create tokens <a href="https://huggingface.co/settings/tokens">here</a>.</li>
-  </ol>
-  <b>Deliverable: </b> 
-  <ul>
-    <li>Display the output of the model when run with the provided text embeddings. Reflect on the quality of the outputs and their relationships to the text prompts.</li>
-  </ul>
-  <h3>Using your own Prompts</h3>
-  Due to memory constraints on Colab, we have pre-computed a set of text embeddings for you to try. If you'd like to compute your own, you can do so as shown below:
-  <pre><code class="python">
+    <p class="text">
+      We are going to use the <a
+        href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">DeepFloyd
+        IF</a> diffusion model.
+      DeepFloyd is a two stage model trained by Stability AI.
+      The first stage produces images of size $64 \times 64$ and the second
+      stage takes the outputs of the first stage and generates images of size
+      $256 \times 256$.
+      Before using DeepFloyd, you must accept its usage conditions. To do so:
+    </p>
+    <ol>
+      <li>Make a <a href="https://huggingface.co/join">Hugging Face account</a>
+        and log in.</li>
+      <li>Accept the license on the model card of <a
+          href="https://huggingface.co/DeepFloyd/IF-I-XL-v1.0">DeepFloyd/IF-I-XL-v1.0</a>.
+        Accepting the license on the stage I model card will auto accept for the
+        other IF models.</li>
+      <li>Log in locally by entering your <a
+          href="https://huggingface.co/docs/hub/security-tokens#what-are-user-access-tokens">Hugging
+          Face Hub access token</a> below. You should be able to find and create
+        tokens <a href="https://huggingface.co/settings/tokens">here</a>.</li>
+    </ol>
+    <h3>Disclaimer about Text Embeddings</h3>
+    <p>DeepFloyd was trained as a text-to-image model, which takes text prompts
+      as input and outputs images that are aligned with the text.
+      Throughout this notebook, you will see that we ask you to generate with
+      the prompt "a high quality photo".
+      We want you to think of this as a "null" prompt that doesn't have any
+      specific meaning, and is simply a way for the model to do unconditional
+      generation.
+      You can view this as using the diffusion model to "force" a noisy image
+      onto the "manifold" of real images.
+
+      <h3>Downloading Precomputed Text Embeddings </h3>
+      <p>Because the text encoder is very large, and barely fits on a free tier
+        Colab GPU, we have precomputed a couple of text embeddings for you to
+        try.
+        You can download the <code>.pth</code> file <a
+          href="prompt_embeds_dict.pth" download>here</a>.
+        This should hopefully save some headaches from GPU out of memory errors.
+        At the end of part A of the project, we provide you code if you want to
+        try your own text prompts.</p>
+
+      <h3>Deliverable: </h3>
+      In the notebook, we instantiate DeepFloyd's <code>stage_1</code> and
+      <code>stage_2</code> objects used for generation, as well as several text
+      prompts for sample generation.
+      <ul>
+        <li>For the 3 text prompts that we provide, display the caption and the
+          output of the model. Reflect on the quality of the outputs and their
+          relationships to the text prompts. Make sure to try at least 2
+          different <code>num_inference_steps</code> values.</li>
+      </ul>
+
+      <h1> Part 1: Sampling Loops</h1>
+      In this part of the problem set, you will write your own "sampling loops"
+      that use the pretrained DeepFloyd denoisers.
+      These should produce high quality images such as the ones generated above.
+
+      <p class="text">
+        You will then modify these sampling loops to solve different tasks such
+        as inpainting or producing optical illusions.
+      </p>
+
+      <h3>Diffusion Models Primer</h3>
+      <div style="text-align: center;">
+        <img src="assets/ddpm_markov.png" alt="DDPM Markov Chain"
+          style="width: 50vw; display: block; margin-left: auto; margin-right: auto" />
+      </div>
+
+      <p class="text">
+        Starting with a clean image, $x_0$, we can iteratively add noise to an
+        image, obtaining progressively more and more noisy versions of the
+        image, $x_t$, until we're left with basically pure noise at timestep
+        $t=T$. When $t=0$, we have a clean image, and for larger $t$ more noise
+        is in the image.
+      </p>
+      <p class="text">
+        A diffusion model tries to reverse this process by denoising the image.
+        By giving a diffusion model a noisy $x_t$ and the timestep $t$, the
+        model predicts the noise in the image. With the predicted noise, we can
+        either completely remove the noise from the image, to obtain an estimate
+        of $x_0$, or we can remove just a portion of the noise, obtaining an
+        estimate of $x_{t-1}$, with slightly less noise.
+      </p>
+      <p class="text">
+        To generate images from the diffusion model (sampling), we start with
+        pure noise at timestep $T$ sampled from a gaussian distribution, which
+        we denote $x_T$. We can then predict and remove part of the noise,
+        giving us $x_{T-1}$. Repeating this process until we arrive at $x_0$
+        gives us a clean image. For the DeepFloyd models, $T = 1000$. The exact
+        amount of noise added at each step is dictated by hyperparameters, 𝛼¯𝑡
+        , which were chosen by the people who trained DeepFloyd.
+      </p>
+
+      <h3>1.1 Implementing the Forward Process</h3>
+      <p class="text">
+        A key part of diffusion is the forward process, which takes a clean
+        image and adds noise to it. In this part, we will write a function to
+        implement this. The forward process is defined by:
+      </p>
+      <p class="text">
+        $$q(x_t | x_0) = N(x_t ; \sqrt{\bar\alpha} x_0, (1 -
+        \bar\alpha_t)\mathbf{I})\tag{1}$$
+      </p>
+      <p class="text">
+        which is equivalent to computing
+        $$ x_t = \sqrt{\bar\alpha_t} x_0 + \sqrt{1 - \bar\alpha_t} \epsilon
+        \quad \text{where}~ \epsilon \sim N(0, 1) \tag{2}$$
+        That is, given a clean image $x_0$, we get a noisy image $ x_t $ at
+        timestep $t$ by sampling from a Gaussian with mean $ \sqrt{\bar\alpha_t}
+        x_0 $ and variance $ (1 - \bar\alpha_t) $.
+        Note that the forward process is not just adding noise -- we also scale
+        the image.
+      </p>
+      <p class="text">
+        You will need to use the <code>alphas_cumprod</code> variable, which
+        contains the $\bar\alpha_t$ for all $t \in [0, 999]$.
+        Remember that $t=0$ corresponds to a clean image, and larger $t$
+        corresponds to more noise.
+        Thus, $\bar\alpha_t$ is close to 1 for small $t$, and close to 0 for
+        large $t$. The test image of the Campanile can be downloaded at <a
+          href="assets/campanile.jpg" download>here</a>, which you should then
+        resize to 64x64.
+        Run the forward process on the test image with $t \in [250, 500, 750]$
+        and display the results. You should get progressively more noisy images.
+      </p>
+      <p class="text">
+        <b>Deliverables</b>
+      </p>
+      <ul>
+        <li>Implement the <code>noisy_im = forward(im, t)</code> function</li>
+        <li> Show the test image at noise level [250, 500, 750].</li>
+      </ul>
+      <p class="text">
+        <b>Hints</b>
+      </p>
+      <ul>
+        <li>The <code>torch.randn_like</code> function is helpful for computing
+          $\epsilon$.</li>
+        <li>Use the <code>alphas_cumprod</code> variable, which contains an
+          array of the hyperparameters, with <code>alphas_cumprod[t]</code>
+          corresponding to $\bar\alpha_t$.</li>
+      </ul>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/campanile_resized.png" alt="Berkeley Campanile">
+          <p>Berkeley Campanile</p>
+        </div>
+        <div>
+          <img src="assets/1.2_noisy_250.png" alt="Noisy Campanile at t=250">
+          <p>Noisy Campanile at t=250</p>
+        </div>
+        <div>
+          <img src="assets/1.2_noisy_500.png" alt="Noisy Campanile at t=500">
+          <p>Noisy Campanile at t=500</p>
+        </div>
+        <div>
+          <img src="assets/1.2_noisy_750.png" alt="Noisy Campanile at t=750">
+          <p>Noisy Campanile at t=750</p>
+        </div>
+      </div>
+
+      <h3>1.2 Classical Denoising</h3>
+      <p class="text">
+        Let's try to denoise these images using classical methods.
+        Again, take noisy images for timesteps [250, 500, 750], but use
+        <b>Gaussian blur filtering</b> to try to remove the noise.
+        Getting good results should be quite difficult, if not impossible.
+      </p>
+
+      <b> Deliverables </b>
+      <ul>
+        <li>For each of the 3 noisy test images from the previous part, show
+          your best Gaussian-denoised version side by side.</li>
+      </ul>
+
+      <b>Hint:</b>
+      <ul>
+        <li> <code>torchvision.transforms.functional.gaussian_blur</code> is
+          useful. Here is the <a
+            href="https://pytorch.org/vision/0.16/generated/torchvision.transforms.functional.gaussian_blur.html">documentation</a>.</li>
+      </ul>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.2_noisy_250.png" alt="Noisy Campanile at t=250">
+          <p>Noisy Campanile at t=250</p>
+        </div>
+        <div>
+          <img src="assets/1.2_noisy_500.png" alt="Noisy Campanile at t=500">
+          <p>Noisy Campanile at t=500</p>
+        </div>
+        <div>
+          <img src="assets/1.2_noisy_750.png" alt="Noisy Campanile at t=750">
+          <p>Noisy Campanile at t=750</p>
+        </div>
+      </div>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.2_gaussianblur_250.png"
+            alt="Gaussian Blur at t=250">
+          <p>Gaussian Blur Denoising at t=250</p>
+        </div>
+        <div>
+          <img src="assets/1.2_gaussianblur_500.png"
+            alt="Gaussian Blur Denoising at t=500">
+          <p>Gaussian Blur Denoising at t=500</p>
+        </div>
+        <div>
+          <img src="assets/1.2_gaussianblur_750.png"
+            alt="Gaussian Blur Denoising at t=750">
+          <p>Gaussian Blur Denoising at t=750</p>
+        </div>
+      </div>
+
+      <h3>1.3 One-Step Denoising</h3>
+
+      <p class="text">
+        Now, we'll use a pretrained diffusion model to denoise. The actual
+        denoiser can be found at <code>stage_1.unet</code>.
+        This is a UNet that has already been trained on a <i>very, very</i>
+        large dataset of $(x_0, x_t)$ pairs of images.
+        We can use it to recover Gaussian noise from the image. Then, we can
+        remove this noise to recover (something close to) the original image.
+        Note: this UNet is conditioned on the amount of Gaussian noise by taking
+        timestep $t$ as additional input.
+      </p>
+      <p class="text">
+        The diffusion model also needs a text prompt embedding.
+        We use <code>"a high quality photo"</code> as a suitable text prompt,
+        which you should use to condition the model with.
+      </p>
+      <p class="text">
+        For t = [250, 500, 750], please:
+      </p>
+      <ul>
+        <li>Using the UNet, denoise the 3 noisy images from 1.2 by estimating
+          the noise.</li>
+        <li>Estimate the noise in the new noisy image, by passing it through
+          <code>stage_1.unet</code></li>
+        <li>Remove the noise from the noisy image to obtain an estimate of the
+          original image. To do this, we can use equation 2 from part 1.1.</li>
+        <li>Visualize the original image, the noisy image, and the estimate of
+          the original image</li>
+      </ul>
+      <p class="text">
+        <b>Deliverables</b>
+      </p>
+      <ul>
+        <li>Show three noisy images at timestep [250, 500, 750]</li>
+        <li>For all 3 noisy images, show the diffusion model estimate of the
+          clean image</li>
+      </ul>
+
+      <p class="text">
+        <b>Hints</b>
+      </p>
+      <ul>
+        <li>You will probably have to wrangle tensors to the correct device and
+          into the correct data types. The functions <code>.to(device)</code>
+          and <code>.half()</code> will be useful. The denoiser is loaded as
+          <code>half</code> precision (to save memory).</li>
+        <li>The signature for the unet is <code>stage_1.unet(image, t,
+            encoder_hidden_states=prompt_embeds, return_dict=False)</code>. You
+          need to pass in the noisy image, the timestep, and the prompt
+          embeddings. The <code>return_dict</code> argument just makes the
+          output nicer.</li>
+        <li>The unet will output a tensor of shape (1, 6, 64, 64). This is
+          because DeepFloyd was trained to predict the noise as well as variance
+          of the noise. The first 3 channels is the noise estimate, which you
+          will use. The second 3 channels is the variance estimate which you may
+          ignore.</li>
+        <li>To save GPU memory, you should wrap all of your code in a <code>with
+            torch.no_grad():</code> context. This tells torch not to do
+          automatic differentiation, and saves a considerable amount of
+          memory.</li>
+      </ul>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.2_noisy_250.png" alt="Noisy Campanile at t=250">
+          <p>Noisy Campanile at t=250</p>
+        </div>
+        <div>
+          <img src="assets/1.2_noisy_500.png" alt="Noisy Campanile at t=500">
+          <p>Noisy Campanile at t=500</p>
+        </div>
+        <div>
+          <img src="assets/1.2_noisy_750.png" alt="Noisy Campanile at t=750">
+          <p>Noisy Campanile at t=750</p>
+        </div>
+      </div>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.3_estimate_250.png"
+            alt="Estimated Campanile at t=250">
+          <p>One-Step Denoised Campanile at t=250</p>
+        </div>
+        <div>
+          <img src="assets/1.3_estimate_500.png"
+            alt="Denoised Campanile at t=500">
+          <p>One-Step Denoised Campanile at t=500</p>
+        </div>
+        <div>
+          <img src="assets/1.3_estimate_750.png"
+            alt="Denoised Campanile at t=750">
+          <p>One-Step Denoised Campanile at t=750</p>
+        </div>
+      </div>
+
+      <h3>1.4 Iterative Denoising</h3>
+      <p class="text">
+        In part 1.3, you should see that the one-step estimate of the clean
+        image gets worse as you add more noise, but is still much better than
+        Gaussian blurring. This makes sense, as the problem is much harder with
+        more noise!
+      </p>
+
+      <p class="text">
+        But diffusion models are designed to denoise iteratively.
+        In this part we will implement this.
+      </p>
+      <p class="text">
+        In theory, we could start with noise $x_{1000}$ at timestep $T=1000$,
+        denoise for one step to get an estimate of $x_{999}$, and carry on until
+        we get $x_0$. But this would require running the diffusion model 1000
+        times, which is
+        quite slow.
+      </p>
+      <p class="text">
+        It turns out, we can actually speed things up by skipping steps. The
+        rationale for why this is possible is due to a connection with
+        differential equations. It's a tad complicated, and not within scope for
+        this course, but if you're interested you can check out <a
+          href="https://yang-song.net/blog/2021/score/">this excellent
+          article</a>.
+      </p>
+      <p class="text">
+        To skip steps we can create a new list of timesteps that we'll call
+        <code>strided_timesteps</code>, which does just this.
+        <code>strided_timesteps</code> will
+        correspond to the noisiest image (and thus the largest $t$) and
+        <code>strided_timesteps[-1]</code> will correspond to a clean image (and
+        thus $t =
+        0$). Here are conditions that <code>strided_timesteps</code> must
+        satisfy:
+      </p>
+
+      <ul>
+        <li>It must be <b>monotonically decreasing</b>. (Decreasing because we
+          are using the index of the list to indicate which step of denoising we
+          are on.)</li>
+        <li>It must start somewhere near 999, the largest timestep</li>
+        <li>It must end on 0, the timestep corresponding to a clean image</li>
+      </ul>
+
+      <p class="text">
+        On the <code>i</code>th denoising step we are at $ t = $
+        <code>strided_timesteps[i]</code>, and want to get to $ t' =$
+        <code>strided_timesteps[i+1]</code> (from more noisy to less noisy). To
+        actually do this, we have the following formula:
+      </p>
+
+      $$ x_{t'} = \frac{\sqrt{\bar\alpha_{t'}}\beta_t}{1 - \bar\alpha_t} x_0 +
+      \frac{\sqrt{\alpha_t}(1 - \bar\alpha_{t'})}{1 - \bar\alpha_t} x_t +
+      v_\sigma\tag{3}$$
+
+      <p class="text">
+        The alphas and betas are hyperparameters, and are defined as below:
+      </p>
+      <ul>
+        <li>$ \alpha_{\bar{t}} $ is defined by alphas_cumprod</li>
+        <li>$ \alpha_t = \frac{\alpha_{\bar{t}}}{\alpha_{\bar{t-1}}} $</li>
+        <li>$ \beta_t = 1 - \alpha_t $</li>
+      </ul>
+      (see equations 6 and 7 of the <a
+        href="https://arxiv.org/pdf/2006.11239">DDPM paper</a> for more
+      information)
+
+      <p class="text">
+        The $v_\sigma$ is random noise, which in the case of DeepFloyd is also
+        predicted.
+        The process to compute this is not very important, so we supply a
+        function, <code>add_variance</code>, to do this for you.
+      </p>
+
+      <p class="text">
+        Please implement the function <code>iterative_denoise(image,
+          i_start)</code>, which takes a noisy image <code>image</code>, as well
+        as a starting index <code>i_start</code>.
+        The function should denoise an image starting at timestep
+        <code>timestep[i_start]</code>, applying the above formula to obtain an
+        image at timestep <code>t_prev = timestep[i_start + 1]</code>, and
+        repeat iteratively until we arrive at a clean image.
+
+        Please add noise to the test image <code>im</code> to timestep
+        <code>timestep[10]</code>. Then run the <code>iterative_denoise</code>
+        function on the noisy image, with <code>i_start = 10</code>.
+      </p>
+
+      <p class="text">
+        <b>Deliverables</b>
+      </p>
+      <ul>
+        <li>The noisy image every 5th loop of denoising</li>
+        <li>The final predicted clean image, using iterative denoising</li>
+        <li>The predicted clean image using only a single denoising step, as was
+          done in the previous part. This should look much worse.</li>
+        <li>A completed <code>iterative_denoise</code> function</li>
+      </ul>
+
+      <b>Hints</b>
+      <ul>
+        <li>Remember, the unet will output a tensor of shape (1, 6, 64, 64).
+          This is because DeepFloyd was trained to predict the noise as well as
+          variance of the noise. The first 3 channels is the noise estimate,
+          which you will use here.
+          The second 3 channels is the variance estimate which you will pass to
+          the <code>add_variance</code> function</li>
+        <li>Read the documentation for the <code>add_variance</code> function to
+          figure out how to use it to add the $v_\sigma$ to the image.</li>
+      </ul>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.4_noisy_90.png" alt="Noisy Campanile at t=90">
+          <p>Noisy Campanile at t=90</p>
+        </div>
+        <div>
+          <img src="assets/1.4_noisy_240.png" alt="Noisy Campanile at t=240">
+          <p>Noisy Campanile at t=240</p>
+        </div>
+        <div>
+          <img src="assets/1.4_noisy_390.png" alt="Noisy Campanile at t=390">
+          <p>Noisy Campanile at t=390</p>
+        </div>
+        <div>
+          <img src="assets/1.4_noisy_540.png" alt="Noisy Campanile at t=540">
+          <p>Noisy Campanile at t=540</p>
+        </div>
+        <div>
+          <img src="assets/1.4_noisy_690.png" alt="Noisy Campanile at t=690">
+          <p>Noisy Campanile at t=690</p>
+        </div>
+      </div>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/campanile_resized.png"
+            alt="Original Campanile">
+          <p>Original</p>
+        </div>
+        <div>
+          <img src="assets/1.4_clean_iterative.png"
+            alt="Denoised Campanile at t=500">
+          <p>Iterative Denoised Campanile at t=500</p>
+        </div>
+        <div>
+          <img src="assets/1.4_clean_onestep.png"
+            alt="One-Step Denoised Campanile">
+          <p>One-Step Denoised Campanile</p>
+        </div>
+        <div>
+          <img src="assets/1.4_gaussianblur.png"
+            alt="Gaussian Blurred Campanile">
+          <p>Gaussian Blurred Campanile</p>
+        </div>
+      </div>
+
+      <h3>1.5 Diffusion Model Sampling</h3>
+      <p class="text">
+        In part 1.4, we use the diffusion model to denoise an image. Another
+        thing we can do with the <code>iterative_denoise</code> function is to
+        generate images from scratch. We can do this by setting <code>i_start =
+          0</code> and passing in random noise. This effectively denoises pure
+        noise. Please do this, and show 5 results of <code>"a high quality
+          photo"</code>.
+      </p>
+      <p class="text">
+        <b>Deliverables</b>
+        <ul>
+          <li>Show 5 sampled images.</li>
+        </ul>
+      </p>
+      <p class="text">
+        <b>Hints</b>
+      </p>
+      <ul>
+        <li>Use <code>torch.randn</code> to make the noise.</li>
+        <li>Make sure you move the tensor to the correct device and correct data
+          type by calling <code>.half()</code> and
+          <code>.to(device)</code>.</li>
+        <li>The quality of the images will not be spectacular, but should be
+          reasonable images.
+          We will fix this in the next section with CFG.</li>
+      </ul>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.5_1.png" alt="Noisy Campanile at t=90">
+          <p>Sample 1</p>
+        </div>
+        <div>
+          <img src="assets/1.5_2.png" alt="Sample 2">
+          <p>Sample 2</p>
+        </div>
+        <div>
+          <img src="assets/1.5_3.png" alt="Sample 3">
+          <p>Sample 3</p>
+        </div>
+        <div>
+          <img src="assets/1.5_4.png" alt="Sample 4">
+          <p>Sample 4</p>
+        </div>
+        <div>
+          <img src="assets/1.5_5.png" alt="Sample 5">
+          <p>Sample 5</p>
+        </div>
+      </div>
+
+      <h3>1.6 Classifier-Free Guidance (CFG)</h3>
+      <p class="text">
+        You may have noticed that the generated images in the prior section are
+        not very good, and some are completely non-sensical.
+        In order to greatly improve image quality (at the expense of image
+        diversity), we can use a technicque called <a
+          href="https://arxiv.org/abs/2207.12598">Classifier-Free Guidance</a>.
+      </p>
+      <p class="text">
+        In CFG, we compute both a conditional and an unconditional noise
+        estimate. We denote these $\epsilon_c$ and $\epsilon_u$.
+        Then, we let our new noise estimate be: $$\epsilon = \epsilon_u + \gamma
+        (\epsilon_c - \epsilon_u) \tag{4}$$
+        where $\gamma$ controls the strength of CFG. Notice that for $\gamma=0$,
+        we get an unconditional noise estimate, and for $\gamma=1$ we get the
+        conditional noise estimate.
+        The magic happens when $\gamma > 1$. In this case, we get much higher
+        quality images. Why this happens is still up to vigorous debate.
+        For more information on CFG, you can check out <a
+          href="https://sander.ai/2022/05/26/guidance.html">this blog post</a>.
+      </p>
+      <p class="text">
+        Please implement the <code>iterative_denoise_cfg</code> function,
+        identical to the <code>iterative_denoise</code> function but using
+        classifier-free guidance.
+        To get an unconditional noise estimate, we can just pass an empty prompt
+        embedding to the diffusion model (the model was trained to predict an
+        unconditional noise estimate when given an empty text prompt).
+      </p>
+      <p class="text">
+        <b>Disclaimer</b>
+        Disclaimer
+        Before, we used <code>"a high quality photo"</code> as a "null"
+        condition.
+        Now, we will use the actual <code>""</code> null prompt for
+        unconditional
+        guidance for CFG. In the later part, you should always use
+        <code>""</code>
+        null prompt for unconditional guidance and use <code>"a high quality
+          photo"</code> for unconditional generation.
+      </p>
+      <p class="text">
+        <b>Deliverables</b>
+        <ul>
+          <li>Implement the <code>iterative_denoise_cfg</code> function</li>
+          <li>Show 5 images of <code>"a high quality photo"</code> with a CFG
+            scale of $\gamma=7$.</li>
+        </ul>
+      </p>
+      <p class="text">
+        <b>Hints</b>
+      </p>
+      <ul>
+        <li>You will need to run the UNet twice, once for the conditional prompt
+          embedding, and once for the unconditional</li>
+        <li>The UNet will predict both a conditional and an unconditional
+          variance. Just use the conditional variance with the
+          <code>add_variance</code> function.</li>
+        <li>The resulting images should be much better than those in the prior
+          section.</li>
+      </ul>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.6_1.png" alt="Noisy Campanile at t=90">
+          <p>Sample 1 with CFG</p>
+        </div>
+        <div>
+          <img src="assets/1.6_2.png" alt="Sample 2">
+          <p>Sample 2 with CFG</p>
+        </div>
+        <div>
+          <img src="assets/1.6_3.png" alt="Sample 3">
+          <p>Sample 3 with CFG</p>
+        </div>
+        <div>
+          <img src="assets/1.6_4.png" alt="Sample 4">
+          <p>Sample 4 with CFG</p>
+        </div>
+        <div>
+          <img src="assets/1.6_5.png" alt="Sample 5">
+          <p>Sample 5 with CFG</p>
+        </div>
+      </div>
+
+      <h3>1.7 SDEdit: Image Editing</h3>
+      <p class="text">
+        In part 1.4, we take a real image, add noise to it, and then denoise.
+        This effectively allows us to translate from one image to another (or
+        "make an edit"). The more noise we add, the larger the edit will be.
+        This works because in order to denoise an image, the diffusion model
+        must to some extent "hallucinate" new things -- the model has to be
+        "creative." Another way to think about it is that the denoising process
+        "projects" a noisy image back to the "manifold" or "set" of real images.
+      </p>
+      <p class="text">
+        In this part, we're going to implement
+        <a href="https://sde-image-editing.github.io/">SDEdit</a>. Here, we're
+        going to take the original test image, noise it a little, and force it
+        back onto the image manifold without any conditioning. Effectively,
+        we're
+        going to get an image that is similar to the test image (with a
+        low-enough
+        noise level).
+      </p>
+      <p>Please run the forward process to get a noisy test image, and then run
+        the <code>iterative_denoise_cfg</code> function using a starting index
+        of
+        [1, 3, 5, 7, 10, 20] steps and show the results, labeled with the
+        starting
+        index. You should see a series of "edits" to the original image,
+        gradually matching the original image closer and closer.</p>
+      <b> Deliverables </b>
+      <ul>
+        <li>Edits of the test image, using the given prompt at noise levels [1,
+          3, 5, 7, 10, 20] with text prompt
+          <code>"a high quality photo"</code></li>
+        <li>Edits of 2 of your own test images, using the same procedure.</li>
+      </ul>
+      <p class="text">
+        Hints
+        <ul>
+          <li>You should have a range of images, gradually looking more like the
+            original image</li>
+        </ul>
+      </p>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.7_start_1.png" alt="Sample 5">
+          <p>SDEdit with <code>i_start=1</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_start_3.png" alt="Sample 4">
+          <p>SDEdit with <code>i_start=3</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_start_5.png" alt="Sample 3">
+          <p>SDEdit with <code>i_start=5</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_start_7.png" alt="Sample 2">
+          <p>SDEdit with <code>i_start=7</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_start_10.png" alt="Noisy Campanile at t=90">
+          <p>SDEdit with <code>i_start=10</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_start_20.png" alt="Noisy Campanile at t=90">
+          <p>SDEdit with <code>i_start=20</code></p>
+        </div>
+      </div>
+      <h4>1.7.1 Editing Hand-Drawn and Web Images</h4>
+      <p>We provide code in the notebook to
+        <ol>
+          <li>Process images to the correct format to give to the diffusion
+            model</li>
+          <li>Download images from the web</li>
+          <li>Draw your own images</li>
+        </ol>
+        Please find an image from the internet and apply edits exactly as above.
+        And also draw your own images, and apply edits exactly as above. Feel
+        free to copy the prior cell here. For drawing inspiration, you can check
+        out the examples on <a href="https://sde-image-editing.github.io/">this
+          project page</a>.
+      </p>
+
+      <p>
+        <b>Deliverables</b>
+        <ul>
+          <li>1 image from the web, edited using the above method for noise
+            levels [1, 3, 5, 7, 10, 20] (and whatever additional noise levels
+            you want)</li>
+          <li>2 hand drawn images, edited using the above method for noise
+            levels [1, 3, 5, 7, 10, 20] (and whatever additional noise levels
+            you want)</li>
+        </ul>
+
+        <b>Hints</b>
+        <ul>
+          <li>Unfortunately, the drawing interface is hardcoded to be 300x600
+            pixels, but we need a square image. The code will center crop, so
+            just draw in the middle of the canvas.</li>
+        </ul>
+      </p>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.7_avo_1.png" alt="Avocado at noise level 1">
+          <p>Avocado at <code>i_start=1</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_avo_3.png" alt="Avocado at noise level 3">
+          <p>Avocado at <code>i_start=3</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_avo_5.png" alt="Avocado at noise level 5">
+          <p>Avocado at <code>i_start=5</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_avo_7.png" alt="Avocado at noise level 7">
+          <p>Avocado at <code>i_start=7</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_avo_10.png" alt="Avocado at noise level 10">
+          <p>Avocado at <code>i_start=10</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7_avo_20.png" alt="Avocado at noise level 20">
+          <p>Avocado at <code>i_start=20</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7.1_avo_original.png" alt="Original Avocado">
+          <p>Original Avocado</p>
+        </div>
+      </div>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/1.7.1_house_1.png" alt="House at noise level 1">
+          <p>House at <code>i_start=1</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7.1_house_3.png" alt="House at noise level 3">
+          <p>House at <code>i_start=3</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7.1_house_5.png" alt="House at noise level 5">
+          <p>House at <code>i_start=5</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7.1_house_7.png" alt="House at noise level 7">
+          <p>House at <code>i_start=7</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7.1_house_10.png" alt="House at noise level 10">
+          <p>House at <code>i_start=10</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7.1_house_20.png" alt="House at noise level 20">
+          <p>House at <code>i_start=20</code></p>
+        </div>
+        <div>
+          <img src="assets/1.7.1_house_sketch_resized.png"
+            alt="House at noise level 20">
+          <p>Original House Sketch</p>
+        </div>
+      </div>
+
+      <h3>1.7.2 Inpainting</h3>
+      <p class="text">
+        Now, we will implement <a
+          href="https://arxiv.org/abs/2201.09865">RePaint</a>,
+        which uses diffusion models for inpainting. That is, given an image
+        $x_{orig}$, and a binary mask $\bf m$, we can create a new image that
+        has the same content where $\bf m$ is 0, but new content wherever $\bf
+        m$ is 1.
+      </p>
+      <p class="text">
+        To do this, we can run the diffusion denoising loop. But at every step,
+        after obtaining $x_t$, we "project" $x_t$ such that areas outside of the
+        mask aligns with the original image $x_{orig}$. To do this, we can use
+        the following update:
+      </p>
+      <p class="text">
+        $$ x_t \leftarrow \textbf{m} x_t + (1 - \textbf{m})
+        \text{forward}(x_{orig}, t) \tag{5}$$
+      </p>
+      <p class="text">
+        Essentially, we leave everything inside the edit mask alone, but we
+        replace everything outside the edit mask with our original image, with
+        the correct amount of noise added for timestep $t$. For more information
+        about this method, please see this <a
+          href="https://arxiv.org/abs/2201.09865">paper</a>.
+      </p>
+      <p class="text">
+        Please implement this below, and edit the picture to inpaint the top of
+        the Campanile.
+      </p>
+      <p class="text">
+        <b>Deliverables</b>
+
+        <ul>
+          <li>A properly implemented <code>inpaint</code> function</li>
+          <li>The test image edited with RePaint</li>
+          <li>2 of your own images edited with RePaint (come up with your own
+            mask)</li>
+        </ul>
+      </p>
+      <p class="text">
+        <b>Hints</b>
+      </p>
+      <ul>
+        <li>Reuse the <code>forward</code> function you implemented earlier to
+          implement inpainting</li>
+        <li>Because we are using the diffusion model for tasks it was not
+          trained for, you may have to run the sampling process a few times
+          before you get a nice result.</li>
+        <li>You can copy and paste your iterative_denoise_cfg function. To get
+          inpainting to work should only require (roughly) 1-2 additional lines
+          and a few small changes.</li>
+      </ul>
+
+      <div class="image-container">
+        <div>
+          <img src="assets/campanile_resized.png" alt="Resized Campanile">
+          <p>Campanile</p>
+        </div>
+        <div>
+          <img src="assets/1.7.2_mask.png" alt="Mask">
+          <p>Mask</p>
+        </div>
+        <div>
+          <img src="assets/1.7.2_to_replace.png" alt="To Replace">
+          <p>Hole to Fill</p>
+        </div>
+        <div>
+          <img src="assets/1.7.2_campanile_inpainted.png"
+            alt="Campanile Inpainted">
+          <p>Campanile Inpainted</p>
+        </div>
+      </div>
+
+      <h3>1.7.3 Text-Conditional Image-to-image Translation</h3>
+
+      <p>Now, we will do the same thing as the previous section, but guide the
+        projection with a text prompt. This is no longer pure
+        "projection to image space" but also adds control using language. We
+        will use the <code>test_image</code> with the prompt <code>"a rocket
+          ship"</code>.</p>
+
+      <b>Deliverables</b>
+      <ul>
+        <li>Edits of the test image, using the given prompt at noise levels [1,
+          3, 5, 7, 10, 20]</li>
+        <li>Edits of 2 of your own test images, using the same procedure</li>
+      </ul>
+
+      <b></b>Hints</b>
+    <ul>
+      <li>The images should gradually look more like original image, but also
+        look like the text prompt.</li>
+    </ul>
+
+    <div class="image-container">
+      <div>
+        <img src="assets/1.7.3_rocket_1.png" alt="Rocket Ship at noise level 1">
+        <p>Rocket Ship at noise level 1</p>
+      </div>
+      <div>
+        <img src="assets/1.7.3_rocket_3.png" alt="Rocket Ship at noise level 3">
+        <p>Rocket Ship at noise level 3</p>
+      </div>
+      <div>
+        <img src="assets/1.7.3_rocket_5.png" alt="Rocket Ship at noise level 5">
+        <p>Rocket Ship at noise level 5</p>
+      </div>
+      <div>
+        <img src="assets/1.7.3_rocket_7.png" alt="Rocket Ship at noise level 7">
+        <p>Rocket Ship at noise level 7</p>
+      </div>
+      <div>
+        <img src="assets/1.7.3_rocket_10.png"
+          alt="Rocket Ship at noise level 10">
+        <p>Rocket Ship at noise level 10</p>
+      </div>
+      <div>
+        <img src="assets/1.7.3_rocket_20.png"
+          alt="Rocket Ship at noise level 20">
+        <p>Rocket Ship at noise level 20</p>
+      </div>
+      <div>
+        <img src="assets/campanile_resized.png"
+          alt="Rocket Ship at noise level 20">
+        <p>Campanile</p>
+      </div>
+    </div>
+
+    <h3>1.8 Visual Anagrams</h3>
+    <p class="text">
+      In this part, we will implement <a
+        href="https://arxiv.org/abs/2311.17919">Visual
+        Anagrams</a> to create optical illusions with diffusion models. In
+      this part, we will create an image that looks like <code>"an oil
+        painting of a snowy mountain village"</code>, but when flipped upside
+      down will reveal <code>"an oil painting of a horse"</code>.
+    </p>
+    <p class="text">
+      To do this, we will denoise an image normally with the prompt
+      <code>"an oil painting of a horse"</code>, to obtain noise estimate
+      $\epsilon_1$. But at the same time, we will take our noisy image, flip it
+      upside down, and denoise with the prompt
+      <code>"an oil painting of a snowy mountain village"</code>, to get noise
+      estimate $\epsilon_2$. We can flip $\epsilon_2$ again, to make it
+      right-side up, and average the two noise estimates. We can then perform a
+      reverse diffusion step with the averaged noise estimate.
+    </p>
+    <p class="text">
+      The full algorithm will be:
+    </p>
+    <p class="text">
+      $$ \epsilon_1 = u(x_t, t, p_1) $$
+    </p>
+    <p class="text">
+      $$ \epsilon_2 = (u(\text{flip}(x_t), t, p_2)) $$
+    </p>
+    <p class="text">
+      $$ \epsilon = (\epsilon_1 + \epsilon_2) / 2 $$
+    </p>
+    <p class="text">
+      where $u$ is the diffusion model unet, $\text{flip}$ is a function that
+      flips the image, and $p_1$ and $p_2$ are two different text prompt
+      embeddings. And our final noise estimate is $\epsilon$. Please implement
+      the above algorithm and show example of an illusion.
+    </p>
+
+    <b>Deliverables</b>
+    <ul>
+      <li>Correctly implemented <code>visual_anagrams</code> function</li>
+      <li>A visual anagram where on one orientation
+        <code>"an oil painting of people around a campfire"</code> is displayed
+        and, when flipped, <code>"an oil painting of an old man"</code> is
+        displayed.</li>
+      <li>2 more illusions of your choice that change appearance when you flip
+        it upside down.</li>
+    </ul>
+
+    <b>Hints</b>
+    <ul>
+      <li>- You may have to run multiple times to get a really good result for
+        the same reasons as above.</li>
+    </ul>
+
+    <h3>1.9 Hybrid Images</h3>
+    <p class="text">
+      In this part we'll implement <a
+        href="https://arxiv.org/abs/2404.11615">Factorized
+        Diffusion</a> and create hybrid images just like in project 2.
+    </p>
+    <p class="text">
+      In order to create hybrid images with a diffusion model we can use a
+      similar technique as above. We will create a composite noise estimate
+      $\epsilon$, by estimating the noise with two different text prompts, and
+      then combining low frequencies from one noise estimate with high
+      frequencies of the other. The algorithm is:
+    </p>
+    <p class="text">
+      $$ \epsilon_1 = u(x_t, t, p_1) $$
+    </p>
+    <p class="text">
+      $$ \epsilon_2 = u(x_t, t, p_2) $$
+    </p>
+    <p class="text">
+      $$ \epsilon = f_\text{lowpass}(\epsilon_1) + f_\text{highpass}(\epsilon_2)$$
+    </p>
+    <p class="text">
+      where $u$ is the diffusion model unet, $f_\text{lowpass}$ is a low pass function, $f_\text{highpass}$ is a high pass function,
+      and $p_1$ and $p_2$ are two different text prompt embeddings. Our final
+      noise estimate is $\epsilon$.
+      Please show an example of a hybrid image using this technique (you may
+      have to run multiple times to get a really good result for the same
+      reasons as above). We recommend that you use a gaussian blur of kernel size 33 and sigma 2.
+    </p>
+
+    <h3>Deliverables</h3>
+    <ul>
+      <li>Correctly implemented <code>make_hybrids</code> function</li>
+      <li>An image that looks like a <code>skull</code> from far away but a <code>waterfall</code> from close up</li>
+      <li>2 more hybrid images of your choosing.</li>
+    </ul>
+
+    Hints
+    <ul>
+      <li>use torchvision.transforms.functional.gaussian_blur. The
+        documentation can be found <a
+          href="https://pytorch.org/vision/0.16/generated/torchvision.transforms.functional.gaussian_blur.html">here</a>.</li>
+          <li>You may have to run multiple times to get a really good result for the same reasons as above</li>
+    </ul>
+
+    <div class="image-container">
+      <div>
+        <img src="assets/1.9_skull.png" alt="Hybrid image of a skull and a waterfall">
+        <p>Hybrid image of a skull and a waterfall</p>
+      </div>
+    </div>
+
+    <h1> Part 2: Bells & Whistles </h1>
+
+    <ul>
+      <li>Create a course logo! The best logo will (possibly) be used to
+        design a class t-shirt, and the winner will get one for free!</li>
+    </ul>
+
+    <h3>Using your own Prompts</h3>
+    Due to memory constraints on Colab, we have pre-computed a set of text
+    embeddings for you to try. If you'd like to compute your own, you can do
+    so as shown below:
+    <pre><code class="python">
 
 # Load the T5 text encoder
 text_encoder = T5EncoderModel.from_pretrained(
@@ -171,361 +1194,7 @@ torch.save(prompt_embeds_dict, save_path)
 
   </code>
     </pre>
-
-    
-
-<h1> Part 1: Sampling Loops</h1>
-In this part of the problem set, you will write your own "sampling loops" that use the pretrained DeepFloyd denoisers. These should produce high quality images such as the ones generated above.
-<p class="text">
-  You will then modify these sampling loops to solve different tasks such as inpainting or producing optical illusions.
-</p>
-
-<h3>Diffusion Models Primer</h3>
-<div style="text-align: center;">
-    <img src="assets/ddpm_markov.png" alt="DDPM Markov Chain" style="width: 50vw; display: block; margin-left: auto; margin-right: auto" />
-</div>
-
-<p class="text">
-  Starting with a clean image, $x_0$, we can iteratively add noise to an image, obtaining progressively more and more noisy versions of the image, $x_t$, until we're left with basically pure noise at timestep $t=T$. When $t=0$, we have a clean image, and for larger $t$ more noise is in the image.
-</p>
-<p class="text">
-  A diffusion model tries to reverse this process by estimating the noise in an image. When given $x_t$ and the timestep $t$, the diffusion model predicts the noise in the image. With the predicted noise, we can either completely remove the noise from the image, to obtain an estimate of $x_0$, or we can remove just a portion of the noise, obtaining an estimate of $x_{t-1}$, with slightly less noise.
-</p>
-<p class="text">
-  To actually sample images, we start with pure, isotropic Gaussian noise at timestep $T$, and iteratively denoise gradually until we're left with a clean image. For the DeepFloyd models, $T = 1000$.
-</p>
-<p class="text">
-  The amount of noise added at each step is dictated by hyperparameter $\bar\alpha_t$.
-</p>
-
-<h3>1.1 Implementing the Forward Process</h3>
-<p class="text">
-  Write a function <code>forward(im, t)</code> to implement the forward process:
-</p>
-<p class="text">
-  $$q(x_t | x_0) = N(x_t ; \sqrt{\bar\alpha} x_0, (1 - \bar\alpha_t)\mathbf{I})\tag{1}$$
-</p>
-<p class="text">
-  That is, given a clean image $x_0$, return a noisy image $x_t$ at timestep $t$ by sampling from a Gaussian with mean $\sqrt{\bar\alpha} x_0$ and variance $(1 - \bar\alpha_t)$. This is how we go from a clean image to a noisy image. Note that the forward process is not just adding noise -- we also scale the image.
-</p>
-<p class="text">
-  You will need to use the <code>alphas_cumprod</code> variable, which contains the $\bar\alpha_t$ for all $t \in [0, 999]$. 
-  Remember that $t=0$ corresponds to a clean image, and larger $t$ corresponds to more noise. 
-  Thus, $\bar\alpha_t$ is close to 1 for small $t$, and close to 0 for large $t$. 
-  Run the forward process on the test image with $t \in [250, 500, 750]$ and display the results. You should get progressively more noisy images.
-</p>
-<p class="text">
-  Hints:
-</p>
-<ul>
-  <li>Sampling from the above probability distribution is the equivalent of computing $x_t = \sqrt{\bar\alpha} x_0 + \sqrt{1 - \bar\alpha} \epsilon$, for $\epsilon \sim N(0, 1)$.</li>
-  <li>The <code>torch.randn_like</code> function is helpful for computing $\epsilon$.</li>
-</ul>
-<p class="text">
-  <b>Deliverables:</b>
-</p>
-<ul>
-  <li>Implemented <code>forward(im, t)</code> function</li>
-  <li> Show a photograph $x_0$ (that you have taken yourself), as well as 3 noised versions of $x_0$ at noise levels $\sigma$ = [250, 500, 750].</li>
-</ul>
-
-<h3>1.2 Classical Denoising</h3>
-<p class="text">
-  Let's try to denoise these images using classical methods. 
-  Again, take noisy images for timesteps [250, 500, 750], but use <b>gaussian blur filtering</b> (with kernel size 5 and sigma 2) to try to remove the noise. 
-  The results should be quite bad.
-</p>
-
-<b> Deliverables: </b>
-<ul>
-  <li>Three noisy images at noise levels [250, 500, 750]</li>
-  <li>The three noisy images processed with Gaussian blur filtering</li>
-</ul>
-
-Hint:
-<ul>
-  <li> The results should be quite bad.</li>
-<li><code>torchvision.transforms.functional.gaussian_blur</code> is useful. 
-  Here is the <a href="https://pytorch.org/vision/0.16/generated/torchvision.transforms.functional.gaussian_blur.html">documentation</a>.</li>
-</ul>
-
-<h3>1.3 One-Step Denoising</h3>
-
-<p class="text">
-  Now, we'll use a pretrained diffusion model to denoise. The actual denoiser can be found at <code>stage_1.unet</code>. This is a UNet that has been trained to be a powerful noise estimator. We can use it to estimate the noise in an image, after having run the forward process. We can then remove this noise to recover (something close to) the original image.
-</p>
-<p class="text">
-  For t = [250, 500, 750], please:
-</p>
-<ul>
-  <li>Run the forward process on the test image for timestep t</li>
-  <li>Estimate the noise in the new noisy image, by passing it through <code>stage_1.unet</code></li>
-  <li>Remove the noise from the noisy image to obtain an estimate of the original image. To do this, we can invert the equation from part 1.1: $$ x_0 = (x_t - \sqrt{1 - \bar\alpha_t}\epsilon) / \sqrt{\bar\alpha_t} $$, where $\epsilon$ is the predicted noise from <code>stage_1.unet</code>.</li>
-  <li>Visualize the original image, the noisy image, and the estimate of the original image</li>
-</ul>
-<p class="text">
-  <b>Deliverables:</b>
-</p>
-<ul>
-  <li>Show three noisy images at timestep [250, 500, 750]</li>
-  <li>For all 3 noisy images, show the diffusion model estimate of the clean image</li>
-</ul>
-
-<p class="text">
-  Hints:
-</p>
-<ul>
-  <li>You will probably have to wrangle tensors to the correct device and into the correct data types. The functions <code>.to(device)</code> and <code>.half()</code> will be useful. The denoiser is loaded as <code>half</code> precision (to save memory).</li>
-  <li>The signature for the unet is <code>stage_1.unet(image, t, encoder_hidden_states=prompt_embeds, return_dict=False)</code>. You need to pass in the noisy image, the timestep, and the prompt embeddings. The <code>return_dict</code> argument just makes the output nicer.</li>
-  <li>The unet will output a tensor of shape (1, 6, 64, 64). This is because DeepFloyd was trained to predict the noise as well as variance of the noise. The first 3 channels is the noise estimate, which you will use. The second 3 channels is the variance estimate which you may ignore.</li>
-  <li>To save GPU memory, you should wrap all of your code in a <code>with torch.no_grad():</code> context. This tells torch not to do automatic differentiation, and saves a considerable amount of memory.</li>
-</ul>
-
-<h3>1.4 Iterative Denoising</h3>
-<p class="text">
-  In part 1.3, you should see that the one-step estimate of the clean image gets worse as you add more noise. This makes sense, as the problem is much harder with more noise!
-
-  But diffusion models are designed to denoise iteratively. 
-  In this part we will implement this. To do this, we can denoise taking the default steps of the model one-by-one, taking 1000 steps.
-   But we can also speed things up by skipping steps. We have already created a list of timesteps, <code>timesteps</code>, which does just this. 
-   There are 30 total steps, with <code>timesteps[0]</code> corresponding to the noisiest image and <code>timesteps[-1]</code> corresponding to a clean image.
-</p>
-<b>TODO: fix from exact timestep to pseudotimestep</b>
-<p class="text">
-  At every iteration, suppose we are at $ t = $ <code>timesteps[i]</code>, and want to get to $ t-1 =$ <code>timesteps[i+1]</code> (from more noisy to less noisy). 
-  To get the less noisy $x_{t-1}$ we use the following formula:
-</p>
-$$ x_{t-1} = \frac{\sqrt{\bar\alpha_{t-1}}\beta_t}{1 - \bar\alpha_t} x_0 + \frac{\sqrt{\alpha_t}(1 - \bar\alpha_{t-1})}{1 - \bar\alpha_t} x_t + v_\sigma \tag{2}$$
-
-<p class="text">
-  The alphas and betas are hyperparameters, and are defined as below:
-</p>
-<ul>
-  <li>$ \alpha_{\bar{t}} $ is defined by alphas_cumprod</li>
-  <li>$ \alpha_t = \frac{\alpha_{\bar{t}}}{\alpha_{\bar{t-1}}} $</li>
-  <li>$ \beta_t = 1 - \alpha_t $</li>
-</ul>
-(see equations 6 and 7 of the <a href="https://arxiv.org/pdf/2006.11239">DDPM paper</a> for more information)
-
-<p class="text">
-  The $v_\sigma$ is random noise, which in the case of DeepFloyd is also predicted. 
-  The process to compute this is not very important, so we supply a function, <code>add_variance</code>, to do this for you.
-</p>
-
-<p class="text">
-  Please implement the function <code>iterative_denoise(image, i_start)</code>, which takes a noisy image <code>image</code>, as well as a starting index <code>i_start</code>. 
-  The function should denoise an image starting at timestep <code>timestep[i_start]</code>, applying the above formula to obtain an image at timestep <code>t_prev = timestep[i_start + 1]</code>, and repeat iteratively until we arrive at a clean image.
-
-  Please add noise to the test image <code>im</code> to timestep <code>timestep[10]</code>. Then run the <code>iterative_denoise</code> function on the noisy image, with <code>i_start = 10</code>.
-</p>
-
-<p class="text">
-  <b>Deliverables:</b>
-</p>
-<ul>
-  <li>The noisy image every 5th loop of denoising</li>
-  <li>The final predicted clean image, using iterative denoising</li>
-  <li>The predicted clean image using only a single denoising step, as was done in the previous part. This should look much worse.</li>
-  <li>A completed <code>iterative_denoise</code> function</li>
-</ul>
-
-Hints:
-<ul>
-  <li>Remember, the unet will output a tensor of shape (1, 6, 64, 64). This is because DeepFloyd was trained to predict the noise as well as variance of the noise. The first 3 channels is the noise estimate, which you will use here.
-     The second 3 channels is the variance estimate which you will pass to the <code>add_variance</code> function</li>
-  <li>Read the documentation for the <code>add_variance</code> function to figure out how to use it to add the $v_\sigma$ to the image.</li>
-</ul>
-
-<h3>1.5 Diffusion Model Sampling</h3>
-<p class="text">
-  Another thing we can do with the <code>iterative_denoise</code> function is to generate images from scratch. 
-  We can do this by setting <code>i_start = 0</code> and passing in random noise. This effectively denoises pure noise. Please do this, and show 10 results of <code>"a photo of a dog"</code>.
-</p>
-<p class="text">
-  <b>Deliverables:</b>
-  <ul>
-    <li>show 10 results of <code>"a photo of a dog"</code>.</li>
-  </ul>
-</p>
-<p class="text">
-  Hints:
-</p>
-<ul>
-  <li>Use <code>torch.randn</code> to make the noise.</li>
-  <li>Make sure you move the tensor to the correct device and correct data type by calling <code>.half()</code> and <code>.to(device)</code>.</li>
-  <li>The quality of the images will not be spectacular, but should resemble dogs. We will fix this in the next section.</li>
-</ul>
-
-<h3>1.6 Classifier-Free Guidance (CFG)</h3>
-<p class="text">
-  You may have noticed that the generated images in the prior section are not very good, and some are completely non-sensical. 
-  In order to greatly improve image quality (at the expense of image diversity), we can use a technicque called <a href="https://arxiv.org/abs/2207.12598">Classifier-Free Guidance</a>.
-   (The name Classifier-Free Guidance comes from the fact that there was originally a technique called "classifier guidance," which used image classifiers to work. This is as opposed to CFG, which is classifier "free." 
-   Now we're kinda stuck with the name for historical reasons.)
-</p>
-<p class="text">
-  In CFG, we compute both a conditional and an unconditional noise estimate. We denote these $\epsilon_c$ and $\epsilon_u$. 
-  Then, we let our new noise estimate be: $$\epsilon = \epsilon_u + \gamma (\epsilon_c - \epsilon_u) \tag{3}$$
-  where $\gamma$ controls the strength of CFG. Notice that for $\gamma=0$, we get an unconditional noise estimate, and for $\gamma=1$ we get the conditional noise estimate. 
-  The magic happens when $\gamma > 1$. In this case, we get much higher quality images. Why this happens is still up to vigorous debate. 
-  For more information on CFG, you can check out <a href="https://sander.ai/2022/05/26/guidance.html">this blog post</a>.
-</p>
-<p class="text">
-  Please implement the <code>iterative_denoise_cfg</code> function, identical to the <code>iterative_denoise</code> function but using classifier-free guidance. 
-  To get an unconditional noise estimate, just pass an empty prompt embedding to the diffusion model 
-  (the model was trained to predict an unconditional noise estimate when given an empty text prompt).
-</p>
-<p class="text">
-  <b>Deliverables:</b>
-  <ul>
-    <li>Show 10 results of <code>"a photo of a dog"</code> with a CFG scale of $\gamma=7$.</li>
-    <li>Implemented <code>iterative_denoise_cfg</code></li>
-  </ul>
-  Because CFG reduces diversity to increase image quality, the biases of the model should now be even more evident.
-</p>
-<p class="text">
-  Hints:
-</p>
-<ul>
-  <li>Because we are passing two prompts to the UNet, you will also need to duplicate the <code>image</code> argument to the UNet. Repeat the image in the batch dimension.</li>
-  <li>The UNet will predict both a conditional and an unconditional variance. Just use the conditional variance with the <code>add_variance</code> function.</li>
-  <li>The resulting images should be much better than those in the prior sectino.</li>
-</ul>
-
-<h3>1.7 SDEdit: Image Editing</h3>
-<p class="text">
-  In part 1.4, we take a real image, add noise to it, and then denoise. This effectively allows us to "remix" or "edit" the original image. The more noise we add, the larger the edit will be. 
-  This works because in order to denoise an image, the diffusion model must to some extent "hallucinate" new things -- the model has to be "creative." Another way to think about it is that the denoising process "projects" a noisy image back to the "manifold" or "set" of real images. (For more info, please see the <a href="https://sde-image-editing.github.io/">SDEdit paper</a>).
-</p>
-<p class="text">
-  With this in mind, please run the forward process to get a noisy test image, and then run the <code>iterative_denoise_cfg</code> function using a starting index of [1, 3, 5, 7, 10, 20] steps and show the results, labeled with the starting index.
-  You should see a series of "edits" to the original image, gradually matching the original image closer and closer.
-</p>
-<b> Deliverables: </b>
-<ul>
-  <li>Show the results of the SDEdit process for $t = [1, 5, 10, 15, 20, 25]$ for the prompt <code>"a photo of a hipster barista"</code></li>
-</ul>
-<p class="text">
-  Hints:
-  <ul>
-    <li>The images should gradually look more like the original image.</li>
-  </ul>
-</p>
-
-<h3>1.8 Inpainting</h3>
-<p class="text">
-  We can also use diffusion models to inpaint. That is, given an image $x_{orig}$, and a binary mask $\bf m$, we can create a new image that has the same content where $\bf m$ is 0, but new content wherever $\bf m$ is 1.
-</p>
-<p class="text">
-  To do this, we can run the diffusion denoising loop. But at every step, after obtaining $x_t$, we "project" $x_t$ such that areas outside of the mask aligns with the original image $x_{orig}$. To do this, we can use the following update:
-</p>
-<p class="text">
-  $$ x_t \leftarrow \textbf{m} x_t + (1 - \textbf{m}) \text{forward}(x_{orig}, t) $$
-</p>
-<p class="text">
-  Essentially, we leave everything inside the edit mask alone, but we replace everything outside the edit mask with our original image, with the correct amount of noise added for timestep $t$. For more information about this method, please see this <a href="https://arxiv.org/abs/2201.09865">paper</a>.
-</p>
-<p class="text">
-  Please implement this below, and edit the picture to add a hat. Please display the image.
-</p>
-<p class="text">
-  <b>Deliverables:</b>
-  
-  <ul>
-    <li>Edit the picture to add a hat.</li>
-    <li>Display the image.</li>
-  </ul>
-  Run the following cell to retrieve the correct prompt embedding, and an edit mask.
-</p>
-<p class="text">
-  Hints:
-</p>
-<ul>
-  <li>Reuse the <code>forward</code> function you implemented earlier to implement inpainting</li>
-  <li>Because we are using the diffusion model for tasks it was not trained for, you may have to run the sampling process a few times before you get a nice result.</li>
-  <li>You can copy and paste your iterative_denoise_cfg function. To get inpainting to work should only require (roughly) 1-2 additional lines and a few small changes.</li>
-</ul>
-
-<h3>1.9 Visual Anagrams</h3>
-<p class="text">
-  We can also create optical illusions with diffusion models.
-  In this part, we will create an image that looks like <code>"an oil painting of a snowy mountain village"</code>,
-  but when flipped upside down will reveal <code>"an oil painting of a horse"</code>.
-</p>
-<p class="text">
-  To do this, we will denoise an image normally with the prompt <code>"an oil painting of a horse"</code>, to obtain noise estimate $\epsilon_1$.
-  But at the same time, we will take our noisy image, flip it upside down, 
-  and denoise with the prompt <code>"an oil painting of a snowy mountain village"</code>, to get noise estimate $\epsilon_2$.
-  We can flip $\epsilon_2$ again, to make it right-side up, and average the two noise estimates. And run DDPM with the averaged noise estimate.
-</p>
-<p class="text">  
-  The full algorithm will be:
-</p>
-<p class="text">
-  $$ \epsilon_1 = u(x_t, t, p_1) $$
-</p>
-<p class="text">
-  $$ \epsilon_2 = f(u(f(x_t), t, p_2)) $$
-</p>
-<p class="text">
-  $$ \epsilon = (\epsilon_1 + \epsilon_2) / 2 $$
-</p>
-<p class="text">
-  where $u$ is the diffusion model unet, $f$ is a function that flips the image, and $p_1$ and $p_2$ are two different text prompt embeddings. 
-  And our final noise estimate is $\epsilon$. Please show an example of an illusion (you may have to run multiple times to get a really good result for the same reasons as above).
-</p>
-
-<b>Deliverables:</b>
-<ul>
-  <li>Correctly implemented <code>visual_anagrams</code> function</li>
-  <li>An illusions that changes appearance when you flip it upside down</li>
-</ul>
-
-<h3>2.0 Hybrid Images</h3>
-<p class="text">
-  Hybrid images are images that look different depending on distance. 
-  These images work because from a distance, we can only see the low frequencies of an image, while up close we can see both high and low frequencies.
-</p>
-<p class="text">
-  In order to create hybrid images with a diffusion model we can use a similar technique as above. 
-  We will create a composite noise estimate $\epsilon$, by estimating the noise with two different text prompts, 
-  and then combining low frequencies from one noise estimate with high frequencies of the other. 
-  The algorithm is:
-</p>
-<p class="text">
-  $$ \epsilon_1 = u(x_t, t, p_1) $$
-</p>
-<p class="text">
-  $$ \epsilon_2 = u(x_t, t, p_2) $$
-</p>
-<p class="text">
-  $$ \epsilon = f_{low}(\epsilon_1) + f_{high}(\epsilon_2) $$
-</p>
-<p class="text">
-  where $u$ is the diffusion model unet, $f_{low}$ is a low pass function, $f_{high}$ is a high pass function, 
-  and $p_1$ and $p_2$ are two different text prompt embeddings. Our final noise estimate is $\epsilon$. 
-  Please show an example of a hybrid image using this technique (you may have to run multiple times to get a really good result for the same reasons as above).
-</p>
-
-<b>Deliverables:</b>
-<ul>
-  <li>Correctly implemented <code>make_hybrids</code> function</li>
-  <li>An image that looks like a skull from far away but a waterfall from close up</li>
-</ul>
-
-Hints:
-<ul>
-  <li>use torchvision.transforms.functional.gaussian_blur. The documentation can be found <a href="https://pytorch.org/vision/0.16/generated/torchvision.transforms.functional.gaussian_blur.html">here</a>.</li>
-</ul>
-
-<h1> Part 2: Bells & Whistles </h1>
-
-<ul>
-  <li>Create a course logo! The best logo will (possibly) be used to design a class t-shirt, and the winner will get one for free!</li>
-</ul>
-
-
-<!--     
+    <!--     
 
     <h1>Part 0: Sampling from the model</h1>
     <h3>Gaining Access to DeepFloyd</h3>
@@ -583,5 +1252,7 @@ They can be found <a href="./parta.html">here</a>.
 
 
   </body> -->
-  <grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
-</html>
+
+    <grammarly-desktop-integration
+      data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+  </html>
