@@ -66,6 +66,215 @@
         clear: both;
         display: table;
       }
+      code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.image-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  max-width: 200px;
+  position: relative;
+  padding: 20px;
+  overflow: visible;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  transform-origin: center center;
+}
+
+.image-container p {
+  text-align: center;
+  margin-top: 10px;
+}
+      /* Two image containers */
+      .column {
+        float: left;
+        width: 45%;
+        padding: 5px;
+      }
+
+      /* Clear floats after image containers */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      @keyframes rotate180 {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(180deg);
+        }
+      }
+      
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+      
+      .rotating-image:hover {
+        transform: rotate(180deg);
+      }
+
+      .zoom-animation {
+        transition: transform 1s ease-in-out;
+        transform: scale(1);
+      }
+
+      .zoom-animation:hover,
+      .zoom-animation.active {
+        transform: scale(0.25);
+      }
+
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+
+      .rotating-image:hover,
+      .rotating-image.active {
+        transform: rotate(180deg);
+      }
+
+      .caption-container {
+        position: relative;
+        height: auto;
+        min-height: 2em;
+        text-align: center;
+        width: 100%;
+        padding: 5px 0;
+      }
+
+      .caption-default, .caption-transform {
+        position: absolute;
+        width: 100%;
+        transition: opacity 1.5s;
+        white-space: normal;
+        left: 0;
+      }
+
+      .caption-transform {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-default,
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-transform,
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .image-container > div:hover .zoom-animation {
+        transform: scale(0.25);
+      }
+
+      .image-container > div:hover .caption-default {
+        opacity: 0;
+      }
+
+      .image-container > div:hover .caption-transform {
+        opacity: 1;
+      }
+
+      .caption-container .caption-default {
+        opacity: 1;
+        transition: opacity 1.5s;
+      }
+
+      .caption-container .caption-transform {
+        opacity: 0;
+        transition: opacity 1.5s;
+      }
+
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .dissolve-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%; /* Creates a square aspect ratio */
+        margin-bottom: 5px; /* Reduced from 10px to match other captions */
+      }
+
+      .dissolve-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .dissolve-image.original {
+        opacity: 1;
+      }
+
+      .dissolve-image.edited {
+        opacity: 0;
+      }
+
+      .dissolve-image.original.active {
+        opacity: 0;
+      }
+
+      .dissolve-image.edited.active {
+        opacity: 1;
+      }
+
+      /* Ensure consistent caption styling */
+      .image-container > div p {
+        text-align: center;
+        margin-top: 5px;  /* Reduced from 10px to align with other captions */
+        margin-bottom: 0;
+      }
+
+      /* Hover state */
+      .dissolve-container:hover .dissolve-image.original {
+        opacity: 0;
+      }
+
+      .dissolve-container:hover .dissolve-image.edited {
+        opacity: 1;
+      }
     </style>
   </head>
 
@@ -75,9 +284,13 @@
       <a href="https://cal-cs180.github.io/fa24/index.html">CS180: Intro to Computer Vision and Computational Photography </a>
     </h1>
     <div>
-      <video id="video5" width="640" height="320" muted loop style="display: block; margin-left: auto; margin-right: auto;">
+      
+      <video id="video5" width="640" height="320" muted 
+        style="display: block; margin-left: auto; margin-right: auto;"
+        onmouseover="this.play()" 
+        onmouseout="playInReverse(this)">
         <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
-      </video>
+    </video>
     </div>
     <h1 style="text-align: center">Part B: The Power of Diffusion Models!</h1>
     <h3 style="text-align: center;">The first part of a <a href="./index.html">larger project</a>.</h3>
@@ -90,6 +303,10 @@
 
     <h2>Overview</h2>
     In part B you will train your own diffusion model on MNIST. Starter code can be found in the <a href="./partb.html">provided notebook</a>.
+
+    <br>
+<br>
+    <p style="color: red; display: inline;"><b>START EARLY!</b></p><span style="margin-left: 5px;"> This project, in many ways, will be the most difficult project this semester.</span>
 
 
     <h1>Part 1: Training a Single-Step Denoising U-Net</h1>
@@ -515,13 +732,13 @@ $$\implies \mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}(\mathbf{x}_t - \frac{1 -
 <div class="image-container" style="justify-content: center;">
   <div style="width: 100%;">
     <p style="text-align: left;">Epoch 1</p>
-    <video id="video1" width="100%" muted loop style="display: block; margin-left: 0;">
+    <video id="video1" width="100%" muted loop playbackRate="0.75" style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch1.mp4" />
     </video>
   </div>
   <div style="width: 50%;">
     <p style="text-align: left;">Epoch 5</p>
-    <video id="video2" width="100%" muted loop style="display: block; margin-left: 0;">
+    <video id="video2" width="100%" muted loop playbackRate="0.75" style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch5.mp4" />
     </video>
   </div>
@@ -531,19 +748,19 @@ $$\implies \mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}(\mathbf{x}_t - \frac{1 -
 <div class="image-container" style="justify-content: center; margin-top: 20px;">
   <div style="width: 100%;">
     <p style="text-align: left;">Epoch 10</p>
-    <video id="video3" width="100%" muted loop style="display: block; margin-left: 0;">
+    <video id="video3" width="100%" muted loop playbackRate="0.75" style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch10.mp4" />
     </video>
   </div>
   <div style="width: 100%;">
     <p style="text-align: left;">Epoch 15</p>
-    <video id="video4" width="100%" muted loop style="display: block; margin-left: 0;">
+    <video id="video4" width="100%" muted loop playbackRate="0.75" style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch15.mp4" />
     </video>
   </div>
   <div style="width: 100%;">
     <p style="text-align: left;">Epoch 20</p>
-    <video id="video5" width="100%" muted loop style="display: block; margin-left: 0;">
+    <video id="video5" width="100%" muted loop playbackRate="0.75" style="display: block; margin-left: 0;">
       <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
     </video>
   </div>
@@ -551,13 +768,53 @@ $$\implies \mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}(\mathbf{x}_t - \frac{1 -
 
 <script>
   window.addEventListener('load', function() {
+    // Handle video autoplay and playback speed
     var videos = document.querySelectorAll('video');
     videos.forEach(function(video) {
+      video.playbackRate = 0.75; // Set playback rate to 25%
       video.play();
     });
+
+    // Handle animations
+    const zoomEls = document.querySelectorAll('.zoom-animation');
+    const rotateEls = document.querySelectorAll('.rotating-image');
+    const dissolveOriginals = document.querySelectorAll('.dissolve-image.original');
+    const dissolveEditeds = document.querySelectorAll('.dissolve-image.edited');
+    
+    // Add active class to trigger animations
+    zoomEls.forEach(el => el.classList.add('active'));
+    rotateEls.forEach(el => el.classList.add('active'));
+    dissolveOriginals.forEach(el => el.classList.add('active'));
+    dissolveEditeds.forEach(el => el.classList.add('active'));
+    
+    // Remove active class after 2 seconds
+    setTimeout(() => {
+      zoomEls.forEach(el => el.classList.remove('active'));
+      rotateEls.forEach(el => el.classList.remove('active'));
+      dissolveOriginals.forEach(el => el.classList.remove('active'));
+      dissolveEditeds.forEach(el => el.classList.remove('active'));
+    }, 2000);
   });
 </script>
-
+<script>
+  function playInReverse(video) {
+      const fps = 30;
+      const interval = 1000 / fps;
+      const step = 0.028;  // Increased from 0.0222 for faster playback (~1.2s duration)
+      
+      function decreaseTime() {
+          if (video.currentTime <= 0) {
+              video.pause();
+              return;
+          }
+          video.currentTime = Math.max(0, video.currentTime - step);
+          setTimeout(decreaseTime, interval);
+      }
+      
+      video.pause();
+      decreaseTime();
+  }
+</script>
 <h2> Bells & Whistles </h2>
 <h3>Sampling Gifs</h3>
 Create your own sampling gifs similar to the ones shown above.
@@ -572,6 +829,6 @@ Modify the UNet (e.g. with skip connections) such that it can fit better during 
     You can reference any code on github, but your implementation needs to follow the same code structure as our DDPM implementation.
     In other words, the code change required should be minimal: only changing the forward and sample functions.
   </p>
-
+  <p>This project was a joint effort by Daniel Geng, Hang Gao, and Ryan Tabrizi, advised by Liyue Shen, Andrew Owens, and Alexei Efros. </p>
   </body>
 </html>

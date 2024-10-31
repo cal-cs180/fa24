@@ -76,6 +76,257 @@
         clear: both;
         display: table;
       }
+      code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.image-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  max-width: 200px;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+}
+
+.image-container p {
+  text-align: center;
+  margin-top: 10px;
+}
+      /* Two image containers */
+      .column {
+        float: left;
+        width: 45%;
+        padding: 5px;
+      }
+
+      /* Clear floats after image containers */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+      code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.image-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  max-width: 200px;
+  position: relative;
+  padding: 20px;
+  overflow: visible;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  transform-origin: center center;
+}
+
+.image-container p {
+  text-align: center;
+  margin-top: 10px;
+}
+      /* Two image containers */
+      .column {
+        float: left;
+        width: 45%;
+        padding: 5px;
+      }
+
+      /* Clear floats after image containers */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      @keyframes rotate180 {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(180deg);
+        }
+      }
+      
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+      
+      .rotating-image:hover {
+        transform: rotate(180deg);
+      }
+
+      .zoom-animation {
+        transition: transform 1s ease-in-out;
+        transform: scale(1);
+      }
+
+      .zoom-animation:hover,
+      .zoom-animation.active {
+        transform: scale(0.25);
+      }
+
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+
+      .rotating-image:hover,
+      .rotating-image.active {
+        transform: rotate(180deg);
+      }
+
+      .caption-container {
+        position: relative;
+        height: auto;
+        min-height: 2em;
+        text-align: center;
+        width: 100%;
+        padding: 5px 0;
+      }
+
+      .caption-default, .caption-transform {
+        position: absolute;
+        width: 100%;
+        transition: opacity 1.5s;
+        white-space: normal;
+        left: 0;
+      }
+
+      .caption-transform {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-default,
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-transform,
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .image-container > div:hover .zoom-animation {
+        transform: scale(0.25);
+      }
+
+      .image-container > div:hover .caption-default {
+        opacity: 0;
+      }
+
+      .image-container > div:hover .caption-transform {
+        opacity: 1;
+      }
+
+      .caption-container .caption-default {
+        opacity: 1;
+        transition: opacity 1.5s;
+      }
+
+      .caption-container .caption-transform {
+        opacity: 0;
+        transition: opacity 1.5s;
+      }
+
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .dissolve-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%; /* Creates a square aspect ratio */
+        margin-bottom: 5px; /* Reduced from 10px to match other captions */
+      }
+
+      .dissolve-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .dissolve-image.original {
+        opacity: 1;
+      }
+
+      .dissolve-image.edited {
+        opacity: 0;
+      }
+
+      .dissolve-image.original.active {
+        opacity: 0;
+      }
+
+      .dissolve-image.edited.active {
+        opacity: 1;
+      }
+
+      /* Ensure consistent caption styling */
+      .image-container > div p {
+        text-align: center;
+        margin-top: 5px;  /* Reduced from 10px to align with other captions */
+        margin-bottom: 0;
+      }
+
+      /* Hover state */
+      .dissolve-container:hover .dissolve-image.original {
+        opacity: 0;
+      }
+
+      .dissolve-container:hover .dissolve-image.edited {
+        opacity: 1;
+      }
     </style>
   </head>
   <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
@@ -90,24 +341,58 @@
         >CS180: Intro to Computer Vision and Computational Photography
       </a>
     </h1>
+    <p style="text-align: center;">Hover Over Us!</p>
     <div class="image-container">
       <div>
-        <img src="assets/reading.png" alt="Lion">
-        <p>reading between the lions</p>
+        <div class="dissolve-container">
+          <img src="assets/hole_filling3.png" alt="Original Campanile"
+            class="dissolve-image original">
+          <img src="assets/hole_filling.png" alt="Hole Filled"
+            class="dissolve-image edited">
+        </div>
+        <p>Hole Filling</p>
       </div>
       <div>
-        <img src="assets/baby.png" alt="Baby">
-        <p>bear with me</p>
+        <!-- <div class="dissolve-container">
+          <img src="assets/dog.png" alt="Original Dog"
+            class="dissolve-image original">
+          <img src="assets/sdedit_dog.png" alt="Edited Dog"
+            class="dissolve-image edited">
+        </div> -->
+        <div class="dissolve-container">
+          <img src="assets/pixel_bear.png" alt="Original Dog"
+            class="dissolve-image original">
+          <img src="assets/sdedit_bear2.png" alt="Edited Dog"
+            class="dissolve-image edited">
+        </div>
+        <p>Image-to-Image Translation</p>
       </div>
       <div>
-        <img src="assets/skull.png" alt="Skull">
-        <p>a lithograph of a skull</p>
+        <img src="assets/skull2.png" alt="Man Wearing Hat"
+          class="zoom-animation">
+        <div class="caption-container">
+          <p class="caption-default">A Lithograph of a Waterfall</p>
+          <p class="caption-transform">A Lithograph of a Skull</p>
+        </div>
       </div>
+      <div>
+        <img src="assets/old_man.png" alt="Bear Dancing" class="rotating-image">
+        <div class="caption-container">
+          <p class="caption-default">An Oil Painting of an Old Man</p>
+          <p class="caption-transform">An Oil Painting of People Around a
+            Fire</p>
+        </div>
+        
+      </div>
+
     </div>
-    <div>
-      <video id="video5" width="640" height="320" muted style="display: block; margin-left: auto; margin-right: auto;">
+    
+    <video id="video5" width="640" height="320" muted 
+        style="display: block; margin-left: auto; margin-right: auto;"
+        onmouseover="this.play()" 
+        onmouseout="playInReverse(this)">
         <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
-      </video>
+    </video>
     </div>
 
     <br />
@@ -129,6 +414,10 @@
     In this project you will implement and deploy diffusion models for
     conditional image generation. It is divided into two parts
     <b>with two separate due dates</b> (see below).
+    
+    <br>
+    <br>
+    <p style="color: red; display: inline;"><b>START EARLY!</b></p><span style="margin-left: 5px;"> This project, in many ways, will be the most difficult project this semester.</span>
 
     <h2>Deliverables</h2>
     There are several due dates:
@@ -152,10 +441,54 @@
   ></grammarly-desktop-integration>
   <script>
     window.addEventListener('load', function() {
+      // Handle video autoplay
       var videos = document.querySelectorAll('video');
       videos.forEach(function(video) {
+        video.playbackRate = 0.67; // Slows down the video to approximately 1.5x longer duration
         video.play();
       });
+  
+      // Handle animations
+      const zoomEls = document.querySelectorAll('.zoom-animation');
+      const rotateEls = document.querySelectorAll('.rotating-image');
+      const dissolveOriginals = document.querySelectorAll('.dissolve-image.original');
+      const dissolveEditeds = document.querySelectorAll('.dissolve-image.edited');
+      
+      // Add active class to trigger animations
+      zoomEls.forEach(el => el.classList.add('active'));
+      rotateEls.forEach(el => el.classList.add('active'));
+      dissolveOriginals.forEach(el => el.classList.add('active'));
+      dissolveEditeds.forEach(el => el.classList.add('active'));
+      
+      // Remove active class after 2 seconds
+      setTimeout(() => {
+        zoomEls.forEach(el => el.classList.remove('active'));
+        rotateEls.forEach(el => el.classList.remove('active'));
+        dissolveOriginals.forEach(el => el.classList.remove('active'));
+        dissolveEditeds.forEach(el => el.classList.remove('active'));
+      }, 2000);
     });
   </script>
+  <script>
+    function playInReverse(video) {
+        const fps = 30;
+        const interval = 1000 / fps;
+        const step = 0.028;  // Increased from 0.0222 for faster playback (~1.2s duration)
+        
+        function decreaseTime() {
+            if (video.currentTime <= 0) {
+                video.pause();
+                return;
+            }
+            video.currentTime = Math.max(0, video.currentTime - step);
+            setTimeout(decreaseTime, interval);
+        }
+        
+        video.pause();
+        decreaseTime();
+    }
+  </script>
+
+  <h3>Acknowledgements</h3>
+  <p>This project was a joint effort by Daniel Geng, Hang Gao, and Ryan Tabrizi, advised by Liyue Shen, Andrew Owens, and Alexei Efros. </p>
 </html>

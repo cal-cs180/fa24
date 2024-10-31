@@ -54,13 +54,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 30%;
+  width: 40%;
   max-width: 200px;
+  position: relative;
+  padding: 20px;
+  overflow: visible;
 }
 
 .image-container img {
   width: 100%;
   height: auto;
+  transform-origin: center center;
 }
 
 .image-container p {
@@ -80,6 +84,162 @@
         clear: both;
         display: table;
       }
+
+      @keyframes rotate180 {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(180deg);
+        }
+      }
+      
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+      
+      .rotating-image:hover {
+        transform: rotate(180deg);
+      }
+
+      .zoom-animation {
+        transition: transform 1s ease-in-out;
+        transform: scale(1);
+      }
+
+      .zoom-animation:hover,
+      .zoom-animation.active {
+        transform: scale(0.25);
+      }
+
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+
+      .rotating-image:hover,
+      .rotating-image.active {
+        transform: rotate(180deg);
+      }
+
+      .caption-container {
+        position: relative;
+        height: auto;
+        min-height: 2em;
+        text-align: center;
+        width: 100%;
+        padding: 5px 0;
+      }
+
+      .caption-default, .caption-transform {
+        position: absolute;
+        width: 100%;
+        transition: opacity 1.5s;
+        white-space: normal;
+        left: 0;
+      }
+
+      .caption-transform {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-default,
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-transform,
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .image-container > div:hover .zoom-animation {
+        transform: scale(0.25);
+      }
+
+      .image-container > div:hover .caption-default {
+        opacity: 0;
+      }
+
+      .image-container > div:hover .caption-transform {
+        opacity: 1;
+      }
+
+      .caption-container .caption-default {
+        opacity: 1;
+        transition: opacity 1.5s;
+      }
+
+      .caption-container .caption-transform {
+        opacity: 0;
+        transition: opacity 1.5s;
+      }
+
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .dissolve-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%; /* Creates a square aspect ratio */
+        margin-bottom: 5px; /* Reduced from 10px to match other captions */
+      }
+
+      .dissolve-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .dissolve-image.original {
+        opacity: 1;
+      }
+
+      .dissolve-image.edited {
+        opacity: 0;
+      }
+
+      .dissolve-image.original.active {
+        opacity: 0;
+      }
+
+      .dissolve-image.edited.active {
+        opacity: 1;
+      }
+
+      /* Ensure consistent caption styling */
+      .image-container > div p {
+        text-align: center;
+        margin-top: 5px;  /* Reduced from 10px to align with other captions */
+        margin-bottom: 0;
+      }
+
+      /* Hover state */
+      .dissolve-container:hover .dissolve-image.original {
+        opacity: 0;
+      }
+
+      .dissolve-container:hover .dissolve-image.edited {
+        opacity: 1;
+      }
     </style>
   </head>
   <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed>
@@ -89,7 +249,7 @@
       <a href="https://cal-cs180.github.io/fa24/index.html">CS180: Intro to
         Computer Vision and Computational Photography </a>
     </h1>
-    <div class="image-container">
+    <!-- <div class="image-container">
       <div>
         <img src="assets/reading.png" alt="Reading">
         <p>Reading Between the Lions</p>
@@ -102,8 +262,53 @@
         <img src="assets/goldenbear_dancing.png" alt="Bear Dancing">
         <p>A Golden Bear Dancing</p>
       </div>
-    </div>
+    </div> -->
 
+    <div class="image-container">
+      <div>
+        <div class="dissolve-container">
+          <img src="assets/hole_filling2.png" alt="Original Campanile"
+            class="dissolve-image original">
+          <img src="assets/hole_filling.png" alt="Hole Filled"
+            class="dissolve-image edited">
+        </div>
+        <p>Hole Filling</p>
+      </div>
+      <div>
+        <!-- <div class="dissolve-container">
+          <img src="assets/dog.png" alt="Original Dog"
+            class="dissolve-image original">
+          <img src="assets/sdedit_dog.png" alt="Edited Dog"
+            class="dissolve-image edited">
+        </div>
+        <p>"Make it Realistic"</p>
+      </div> -->
+      <div class="dissolve-container">
+        <img src="assets/pixel_bear.png" alt="Original Dog"
+          class="dissolve-image original">
+        <img src="assets/sdedit_bear2.png" alt="Edited Dog"
+          class="dissolve-image edited">
+      </div>
+      <p>Image-to-Image Translation</p>
+    </div>
+      <div>
+        <img src="assets/skull2.png" alt="Man Wearing Hat"
+          class="zoom-animation">
+        <div class="caption-container">
+          <p class="caption-default">A Lithograph of a Waterfall</p>
+          <p class="caption-transform">A Lithograph of a Skull</p>
+        </div>
+      </div>
+      <div>
+        <img src="assets/old_man.png" alt="Bear Dancing" class="rotating-image">
+        <div class="caption-container">
+          <p class="caption-default">An Oil Painting of an Old Man</p>
+          <p class="caption-transform">An Oil Painting of People Around a
+            Fire</p>
+        </div>
+      </div>
+
+    </div>
 
     <br />
     <h1 style="text-align: center">Part A: The Power of Diffusion Models!</h1>
@@ -128,6 +333,10 @@
     <p>Because part A is simply to get your feet wet with pre-trained diffusion
       models, all deliverables should be completed in the notebook. You will
       still submit a webpage with your results.</p>
+
+    <p style="color: red; display: inline;"><b>START EARLY!</b></p><span
+      style="margin-left: 5px;"> This project, in many ways, will be the most
+      difficult project this semester.</span>
 
     <h1> Part 0: Setup</h1>
     <h3>Gaining Access to DeepFloyd</h3>
@@ -174,20 +383,22 @@
         At the end of part A of the project, we provide you code if you want to
         try your own text prompts.</p>
 
-        <p>
-          In the notebook, we instantiate DeepFloyd's <code>stage_1</code> and
-          <code>stage_2</code> objects used for generation, as well as several text
-          prompts for sample generation.
-        </p>
+      <p>
+        In the notebook, we instantiate DeepFloyd's <code>stage_1</code> and
+        <code>stage_2</code> objects used for generation, as well as several
+        text
+        prompts for sample generation.
+      </p>
 
       <b>Deliverables </b>
-      
+
       <ul>
         <li>For the 3 text prompts that we provide, display the caption and the
           output of the model. Reflect on the quality of the outputs and their
           relationships to the text prompts. Make sure to try at least 2
           different <code>num_inference_steps</code> values.</li>
-          <li>Report the random seed that you're using here. You should use the same seed all subsequent parts.</li>
+        <li>Report the random seed that you're using here. You should use the
+          same seed all subsequent parts.</li>
       </ul>
 
       <h1> Part 1: Sampling Loops</h1>
@@ -1118,21 +1329,25 @@
       $$ \epsilon_2 = u(x_t, t, p_2) $$
     </p>
     <p class="text">
-      $$ \epsilon = f_\text{lowpass}(\epsilon_1) + f_\text{highpass}(\epsilon_2)$$
+      $$ \epsilon = f_\text{lowpass}(\epsilon_1) +
+      f_\text{highpass}(\epsilon_2)$$
     </p>
     <p class="text">
-      where $u$ is the diffusion model unet, $f_\text{lowpass}$ is a low pass function, $f_\text{highpass}$ is a high pass function,
+      where $u$ is the diffusion model unet, $f_\text{lowpass}$ is a low pass
+      function, $f_\text{highpass}$ is a high pass function,
       and $p_1$ and $p_2$ are two different text prompt embeddings. Our final
       noise estimate is $\epsilon$.
       Please show an example of a hybrid image using this technique (you may
       have to run multiple times to get a really good result for the same
-      reasons as above). We recommend that you use a gaussian blur of kernel size 33 and sigma 2.
+      reasons as above). We recommend that you use a gaussian blur of kernel
+      size 33 and sigma 2.
     </p>
 
     <b>Deliverables</b>
     <ul>
       <li>Correctly implemented <code>make_hybrids</code> function</li>
-      <li>An image that looks like a <code>skull</code> from far away but a <code>waterfall</code> from close up</li>
+      <li>An image that looks like a <code>skull</code> from far away but a
+        <code>waterfall</code> from close up</li>
       <li>2 more hybrid images of your choosing.</li>
     </ul>
 
@@ -1141,12 +1356,14 @@
       <li>use torchvision.transforms.functional.gaussian_blur. The
         documentation can be found <a
           href="https://pytorch.org/vision/0.16/generated/torchvision.transforms.functional.gaussian_blur.html">here</a>.</li>
-          <li>You may have to run multiple times to get a really good result for the same reasons as above</li>
+      <li>You may have to run multiple times to get a really good result for the
+        same reasons as above</li>
     </ul>
 
     <div class="image-container">
       <div>
-        <img src="assets/1.9_skull.png" alt="Hybrid image of a skull and a waterfall">
+        <img src="assets/1.9_skull.png"
+          alt="Hybrid image of a skull and a waterfall">
         <p>Hybrid image of a skull and a waterfall</p>
       </div>
     </div>
@@ -1205,65 +1422,28 @@ torch.save(prompt_embeds_dict, save_path)
 
   </code>
     </pre>
-    <!--     
 
-    <h1>Part 0: Sampling from the model</h1>
-    <h3>Gaining Access to DeepFloyd</h3>
-  <p class="text">
-    We are going to use the <a href="https://huggingface.co/docs/diffusers/api/pipelines/deepfloyd_if">DeepFloyd IF</a> diffusion model. DeepFloyd is a two stage model trained by Stability AI. The first stage produces images of size $64 \times 64$ and the second stage takes the outputs of the first stage and generates images of size $256 \times 256$. Before using DeepFloyd, you must accept its usage conditions. To do so:
-  </p>
-  <ol>
-    <li>Make a <a href="https://huggingface.co/join">Hugging Face account</a> and log in.</li>
-    <li>Accept the license on the model card of <a href="https://huggingface.co/DeepFloyd/IF-I-XL-v1.0">DeepFloyd/IF-I-XL-v1.0</a>. Accepting the license on the stage I model card will auto accept for the other IF models.</li>
-    <li>Log in locally by entering your <a href="https://huggingface.co/docs/hub/security-tokens#what-are-user-access-tokens">Hugging Face Hub access token</a> below. You should be able to find and create tokens <a href="https://huggingface.co/settings/tokens">here</a>.</li>
-  </ol>
-
-  <h3>Loading DeepFloyd Models</h3>
-  <p class="text">
-    We will need to download and create the two DeepFloyd stages. These models are quite large, so this block may take a while the first time you run it (~5 min) so plan ahead! After the first time, Colab should cache the files for a while (i.e. you can hit Runtime -> Restart Session if you hit a weird error and the models will still be downloaded).
-  </p>
-
-  Once you have an access token with the necessary permissions, you can load the models as shown here: 
-  <pre><code class="python">
-from huggingface_hub import login
-
-token = 'YOUR ACCESS TOKEN'
-login(token=token)
-
-# Load DeepFloyd IF stage I
-stage_1 = DiffusionPipeline.from_pretrained(
-    "DeepFloyd/IF-I-L-v1.0",
-    text_encoder=None,
-    variant="fp16",
-    torch_dtype=torch.float16,
-)
-stage_1.to(device)
-
-# Load DeepFloyd IF stage II
-stage_2 = DiffusionPipeline.from_pretrained(
-                "DeepFloyd/IF-II-L-v1.0",
-                text_encoder=None,
-                variant="fp16",
-                torch_dtype=torch.float16,
-              )
-stage_2.to(device)
-
-
-  </code>
-  </pre>
-
-<h3>Downloading Text Embeddings</h3>
-In order to use the diffusion model, we will need to condition on text embeddings. 
-However, because the text encoder is very large, and barely fits on a free tier Colab GPU, 
-we have precomputed a couple of text embeddings for you to try. 
-This should hopefully save some headaches with respect to OOM errors.
-They can be found <a href="./parta.html">here</a>.
-
-
-
-
-  </body> -->
-
+    <script>
+      window.addEventListener('load', function() {
+        const zoomEls = document.querySelectorAll('.zoom-animation');
+        const rotateEls = document.querySelectorAll('.rotating-image');
+        const dissolveOriginals = document.querySelectorAll('.dissolve-image.original');
+        const dissolveEditeds = document.querySelectorAll('.dissolve-image.edited');
+        
+        zoomEls.forEach(el => el.classList.add('active'));
+        rotateEls.forEach(el => el.classList.add('active'));
+        dissolveOriginals.forEach(el => el.classList.add('active'));
+        dissolveEditeds.forEach(el => el.classList.add('active'));
+        
+        setTimeout(() => {
+          zoomEls.forEach(el => el.classList.remove('active'));
+          rotateEls.forEach(el => el.classList.remove('active'));
+          dissolveOriginals.forEach(el => el.classList.remove('active'));
+          dissolveEditeds.forEach(el => el.classList.remove('active'));
+        }, 2000);
+      });
+    </script>
+<p>This project was a joint effort by Daniel Geng, Hang Gao, and Ryan Tabrizi, advised by Liyue Shen, Andrew Owens, and Alexei Efros. </p>
     <grammarly-desktop-integration
       data-grammarly-shadow-root="true"></grammarly-desktop-integration>
   </html>
