@@ -286,13 +286,13 @@
     <div>
       
       <video id="video5" width="640" height="320" muted 
-        style="display: block; margin-left: auto; margin-right: auto;"
-        onmouseover="this.play()" 
-        onmouseout="playInReverse(this)">
-        <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
-    </video>
+      style="display: block; margin-left: auto; margin-right: auto;"
+      onmouseover="this.play()" 
+      onmouseout="playInReverse(this)">
+      <source type="video/mp4" src="assets/mnist.mp4" />
+  </video>
     </div>
-    <h1 style="text-align: center">Part B: The Power of Diffusion Models!</h1>
+    <h1 style="text-align: center">Part B: Diffusion Models from Scratch!</h1>
     <h3 style="text-align: center;">The first part of a <a href="./index.html">larger project</a>.</h3>
     <h2 style="text-align: center">
       <b style="color: red;">Due: 11/19/24 11:59pm</b>
@@ -770,10 +770,15 @@ $$\implies \mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}(\mathbf{x}_t - \frac{1 -
   window.addEventListener('load', function() {
     // Handle video autoplay and playback speed
     var videos = document.querySelectorAll('video');
-    videos.forEach(function(video) {
-      video.playbackRate = 0.75; // Set playback rate to 25%
-      video.play();
-    });
+      videos.forEach(function(video) {
+        video.playbackRate = 1; // Slows down the video to approximately 1.5x longer duration
+        video.play();
+        
+        // Add timeout to reverse video after 2 seconds
+        setTimeout(() => {
+          playInReverse(video);
+        }, 2000);
+      });
 
     // Handle animations
     const zoomEls = document.querySelectorAll('.zoom-animation');
@@ -829,6 +834,7 @@ Modify the UNet (e.g. with skip connections) such that it can fit better during 
     You can reference any code on github, but your implementation needs to follow the same code structure as our DDPM implementation.
     In other words, the code change required should be minimal: only changing the forward and sample functions.
   </p>
-  <p>This project was a joint effort by Daniel Geng, Hang Gao, and Ryan Tabrizi, advised by Liyue Shen, Andrew Owens, and Alexei Efros. </p>
+  <h3>Acknowledgements</h3>
+  <p>This project was a joint effort by <a href="https://dangeng.github.io/">Daniel Geng</a>, <a href="https://hangg7.com/">Hang Gao</a>, and <a href="https://ryantabrizi.com/">Ryan Tabrizi</a>, advised by <a href="https://liyueshen.engin.umich.edu/">Liyue Shen</a>, <a href="https://andrewowens.com/">Andrew Owens</a>, and <a href="https://people.eecs.berkeley.edu/~efros/">Alexei Efros</a>. </p>
   </body>
 </html>

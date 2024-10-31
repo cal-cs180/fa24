@@ -389,18 +389,18 @@
     
     <video id="video5" width="640" height="320" muted 
         style="display: block; margin-left: auto; margin-right: auto;"
-        onmouseover="this.play()" 
-        onmouseout="playInReverse(this)">
-        <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
+        onmouseover="handleMouseOver(this)" 
+        onmouseout="handleMouseOut(this)">
+        <source type="video/mp4" src="assets/mnist.mp4" />
     </video>
     </div>
 
     <br />
     <h1 style="text-align: center">Diffusion Models!</h1>
     <h2 style="text-align: center">
-      <b style="color: red">Part A Due: 11/07/24 11:59pm</b>
+      <b style="color: red"><a href="parta.html" style="color: red !important; text-decoration: underline !important;">Part A</a> Due: 11/07/24 11:59pm</b>
       <br />
-      <b style="color: red">Part B Due: 11/19/24 11:59pm</b>
+      <b style="color: red"><a href="partb.html" style="color: red !important; text-decoration: underline !important;">Part B</a> Due: 11/19/24 11:59pm</b>
     </h2>
     <h4 style="text-align: center">
       <b
@@ -411,8 +411,7 @@
     </h4>
 
     <h2>Overview</h2>
-    In this project you will implement and deploy diffusion models for
-    conditional image generation. It is divided into two parts
+    In this project you will implement and deploy diffusion models for image generation. It is divided into two parts
     <b>with two separate due dates</b> (see below).
     
     <br>
@@ -424,15 +423,12 @@
     <ol>
       <li>
         <b style="color: red">Nov. 07 2024</b>: Code and project webpage for
-        <a href="parta.html">the first part</a> should be complete and submitted
-        to gradescope, along with any bells and whistles.
+        <a href="parta.html">part A</a> should be completed by this date to stay on track. It is <em>not</em> graded, but bells and whistles can be submitted with part B.
       </li>
       <li>
         <b style="color: red">Nov. 19 2024</b>: Code and project webpage for
-        <a href="partb.html">the second part</a> should be complete and
-        submitted to gradescope, along with any bells and whistles. Note: the
-        webpage for part 2 should be the same as the webpage for part 1, you
-        should append your results to the webpage for part 1.
+        <a href="partb.html">part B</a> should be complete and
+        submitted to gradescope, along with any bells and whistles.
       </li>
     </ol>
   </body>
@@ -444,8 +440,13 @@
       // Handle video autoplay
       var videos = document.querySelectorAll('video');
       videos.forEach(function(video) {
-        video.playbackRate = 0.67; // Slows down the video to approximately 1.5x longer duration
+        video.playbackRate = 1; // Slows down the video to approximately 1.5x longer duration
         video.play();
+        
+        // Add timeout to reverse video after 2 seconds
+        setTimeout(() => {
+          playInReverse(video);
+        }, 2000);
       });
   
       // Handle animations
@@ -470,13 +471,30 @@
     });
   </script>
   <script>
+    let isReversing = false;
+
+    function handleMouseOver(video) {
+        if (isReversing) {
+            // If we're currently reversing, stop that process
+            isReversing = false;
+        }
+        video.playbackRate = 1;
+        video.play();
+    }
+
+    function handleMouseOut(video) {
+        playInReverse(video);
+    }
+
     function playInReverse(video) {
+        isReversing = true;
         const fps = 30;
         const interval = 1000 / fps;
-        const step = 0.028;  // Increased from 0.0222 for faster playback (~1.2s duration)
+        const step = 0.028;
         
         function decreaseTime() {
-            if (video.currentTime <= 0) {
+            if (!isReversing || video.currentTime <= 0) {
+                isReversing = false;
                 video.pause();
                 return;
             }
@@ -490,5 +508,5 @@
   </script>
 
   <h3>Acknowledgements</h3>
-  <p>This project was a joint effort by Daniel Geng, Hang Gao, and Ryan Tabrizi, advised by Liyue Shen, Andrew Owens, and Alexei Efros. </p>
+  <p>This project was a joint effort by <a href="https://dangeng.github.io/">Daniel Geng</a>, <a href="https://hangg7.com/">Hang Gao</a>, and <a href="https://ryantabrizi.com/">Ryan Tabrizi</a>, advised by <a href="https://liyueshen.engin.umich.edu/">Liyue Shen</a>, <a href="https://andrewowens.com/">Andrew Owens</a>, and <a href="https://people.eecs.berkeley.edu/~efros/">Alexei Efros</a>. </p>
 </html>
