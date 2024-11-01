@@ -341,7 +341,6 @@
         >CS180: Intro to Computer Vision and Computational Photography
       </a>
     </h1>
-    <p style="text-align: center;">Hover Over Us!</p>
     <div class="image-container">
       <div>
         <div class="dissolve-container">
@@ -365,7 +364,7 @@
           <img src="assets/sdedit_bear2.png" alt="Edited Dog"
             class="dissolve-image edited">
         </div>
-        <p>Image-to-Image Translation</p>
+        <p>"Make it Real"</p>
       </div>
       <div>
         <img src="assets/skull2.png" alt="Man Wearing Hat"
@@ -387,6 +386,8 @@
 
     </div>
     
+    <!-- <p style="text-align: center; font-size: 0.5em; margin: 1px 0;">Hover Over Us!</p> -->
+
     <video id="video5" width="640" height="320" muted 
         style="display: block; margin-left: auto; margin-right: auto;"
         onmouseover="handleMouseOver(this)" 
@@ -396,7 +397,7 @@
     </div>
 
     <br />
-    <h1 style="text-align: center">Diffusion Models!</h1>
+    <h1 style="text-align: center">Fun With Diffusion Models!</h1>
     <h2 style="text-align: center">
       <b style="color: red"><a href="parta.html" style="color: red !important; text-decoration: underline !important;">Part A</a> Due: 11/07/24 11:59pm</b>
       <br />
@@ -474,12 +475,11 @@
     let isReversing = false;
 
     function handleMouseOver(video) {
-        if (isReversing) {
-            // If we're currently reversing, stop that process
-            isReversing = false;
-        }
+        // Stop any reverse playback
+        isReversing = false;
+        // Ensure video plays forward from current position
         video.playbackRate = 1;
-        video.play();
+        video.play().catch(e => console.log("Play failed:", e));
     }
 
     function handleMouseOut(video) {
