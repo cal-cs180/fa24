@@ -56,24 +56,24 @@
   text-align: center;
   margin-top: 10px;
 }
-      /* Two image containers */
-      .column {
-        float: left;
-        width: 45%;
-        padding: 5px;
-      }
+    /* Two image containers */
+    .column {
+      float: left;
+      width: 45%;
+      padding: 5px;
+    }
 
-      /* Clear floats after image containers */
-      .row::after {
-        content: "";
-        clear: both;
-        display: table;
+    /* Clear floats after image containers */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    code {
+          background-color: #f4f4f4;
+          padding: 2.5px;
+          border-radius: 5px;
       }
-      code {
-            background-color: #f4f4f4;
-            padding: 5px;
-            border-radius: 5px;
-        }
         .image-container {
   display: flex;
   justify-content: center;
@@ -285,7 +285,7 @@
     <h1>
       <img src="assets/ucbseal.png" alt="berkeley logo" height="75"
         width="75" />Programming Project #5 (<tt>proj5</tt>)<br />
-      <a href="https://cal-cs180.github.io/fa24/index.html">CS180: Intro to
+      <a href="../../index.html">CS180: Intro to
         Computer Vision and Computational Photography </a>
     </h1>
     <div>
@@ -322,140 +322,114 @@
     <h1>Part 1: Training a Single-Step Denoising U-Net</h1>
     <h2> 1.0 Problem Formulation </h2>
     <p class="text">
-      Let's warmup by building a simple one-step denoiser. Given a noisy $z$, we
-      aim to train a denoiser $D_\theta$ such that it maps the noise to a clean
-      image $x$. To do so, we can apply a simple MSE loss:
-      $$L = \mathbb{E}_{z,x} \|D_{\theta}(z) - x\|^2. \tag{1}$$
+      Let's warmup by building a simple one-step denoiser. Given a noisy image $z$, we
+      aim to train a denoiser $D_\theta$ such that it maps $z$ to a clean
+      image $x$. To do so, we can optimize over an L2 loss:
+      $$L = \mathbb{E}_{z,x} \|D_{\theta}(z) - x\|^2 \tag{1}$$
     </p>
-    <h2> 1.1 Implementing Simple and Composed Ops</h2>
-    In this project, we implement the denoiser as a U-Net [1]. It consists of a
-    few downsampling and upsampling blocks with skip connections. For better
-    understanding, let's define a few tensor operations:
+    <h2> 1.1 Implementing the UNet</h2>
+    In this project, we implement the denoiser as a <a href="https://arxiv.org/abs/1505.04597"> UNet</a>. It consists of a
+    few downsampling and upsampling blocks with skip connections.
+    <br>
+    <br>
     <div style="text-align: center;">
-      <img src="assets/unet_ops.jpg" alt="U-Net Operations" height="400"
+      <img src="assets/unet3.png" alt="U-Net Architecture" height="500"
         style="display: block; margin-left: auto; margin-right: auto" />
-      <p class="text">Figure 1: UNet Operations</p>
+      <p class="text">Figure 1: Unconditional UNet</p>
     </div>
-    Specifically, we denote <code> C(k, s, p)</code> as a 2D convolution layer
-    with kernel size <code>k</code>, stride <code>s</code>, and padding
-    <code>p</code>. <code> BN</code> is a batch normalization layer.
-    <code> GELU</code> is a GELU activation (similar to ReLU).
-    <code> C^{-1}(k, s, p)</code> is a transposed 2D convolution layer. <code>
-      AvgPool(k)</code> is an average pooling layer with kernel size
-    <code>k</code>.
+    
+    
+    
+    <p>The diagram above uses a number of standard tensor operations defined as follows:</p>
+    <div style="text-align: center;">
+      <img src="assets/unet_atomic_ops.png" alt="U-Net Operations" height="400"
+        style="display: block; margin-left: auto; margin-right: auto" />
+      <p class="text">Figure 2: UNet Operations</p>
+    </div>
 
     <br\>
-      Our simple operations are defined as shown in the figure above. We note
-      that
+      Note:
       <ul>
-        <li><code>Conv</code> doesn't change the image resolution, only the
-          channel dimension.</li>
-        <li><code>DownConv</code> downsamples the tensor by 2.</li>
-        <li><code>UpConv</code> upsamples the tensor by 2.</li>
-        <li><code>Flatten</code> flattens a 7x7 tensor into a 1x1 tensor. The 7
-          here is arbitrary, but it is what we are going to use for MNIST.</li>
-        <li><code>Unflatten</code> unflattens a 1x1 tensor into a 7x7
+        <li><b><tt>(1) Conv</tt></b> doesn't change the image resolution, only the channel dimension.</li>
+        <li><b><tt>(2) DownConv</tt></b> downsamples the tensor by 2.</li>
+        <li><b><tt>(3) UpConv</tt></b> upsamples the tensor by 2.</li>
+        <li><b><tt>(4) Flatten</tt></b> flattens a 7x7 tensor into a 1x1 tensor. 7 is the resulting height and width after the downsampling operations.</li>
+        <li><b><tt>(5) Unflatten</tt></b> unflattens a 1x1 tensor into a 7x7
           tensor.</li>
-        <li><code>Concat</code> is a simple channel-wise concatenation between
-          two tensors with the same 2D shape.</li>
+        <li><b><tt>(6) Concat</tt></b> is a simple channel-wise concatenation between tensors with the same 2D shape. This is simply <code>torch.cat</code>.</li>
+        <li><code>D</code> is the number of hidden channels and is a hyperparameter that we will set ourselves.</li>
       </ul>
 
       <p class="text">
-        Composed operations are created using simple operations:
+        We define composed operations using our simple operations in order to make our network deeper. This doesn't change the tensor's height, width, or number of channels, but simply adds more learnable parameters.
         <ul>
-          <li><code>ConvBlock</code>, is similar to <code>Conv</code> but made
-            deeper.</li>
-          <li><code>DownBlock</code>, is similar to <code>DownConv</code> but
-            made deeper.</li>
-          <li><code>UpBlock</code>, is similar to <code>UpConv</code> but made
-            deeper.</li>
+          <li><b><tt>(7) ConvBlock</tt></b>, is similar to <b><tt>Conv</tt></b> but includes an additional <b><tt>Conv</tt></b>. Note that it has the same input and output shape as <b><tt> (1) Conv</tt></b>.</li> 
+          <li><b><tt>(8) DownBlock</tt></b>, is similar to <b><tt>DownConv</tt></b> but includes an additional <b><tt>ConvBlock</tt></b>. Note that it has the same input and output shape as <b><tt> (2) DownConv</tt></b>.</li>
+          <li><b><tt>(9) UpBlock</tt></b>, is similar to <b><tt>UpConv</tt></b> but includes an additional <b><tt>ConvBlock</tt></b>. Note that it has the same input and output shape as <b><tt> (3) UpConv</tt></b>.</li>
         </ul>
       </p>
-      <p class="text">
-        <br>
-        [1] Ronneberger, O., Fischer, P., & Brox, T. (2015). U-Net:
-        Convolutional networks for biomedical image segmentation. In
-        International Conference on Medical image computing and
-        computer-assisted intervention (pp. 234-241). Springer, Cham.
-      </p>
 
-      <b>Deliverable</b>
-      <ul>
-        <li> Implement the operations that we defined by following the previous
-          figure closely.</li>
-      </ul>
+      Within the simple operations:
+    <ul>
+      <li><b><tt>Conv2d(kernel_size, stride, padding)</tt></b> is <code>nn.Conv2d(kernel_size, stride, padding)</code></li>
+      <li><b><tt>BN</tt></b> is <code>nn.BatchNorm2d</code></li>
+      <li><b><tt>GELU</tt></b> is <code>nn.GELU()</code></li>
+      <li><b><tt>Conv2d⁻¹(kernel_size, stride, padding)</tt></b> is <code>nn.ConvTranspose2d(kernel_size, stride, padding)</code></li>
+      <li><b><tt>AvgPool(kernel_size)</tt></b> is <code>nn.AvgPool2d(kernel_size)</code></li>
+    </ul>
 
-      <b>Hint</b>
-      <ul>
-        <li>You don't need to implement <code>Concat</code> since it's just
-          <code>torch.cat</code>.</li>
-      </ul>
-      <h2> 1.2 Implementing Unconditional U-Net</h2>
-      <br>
-      <br>
-      <div style="text-align: center;">
-        <img src="assets/unet.png" alt="U-Net Architecture" height="500"
-          style="display: block; margin-left: auto; margin-right: auto" />
-        <p class="text">Figure 2: Unconditional UNet</p>
-      </div>
-      <b>Deliverable</b>
-      <ul>
-        <li> Implement the UNet by following the figure above.</li>
-      </ul>
-      <h2> 1.3 Putting It All Together: Training and Sampling</h2>
+      <h2> 1.2 Using the UNet to Train a Denoiser</h2>
       Recall from equation 1 that we aim to solve the following denoising
       problem:
 
-      Given a noise $z$, we aim to train a denoiser $D_{\theta}$ such that it
-      maps the noise to a clean image $x$:
+      Given a noisy image $z$, we
+      aim to train a denoiser $D_\theta$ such that it maps $z$ to a clean
+      image $x$. To do so, we can optimize over an L2 loss
       $$
       L = \mathbb{E}_{z,x} \|D_{\theta}(z) - x\|^2.
       $$
 
-      Let's consider the following noising process for generating $z$ during
-      training:
+      To train our denoiser, we need to generate training data pairs of ($z$, $x$), where each $x$ is a clean MNIST digit. For each training batch, we can generate $z$ from $x$ using the the following noising process:
       $$
       z = x + \sigma \epsilon,\quad \text{where }\epsilon \sim N(0, I). \tag{2}
       $$
 
-      Visualize the different noising processes over $\sigma = [0.0, 0.2, 0.4,
-      0.6, 0.8]$, assuming normalized $x \in [0, 1]$ You will recreate this
-      visual as a deliverable.
+      Visualize the different noising processes over $\sigma = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$, assuming normalized $x \in [0, 1]$. 
 
       It should be similar to the following plot:
       <div style="text-align: center;">
-        <img src="assets/varying-sigmas.png" alt="Varying Sigmas" height="600"
+        <img src="assets/varying_sigma.png" alt="Varying Sigmas" height="600"
           style="display: block; margin-left: auto; margin-right: auto" />
-        <p class="text">Figure 3. Ablation on noise level</p>
+        <p class="text">Figure 3. Varying levels of noise on MNIST digits</p>
       </div>
-      <h2>1.3.1 Training</h2>
+      <h2>1.2.1 Training</h2>
       <p class="text">
-        Now, we will train the model to perform denoising. To make the problem
-        easy enough, you should set $\sigma = 0.5$ when training.
+        Now, we will train the model to perform denoising.
       </p>
-      <p class="text">
-        This means that you might want to implement these:
-      </p>
-      <p class="text">
-        We recommend using Adam as the optimizer and the following
-        hyperparameters:
-      </p>
-      <div style="width: 30%;">
-        <pre><code>num_hidden = 128
-batch_size = 256
-num_epochs = 5
-lr = 1e-4
-</code></pre>
-      </div>
+      <ul>
+        <li><b>Objective:</b> Train a denoiser to denoise noisy image $z$ with $\sigma = 0.5$ applied to a clean image $x$.</li>
+        
+        <li><b>Dataset and dataloader:</b> Use the MNIST dataset via <code>torchvision.datasets.MNIST</code> with flags to access training and test sets. Shuffle the dataset before creating the dataloader. Recommended batch size: 256.
+
+          <ul>
+            <li>We recommend only noising the image batches when fetched from the dataloader.</li>
+          </ul>
+        
+        </li>
+        
+        <li><b>Model:</b> Use the UNet architecture defined in section 1.1 with recommended hidden dimension of 128 (this is <code>D</code> in the diagrams above).</li>
+        
+        <li><b>Optimizer:</b> Use Adam optimizer with learning rate of 1e-4.</li>
+      </ul>
       <div style="text-align: center;">
-        <img src="assets/unet_training_loss.png" alt="Training Loss Curve"
+        <img src="assets/training_losses_uncond.png" alt="Training Loss Curve"
           height="400"
           style="display: block; margin-left: auto; margin-right: auto" />
         <p class="text">Figure 4. Training Loss Curve</p>
       </div>
 
       <p class="text"></p>
-      You should visualize your sampling quality on the test set at the end of
+      You should visualize denoised results on the test set at the end of
       training. Display sample results after the 1st and 5th epoch.
     </p>
     <p class="text">
@@ -465,39 +439,33 @@ lr = 1e-4
       <img src="assets/unet_sample_epoch0.png" alt="After the first epoch"
         height="400"
         style="display: block; margin-left: auto; margin-right: auto" />
-      <p class="text">Figure 5. Results after 1 epoch of training</p>
+      <p class="text">Figure 5. Results on digits from the test set after 1 epoch of training</p>
     </div>
     <div style="text-align: center;">
       <img src="assets/unet_sample_epoch5.png" alt="After the 5-th epoch"
         height="400"
         style="display: block; margin-left: auto; margin-right: auto" />
-      <p class="text">Figure 6. Results after 5 epochs of training</p>
+      <p class="text">Figure 6. Results on digits from the test set after 5 epochs of training</p>
     </div>
 
-    <h2>1.3.2 Sampling</h2>
+    <h2>1.2.2 Out-of-Distribution Testing</h2>
 
     <p class="text">
-      Once trained enough, we can use our denoising UNet on noisy samples from
-      our test set.
+      Our denoiser was trained on MNIST digits noised with $\sigma = 0.5$. Let's see how the denoiser performs on different $\sigma$'s that it wasn't trained for.
     </p>
     <p class="text">
-      After the model is trained, you can test by keeping the same image, and
-      varying $\sigma = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]$.
-      The results should look like this on the <b>test set</b>:
+      Visualize the denoiser results on test set digits with varying levels of noise $\sigma = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$.
     </p>
     <div style="text-align: center;">
-      <img src="assets/varying_sigmas_7.png" alt="Varying Sigmas" height="400"
-        style="display: block; margin-left: auto; margin-right: auto" />
-      <p class="text">Figure 7. Results on varying noise levels.</p>
+      <img src="assets/out_of_distribution2.png" alt="Varying Sigmas" 
+        style="max-width: 90%; height: auto; display: block; margin-left: auto; margin-right: auto" />
+      <p class="text">Figure 7. Results on digits from the test set with varying noise levels.</p>
     </div>
 
     <h2> 1.4 Deliverables </h2>
-    <p class="text">
-      <b>Deliverables</b>
-    </p>
     <ul>
       <li>A visualization of different noising process over $\sigma = [0.0,
-        0.2, 0.4, 0.6, 0.8, 1.0]$. (figure 3)</li>
+        0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$. (figure 3)</li>
       <li>A training loss curve plot every few iterations during the whole
         training process (figure 4). That means you are in charge of:
         <ul>
@@ -510,8 +478,8 @@ lr = 1e-4
         <li>Sample results on the test set after the first and the 5-th epoch
           (staff solution takes ~7 minutes for 5 epochs on a Colab T4 GPU).
           (figure 5, 6)</li>
-        <li>Sample results after the model is trained. Keep the same image and
-          vary $\sigma = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]$. (figure 7)</li>
+        <li>Sample results on the test set with out-of-distribution noise levels after the model is trained. Keep the same image and
+          vary $\sigma = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$. (figure 7)</li>
       </ul>
 
       <b>Hint</b>
@@ -530,17 +498,10 @@ lr = 1e-4
       </ul>
 
       <h1>Part 2: Training a DDPM Denoising U-Net</h1>
-      From the last part, you can see that our single-step denoiser doesn't
-      work well when denoising very noisy image.
-      This is because this problem is too hard to solve in one step.
-      Instead we can denoise the image iteratively.
-      This is the main intuition behind Denoising Diffusion Probabilistic
-      Models [2] (DDPM), which we will implement in this part.
-
-      <p>
-        [2] Jonathan Ho, Ajay Jain, and Pieter Abbeel. Denoising diffusion
-        probabilistic models, 2020.
-
+      Now, we are ready for diffusion, where we can iteratively denoise the image. We will implement <a href="https://arxiv.org/abs/2006.11239">DDPM</a> in this part. 
+      
+      <p class="text">
+        One small change is that we're going to change our UNet from part 1 to predict the noise instead of the clean image (like in part 4A of the project).
       </p>
 
       <h2> 2.0 Problem Formulation </h2>
@@ -549,9 +510,9 @@ lr = 1e-4
         Let's reconsider the problem in part 1, but to its extreme:
       </p>
       <p class="text">
-        Given a noise $\epsilon \sim N(0, I)$, we aim to train a denoiser
-        $D_{\theta}$ such that it maps the noise to a clean image $x$.
-        To do so, we can still apply a simple MSE loss:
+        Given a pure noise image $\epsilon \sim N(0, I)$, we aim to train a denoiser
+        $D_{\theta}$ such that it maps the noise image to a clean image $x$.
+        To do so, we can still apply a simple L2 loss:
       </p>
       <p class="text" style="text-align: center;">
         $$L = \mathbb{E}_{\epsilon,x} \|D_{\theta}(\epsilon) - x\|^2.$$
@@ -559,12 +520,10 @@ lr = 1e-4
       <p class="text">
         The difference here, compared to part 1, is that $\epsilon$ is
         <i>pure</i> noise.
-        If we can learn to remove pure noise, we can more expressively
-        generate images, therefore this is a generative problem!
+        If we can learn to remove pure noise, this will allow us to generate novel images, not just those in our training set.
       </p>
       <p class="text">
-        Directly solving this problem is too hard (as we seen in part 1).
-        So we consider a time-step conditioned model instead,
+        We consider a time-step conditioned model,
       </p>
       <p class="text" style="text-align: center;">
         $$L = \mathbb{E}_{\epsilon,x_0,t} \|\epsilon_{\theta}(x_t, t) -
@@ -873,8 +832,6 @@ up1 = fc2_t * up1 + fc2_c
           5.0.
           Note: you do not need to generate gifs (this can be done as B&W
           below).
-          <p class="text">
-          </p>
           <!-- First row with 2 videos -->
           <div class="image-container" style="justify-content: center;">
             <div style="width: 100%;">
