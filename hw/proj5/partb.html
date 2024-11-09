@@ -409,7 +409,7 @@
       <ul>
         <li><b>Objective:</b> Train a denoiser to denoise noisy image $z$ with $\sigma = 0.5$ applied to a clean image $x$.</li>
         
-        <li><b>Dataset and dataloader:</b> Use the MNIST dataset via <code>torchvision.datasets.MNIST</code> with flags to access training and test sets. Shuffle the dataset before creating the dataloader. Recommended batch size: 256.
+        <li><b>Dataset and dataloader:</b> Use the MNIST dataset via <code>torchvision.datasets.MNIST</code> with flags to access training and test sets. Shuffle the dataset before creating the dataloader. Recommended batch size: 256. We'll train over our dataset for 5 epochs.
 
           <ul>
             <li>We recommend only noising the image batches when fetched from the dataloader.</li>
