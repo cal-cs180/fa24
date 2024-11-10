@@ -319,7 +319,7 @@
       style="margin-left: 5px;"> This project, in many ways, will be the most
       difficult project this semester.</span>
 
-    <h1>Part 1: Training a Single-Step Denoising U-Net</h1>
+    <h1>Part 1: Training a Single-Step Denoising UNet</h1>
     <h2> 1.0 Problem Formulation </h2>
     <p class="text">
       Let's warmup by building a simple one-step denoiser. Given a noisy image $z$, we
@@ -333,7 +333,7 @@
     <br>
     <br>
     <div style="text-align: center;">
-      <img src="assets/unet3.png" alt="U-Net Architecture" height="500"
+      <img src="assets/unet3.png" alt="UNet Architecture" height="500"
         style="display: block; margin-left: auto; margin-right: auto" />
       <p class="text">Figure 1: Unconditional UNet</p>
     </div>
@@ -342,7 +342,7 @@
     
     <p>The diagram above uses a number of standard tensor operations defined as follows:</p>
     <div style="text-align: center;">
-      <img src="assets/unet_atomic_ops.png" alt="U-Net Operations" height="400"
+      <img src="assets/unet_atomic_ops.png" alt="UNet Operations" height="400"
         style="display: block; margin-left: auto; margin-right: auto" />
       <p class="text">Figure 2: UNet Operations</p>
     </div>
@@ -497,7 +497,7 @@
         </li>
       </ul>
 
-      <h1>Part 2: Training a DDPM Denoising U-Net</h1>
+      <h1>Part 2: Training a DDPM Denoising UNet</h1>
       Now, we are ready for diffusion, where we can iteratively denoise the image. We will implement <a href="https://arxiv.org/abs/2006.11239">DDPM</a> in this part. 
       
       <p class="text">
@@ -522,24 +522,24 @@
         <i>pure</i> noise.
         If we can learn to remove pure noise, this will allow us to generate novel images, not just those in our training set.
       </p>
+
+      <p class="text">However, we saw in part A that one-step denoising does not yield good results. Instead, we can <em>iteratively</em> denoise the image for better results.</p>
+
       <p class="text">
-        We consider a time-step conditioned model,
+        For iterative denoising, we condition our model on timestep $t$ such that it can learn time-specific denoising. We can equivalently predict the noise added to the image rather than the denoised image itself.
       </p>
       <p class="text" style="text-align: center;">
         $$L = \mathbb{E}_{\epsilon,x_0,t} \|\epsilon_{\theta}(x_t, t) -
         \epsilon\|^2. \tag{3}$$
       </p>
       <p class="text" style="text-align: center;">
-        $$\text{where }x_t = a_t x_0 + b_t \epsilon,~x_T := \epsilon,~x_0 :=
-        x,~t \in \{0, 1, \cdots, T\},~\epsilon \sim N(0, I),~T=1000.$$
+        $$\text{where }x_t = a_t x_0 + b_t \epsilon,~x_T := \epsilon$$ $$~t \in \{0, 1, \cdots, T\},~\epsilon \sim N(0, I).$$
       </p>
       <p class="text">
-        Here, $a_t, b_t$ can be thought of as some random function of $t$ for
-        now.
+        For now, $a_t$ and $b_t$ can be thought of as some random function of $t$.
       </p>
       <p class="text">
-        The nice thing about this formulation is that we can now denoise
-        <b>iteratively</b>.
+        You can imagine that, with a time-conditioned denoising UNet, we can go from one-step denoising to iterative denoising:
       </p>
       <p class="text" style="text-align: center;">
         $$x_{T-1} = x_T - \epsilon_\theta(x_T; T)$$
@@ -548,43 +548,44 @@
         $$x_0 = x_{1} - \epsilon_\theta(x_{1}; 1).$$
       </p>
       <p class="text">
-        Please note that this equation isn't <i>the</i> most mathematically
-        correct formulation in its detail, but should be helpful for our
-        intuitive understanding. TL;DR we can perform iterative denoising to
-        (hopefully) get better results than a one-step denoiser as shown in
-        part 1, which is especially useful when our noisy inputs are pure
-        Gaussian noise.
+        We can therefore perform iterative denoising to get better results than a one-step denoiser as shown in part 1, which is especially useful when our noisy inputs are pure Gaussian noise.
       </p>
 
-      <h2> 2.1 Refactoring Your Unconditional U-Net for DDPM</h2>
+      <p class="text">In practice, our model is predicting the entire noise added to $x_0$ to get $x_t$ rather than intermediate amounts of noise, but the coefficients $a_t$ and $b_t$ will appropriately scale such that we recover intermediate noise samples $x_i$ for $i \in \{1, \cdots, T-1\}$.
+        Additionally, because of this scaling we cannot directly subtract the noise as shown above, but will instead do so under a different process shown later.
+      </p>
+
+      <h2> 2.1 Refactoring Your Unconditional UNet for DDPM</h2>
       In order to do iterative denoising, we first need to add condition $t$
       into our model.
       We will also add a class-label condition $c$ into our model for when we
       later do class-conditioned denoising with classifier-free guidance.
 
       <p class="text">Let's first define a new operator called
-        <code>FCBlock</code> (fully-connected block):</p>
+        <b><tt>FCBlock</tt></b> (fully-connected block):</p>
       <div style="text-align: center;">
-        <img src="assets/FCBlock.png" alt="FCBlock" height="400"
+        <img src="assets/fc_new.png" alt="FCBlock" height="200"
           style="display: block; margin-left: auto; margin-right: auto" />
         <p class="text">Figure 8. FCBlock for conditioning</p>
       </div>
-      Here <code>L(d_in, d_out)</code> notates a linear layer with
-      <code>d_in</code> as input channels and <code>d_out</code> as output
-      channels.
+      Here  <b><tt>L(F_in, F_out)</tt></b> is a linear layer with
+      <b><tt>F_in</tt></b> input features and <b><tt>F_out</tt></b> output
+      features. You can implement it using <code>nn.Linear</code>.
 
-      Also, let's get these tensors from the previous implementation:
+      <p class="text">To condition our network on time and class-label, we can apply conditioning after unflattening and the first upsample:</p>
+      <br>
+      <br>
       <div style="text-align: center;">
-        <img src="assets/unet_highlighted.png" alt="U-Net Highlighted"
+        <img src="assets/conditional_new.png" alt="UNet Highlighted"
           height="500"
           style="display: block; margin-left: auto; margin-right: auto" />
-        <p class="text">Figure 9. Conditional U-Net</p>
+        <p class="text">Figure 9. Conditional UNet</p>
       </div>
 
       <p class="text">
         You can embed $t$ and $c$ by following this pseudo code:
       </p>
-      <div style="width: 40%;">
+      <div style="width: 20%;">
         <pre><code class="language-python">
 fc1_t = FCBlock(...)
 fc1_c = FCBlock(...)
@@ -598,11 +599,11 @@ c2 = fc2_c(c)
 
 # Follow diagram to get unflatten.
 # Replace the original unflatten with modulated unflatten.
-unflatten = fc1_t * unflatten + fc1_c
+unflatten = fc1_c * unflatten + fc1_t
 # Follow diagram to get up1.
 ...
 # Replace the original up1 with modulated up1.
-up1 = fc2_t * up1 + fc2_c
+up1 = fc2_c * up1 + fc2_t
 # Follow diagram to get the output.
 ...
     </code></pre>
@@ -833,141 +834,98 @@ up1 = fc2_t * up1 + fc2_c
           Note: you do not need to generate gifs (this can be done as B&W
           below).
           <!-- First row with 2 videos -->
-          <div class="image-container" style="justify-content: center;">
-            <div style="width: 100%;">
+          <div class="image-container" style="justify-content: center; max-width: 1200px; margin: 0 auto;">
+            <div style="width: 100%; max-width: 600px;">
               <p style="text-align: left;">Epoch 1</p>
               <video id="video1" width="100%" muted loop playbackRate="0.75"
                 style="display: block; margin-left: 0;">
-                <source type="video/mp4"
-                  src="assets/staff_solution_epoch1.mp4" />
+                <source type="video/mp4" src="assets/staff_solution_epoch1.mp4" />
               </video>
             </div>
-            <div style="width: 50%;">
+            <div style="width: 100%; max-width: 600px;">
               <p style="text-align: left;">Epoch 5</p>
               <video id="video2" width="100%" muted loop playbackRate="0.75"
                 style="display: block; margin-left: 0;">
-                <source type="video/mp4"
-                  src="assets/staff_solution_epoch5.mp4" />
+                <source type="video/mp4" src="assets/staff_solution_epoch5.mp4" />
               </video>
             </div>
           </div>
 
-          <!-- Second row with 3 videos -->
-          <div class="image-container"
-            style="justify-content: center; margin-top: 20px;">
-            <div style="width: 100%;">
+          <!-- Second row with 2 videos -->
+          <div class="image-container" style="justify-content: center; max-width: 1200px; margin: 20px auto 0;">
+            <div style="width: 100%; max-width: 600px;">
               <p style="text-align: left;">Epoch 10</p>
               <video id="video3" width="100%" muted loop playbackRate="0.75"
                 style="display: block; margin-left: 0;">
-                <source type="video/mp4"
-                  src="assets/staff_solution_epoch10.mp4" />
+                <source type="video/mp4" src="assets/staff_solution_epoch10.mp4" />
               </video>
             </div>
-            <div style="width: 100%;">
+            <div style="width: 100%; max-width: 600px;">
               <p style="text-align: left;">Epoch 15</p>
               <video id="video4" width="100%" muted loop playbackRate="0.75"
                 style="display: block; margin-left: 0;">
-                <source type="video/mp4"
-                  src="assets/staff_solution_epoch15.mp4" />
+                <source type="video/mp4" src="assets/staff_solution_epoch15.mp4" />
               </video>
             </div>
-            <div style="width: 100%;">
+          </div>
+
+          <!-- Third row with 1 centered video -->
+          <div class="image-container" style="justify-content: center; max-width: 1200px; margin: 20px auto 0;">
+            <div style="width: 100%; max-width: 600px;">
               <p style="text-align: left;">Epoch 20</p>
               <video id="video5" width="100%" muted loop playbackRate="0.75"
                 style="display: block; margin-left: 0;">
-                <source type="video/mp4"
-                  src="assets/staff_solution_epoch20.mp4" />
+                <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
               </video>
             </div>
           </div>
 
           <script>
   window.addEventListener('load', function() {
-    // Handle video autoplay and playback speed
+    // Handle video autoplay and playback speed for all videos
     var videos = document.querySelectorAll('video');
-      videos.forEach(function(video) {
-        video.playbackRate = 1; // Slows down the video to approximately 1.5x longer duration
-        video.play();
+    videos.forEach(function(video) {
+      video.playbackRate = 1;
+      video.loop = false;
+      video.play();
+
+      // Add hover behavior to each video
+      video.addEventListener('mouseover', function() {
+        // Pause normal playback
+        video.pause();
         
-        // Add timeout to reverse video after 2 seconds
-        setTimeout(() => {
-          playInReverse(video);
-        }, 2000);
+        // Play in reverse by decreasing currentTime
+        const rewindInterval = setInterval(() => {
+          if (video.currentTime <= 0) {
+            clearInterval(rewindInterval);
+          } else {
+            video.currentTime -= 0.05; // Slow rewind speed
+          }
+        }, 40); // Smooth interval
+
+        // Store the interval ID so we can clear it on mouseout
+        video.rewindInterval = rewindInterval;
       });
 
-    // Handle animations
-    const zoomEls = document.querySelectorAll('.zoom-animation');
-    const rotateEls = document.querySelectorAll('.rotating-image');
-    const dissolveOriginals = document.querySelectorAll('.dissolve-image.original');
-    const dissolveEditeds = document.querySelectorAll('.dissolve-image.edited');
-    
-    // Add active class to trigger animations
-    zoomEls.forEach(el => el.classList.add('active'));
-    rotateEls.forEach(el => el.classList.add('active'));
-    dissolveOriginals.forEach(el => el.classList.add('active'));
-    dissolveEditeds.forEach(el => el.classList.add('active'));
-    
-    // Remove active class after 2 seconds
-    setTimeout(() => {
-      zoomEls.forEach(el => el.classList.remove('active'));
-      rotateEls.forEach(el => el.classList.remove('active'));
-      dissolveOriginals.forEach(el => el.classList.remove('active'));
-      dissolveEditeds.forEach(el => el.classList.remove('active'));
-    }, 2000);
+      video.addEventListener('mouseout', function() {
+        // Clear the rewind interval if it exists
+        if (video.rewindInterval) {
+          clearInterval(video.rewindInterval);
+          video.rewindInterval = null;
+        }
+        // Play forward normally
+        video.play();
+      });
+    });
   });
-</script>
-          <script>
-  function playInReverse(video) {
-      const fps = 30;
-      const interval = 1000 / fps;
-      const step = 0.028;  // Increased from 0.0222 for faster playback (~1.2s duration)
-      
-      function decreaseTime() {
-          if (video.currentTime <= 0) {
-              video.pause();
-              return;
-          }
-          video.currentTime = Math.max(0, video.currentTime - step);
-          setTimeout(decreaseTime, interval);
-      }
-      
-      video.pause();
-      decreaseTime();
-  }
-</script>
-<script>
-  let isReversing = false;
 
+  // These handlers are no longer needed since we're handling everything in the load event
   function handleMouseOver(video) {
-      // Stop any reverse playback
-      isReversing = false;
-      // Ensure video plays forward from current position
-      video.playbackRate = 1;
-      video.play().catch(e => console.log("Play failed:", e));
+    // Empty or can be removed
   }
 
   function handleMouseOut(video) {
-      playInReverse(video);
-  }
-
-  function playInReverse(video) {
-      isReversing = true;
-      const fps = 30;
-      const interval = 1000 / fps;
-      const step = 0.028;
-      
-      function decreaseTime() {
-          if (!isReversing || video.currentTime <= 0) {
-              isReversing = false;
-              video.pause();
-              return;
-          }
-          video.currentTime = Math.max(0, video.currentTime - step);
-          setTimeout(decreaseTime, interval);
-      }
-      
-      video.pause();
-      decreaseTime();
+    // Empty or can be removed
   }
 </script>
           <h2> Bells & Whistles </h2>
