@@ -416,12 +416,12 @@
       </p>
 
       <h3>Diffusion Models Primer</h3>
-      <div style="text-align: center;">
+      <!-- <div style="text-align: center;">
         <img src="assets/ddpm_markov.png" alt="DDPM Markov Chain"
           style="width: 30vw; display: block; margin-left: auto; margin-right: auto" />
       </div>
 
-      <p>(<a href="https://arxiv.org/abs/2006.11239">Image Source</a>)</p>
+      <p>(<a href="https://arxiv.org/abs/2006.11239">Image Source</a>)</p> -->
 
       <p class="text">
         Starting with a clean image, $x_0$, we can iteratively add noise to an
@@ -460,12 +460,12 @@
         </p>
         <p class="text">
           $$q(x_t | x_0) = N(x_t ; \sqrt{\bar\alpha} x_0, (1 -
-          \bar\alpha_t)\mathbf{I})\tag{1}$$
+          \bar\alpha_t)\mathbf{I})\tag{A.1}$$
         </p>
         <p class="text">
           which is equivalent to computing
           $$ x_t = \sqrt{\bar\alpha_t} x_0 + \sqrt{1 - \bar\alpha_t} \epsilon
-          \quad \text{where}~ \epsilon \sim N(0, 1) \tag{2}$$
+          \quad \text{where}~ \epsilon \sim N(0, 1) \tag{A.2}$$
           That is, given a clean image $x_0$, we get a noisy image $ x_t $ at
           timestep $t$ by sampling from a Gaussian with mean $
           \sqrt{\bar\alpha_t}
@@ -622,8 +622,8 @@
         </p>
         <ul>
           <li>When removing the noise, you can't simply subtract the noise
-            estimate. Recall that in equation 2 we need to scale the noise. Look
-            at equation 2 to figure out how we predict $x_0$ from $x_t$ and
+            estimate. Recall that in equation A.2 we need to scale the noise. Look
+            at equation A.2 to figure out how we predict $x_0$ from $x_t$ and
             $t$.</li>
           <li>You will probably have to wrangle tensors to the correct device
             and
@@ -734,7 +734,7 @@
 
         $$ x_{t'} = \frac{\sqrt{\bar\alpha_{t'}}\beta_t}{1 - \bar\alpha_t} x_0 +
         \frac{\sqrt{\alpha_t}(1 - \bar\alpha_{t'})}{1 - \bar\alpha_t} x_t +
-        v_\sigma\tag{3}$$
+        v_\sigma\tag{A.3}$$
 
         <p class="text">
           where:
@@ -747,7 +747,7 @@
             explained above.</li>
           <li>$\alpha_t = \frac{\bar\alpha_t}{\bar\alpha_{t'}}$</li>
           <li>$\beta_t = 1 - \alpha_t$</li>
-          <li>$x_0$ is our current estimate of the clean image using equation 2
+          <li>$x_0$ is our current estimate of the clean image using equation A.2
             just like in section 1.3</li>
         </ul>
 
@@ -945,7 +945,7 @@
         In CFG, we compute both a conditional and an unconditional noise
         estimate. We denote these $\epsilon_c$ and $\epsilon_u$.
         Then, we let our new noise estimate be: $$\epsilon = \epsilon_u + \gamma
-        (\epsilon_c - \epsilon_u) \tag{4}$$
+        (\epsilon_c - \epsilon_u) \tag{A.4}$$
         where $\gamma$ controls the strength of CFG. Notice that for $\gamma=0$,
         we get an unconditional noise estimate, and for $\gamma=1$ we get the
         conditional noise estimate.
@@ -1217,7 +1217,7 @@
       </p>
       <p class="text">
         $$ x_t \leftarrow \textbf{m} x_t + (1 - \textbf{m})
-        \text{forward}(x_{orig}, t) \tag{5}$$
+        \text{forward}(x_{orig}, t) \tag{A.5}$$
       </p>
       <p class="text">
         Essentially, we leave everything inside the edit mask alone, but we
@@ -1351,7 +1351,7 @@
       <code>"an oil painting of people around a campfire"</code>, to get noise
       estimate $\epsilon_2$. We can flip $\epsilon_2$ back, to make it
       right-side up, and average the two noise estimates. We can then perform a
-      reverse diffusion step with the averaged noise estimate.
+      reverse/denoising diffusion step with the averaged noise estimate.
     </p>
     <p class="text">
       The full algorithm will be:

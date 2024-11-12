@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>CS180: Intro to Computer Vision and Computational Photography</title>
+    <link rel="StyleSheet" href="../style.css" type="text/css" media="all" />
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+    <script type="module" src="your-compiled-script.js"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true
+          }
+        };
+      </script>
+
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+    <style>
+        code {
+            background-color: #f4f4f4;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.image-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+  max-width: 200px;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+}
+
+.image-container p {
+  text-align: center;
+  margin-top: 10px;
+}
+    /* Two image containers */
+    .column {
+      float: left;
+      width: 45%;
+      padding: 5px;
+    }
+
+    /* Clear floats after image containers */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+    code {
+          background-color: #f4f4f4;
+          padding: 2.5px;
+          border-radius: 5px;
+      }
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+        .image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.image-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40%;
+  max-width: 200px;
+  position: relative;
+  padding: 20px;
+  overflow: visible;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  transform-origin: center center;
+}
+
+.image-container p {
+  text-align: center;
+  margin-top: 10px;
+}
+      /* Two image containers */
+      .column {
+        float: left;
+        width: 45%;
+        padding: 5px;
+      }
+
+      /* Clear floats after image containers */
+      .row::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+
+      @keyframes rotate180 {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(180deg);
+        }
+      }
+      
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+      
+      .rotating-image:hover {
+        transform: rotate(180deg);
+      }
+
+      .zoom-animation {
+        transition: transform 1s ease-in-out;
+        transform: scale(1);
+      }
+
+      .zoom-animation:hover,
+      .zoom-animation.active {
+        transform: scale(0.25);
+      }
+
+      .rotating-image {
+        transition: transform 1.5s;
+        transform: rotate(0deg);
+      }
+
+      .rotating-image:hover,
+      .rotating-image.active {
+        transform: rotate(180deg);
+      }
+
+      .caption-container {
+        position: relative;
+        height: auto;
+        min-height: 2em;
+        text-align: center;
+        width: 100%;
+        padding: 5px 0;
+      }
+
+      .caption-default, .caption-transform {
+        position: absolute;
+        width: 100%;
+        transition: opacity 1.5s;
+        white-space: normal;
+        left: 0;
+      }
+
+      .caption-transform {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-default,
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .rotating-image:hover + .caption-container .caption-transform,
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .zoom-animation:hover + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .image-container > div:hover .zoom-animation {
+        transform: scale(0.25);
+      }
+
+      .image-container > div:hover .caption-default {
+        opacity: 0;
+      }
+
+      .image-container > div:hover .caption-transform {
+        opacity: 1;
+      }
+
+      .caption-container .caption-default {
+        opacity: 1;
+        transition: opacity 1.5s;
+      }
+
+      .caption-container .caption-transform {
+        opacity: 0;
+        transition: opacity 1.5s;
+      }
+
+      .active + .caption-container .caption-default {
+        opacity: 0;
+      }
+
+      .active + .caption-container .caption-transform {
+        opacity: 1;
+      }
+
+      .dissolve-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 100%; /* Creates a square aspect ratio */
+        margin-bottom: 5px; /* Reduced from 10px to match other captions */
+      }
+
+      .dissolve-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        transition: opacity 1s ease-in-out;
+      }
+
+      .dissolve-image.original {
+        opacity: 1;
+      }
+
+      .dissolve-image.edited {
+        opacity: 0;
+      }
+
+      .dissolve-image.original.active {
+        opacity: 0;
+      }
+
+      .dissolve-image.edited.active {
+        opacity: 1;
+      }
+
+      /* Ensure consistent caption styling */
+      .image-container > div p {
+        text-align: center;
+        margin-top: 5px;  /* Reduced from 10px to align with other captions */
+        margin-bottom: 0;
+      }
+
+      /* Hover state */
+      .dissolve-container:hover .dissolve-image.original {
+        opacity: 0;
+      }
+
+      .dissolve-container:hover .dissolve-image.edited {
+        opacity: 1;
+      }
+    </style>
+  </head>
+
+  <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed>
+    <h1>
+      <img src="assets/ucbseal.png" alt="berkeley logo" height="75"
+        width="75" />Programming Project #5 (<tt>proj5</tt>)<br />
+      <a href="../../index.html">CS180: Intro to
+        Computer Vision and Computational Photography </a>
+    </h1>
+    <div>
+
+      <video id="video5" width="640" height="320" muted 
+        style="display: block; margin-left: auto; margin-right: auto;"
+        onmouseover="handleMouseOver(this)" 
+        onmouseout="handleMouseOut(this)">
+        <source type="video/mp4" src="assets/mnist.mp4" />
+    </video>
+    </div>
+    <h1 style="text-align: center">Part B: Diffusion Models from Scratch!</h1>
+    <h3 style="text-align: center;">The first part of a <a
+        href="./index.html">larger project</a>.</h3>
+    <h2 style="text-align: center">
+      <b style="color: red;">Due: 11/19/24 11:59pm</b>
+    </h2>
+    <h4 style="text-align: center">
+      <b>We recommend using GPUs from <a
+          href="https://colab.research.google.com/">Colab</a> to finish this
+        project!</b>
+    </h4>
+
+    <h2>Overview</h2>
+    In part B you will train your own diffusion model on MNIST. Starter code can
+    be found in the <a href="https://colab.research.google.com/drive/1CnyXxgexPj3zPIFQB9ju7SpfqtjFdjId?usp=sharing">provided notebook</a>.
+
+    <br>
+    <br>
+    <p style="color: red; display: inline;"><b>START EARLY!</b></p><span
+      style="margin-left: 5px;"> This project, in many ways, will be the most
+      difficult project this semester.</span>
+
+    <h1>Part 1: Training a Single-Step Denoising UNet</h1>
+    <h2> 1.0 Problem Formulation </h2>
+    <p class="text">
+      Let's warmup by building a simple one-step denoiser. Given a noisy image $z$, we
+      aim to train a denoiser $D_\theta$ such that it maps $z$ to a clean
+      image $x$. To do so, we can optimize over an L2 loss:
+      $$L = \mathbb{E}_{z,x} \|D_{\theta}(z) - x\|^2 \tag{1}$$
+    </p>
+    <h2> 1.1 Implementing the UNet</h2>
+    In this project, we implement the denoiser as a <a href="https://arxiv.org/abs/1505.04597"> UNet</a>. It consists of a
+    few downsampling and upsampling blocks with skip connections.
+    <br>
+    <br>
+    <div style="text-align: center;">
+      <img src="assets/unet3.png" alt="UNet Architecture" height="500"
+        style="display: block; margin-left: auto; margin-right: auto" />
+      <p class="text">Figure 1: Unconditional UNet</p>
+    </div>
+    
+    
+    
+    <p>The diagram above uses a number of standard tensor operations defined as follows:</p>
+    <div style="text-align: center;">
+      <img src="assets/unet_atomic_ops.png" alt="UNet Operations" height="400"
+        style="display: block; margin-left: auto; margin-right: auto" />
+      <p class="text">Figure 2: UNet Operations</p>
+    </div>
+
+    <br\>
+      Note:
+      <ul>
+        <li><b><tt>(1) Conv</tt></b> doesn't change the image resolution, only the channel dimension.</li>
+        <li><b><tt>(2) DownConv</tt></b> downsamples the tensor by 2.</li>
+        <li><b><tt>(3) UpConv</tt></b> upsamples the tensor by 2.</li>
+        <li><b><tt>(4) Flatten</tt></b> flattens a 7x7 tensor into a 1x1 tensor. 7 is the resulting height and width after the downsampling operations.</li>
+        <li><b><tt>(5) Unflatten</tt></b> unflattens a 1x1 tensor into a 7x7
+          tensor.</li>
+        <li><b><tt>(6) Concat</tt></b> is a simple channel-wise concatenation between tensors with the same 2D shape. This is simply <code>torch.cat</code>.</li>
+        <li><code>D</code> is the number of hidden channels and is a hyperparameter that we will set ourselves.</li>
+      </ul>
+
+      <p class="text">
+        We define composed operations using our simple operations in order to make our network deeper. This doesn't change the tensor's height, width, or number of channels, but simply adds more learnable parameters.
+        <ul>
+          <li><b><tt>(7) ConvBlock</tt></b>, is similar to <b><tt>Conv</tt></b> but includes an additional <b><tt>Conv</tt></b>. Note that it has the same input and output shape as <b><tt> (1) Conv</tt></b>.</li> 
+          <li><b><tt>(8) DownBlock</tt></b>, is similar to <b><tt>DownConv</tt></b> but includes an additional <b><tt>ConvBlock</tt></b>. Note that it has the same input and output shape as <b><tt> (2) DownConv</tt></b>.</li>
+          <li><b><tt>(9) UpBlock</tt></b>, is similar to <b><tt>UpConv</tt></b> but includes an additional <b><tt>ConvBlock</tt></b>. Note that it has the same input and output shape as <b><tt> (3) UpConv</tt></b>.</li>
+        </ul>
+      </p>
+
+      Within the simple operations:
+    <ul>
+      <li><b><tt>Conv2d(kernel_size, stride, padding)</tt></b> is <code>nn.Conv2d(kernel_size, stride, padding)</code></li>
+      <li><b><tt>BN</tt></b> is <code>nn.BatchNorm2d</code></li>
+      <li><b><tt>GELU</tt></b> is <code>nn.GELU()</code></li>
+      <li><b><tt>Conv2d⁻¹(kernel_size, stride, padding)</tt></b> is <code>nn.ConvTranspose2d(kernel_size, stride, padding)</code></li>
+      <li><b><tt>AvgPool(kernel_size)</tt></b> is <code>nn.AvgPool2d(kernel_size)</code></li>
+    </ul>
+
+      <h2> 1.2 Using the UNet to Train a Denoiser</h2>
+      Recall from equation 1 that we aim to solve the following denoising
+      problem:
+
+      Given a noisy image $z$, we
+      aim to train a denoiser $D_\theta$ such that it maps $z$ to a clean
+      image $x$. To do so, we can optimize over an L2 loss
+      $$
+      L = \mathbb{E}_{z,x} \|D_{\theta}(z) - x\|^2.
+      $$
+
+      To train our denoiser, we need to generate training data pairs of ($z$, $x$), where each $x$ is a clean MNIST digit. For each training batch, we can generate $z$ from $x$ using the the following noising process:
+      $$
+      z = x + \sigma \epsilon,\quad \text{where }\epsilon \sim N(0, I). \tag{2}
+      $$
+
+      Visualize the different noising processes over $\sigma = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$, assuming normalized $x \in [0, 1]$. 
+
+      It should be similar to the following plot:
+      <div style="text-align: center;">
+        <img src="assets/varying_sigma.png" alt="Varying Sigmas" height="600"
+          style="display: block; margin-left: auto; margin-right: auto" />
+        <p class="text">Figure 3. Varying levels of noise on MNIST digits</p>
+      </div>
+      <h2>1.2.1 Training</h2>
+      <p class="text">
+        Now, we will train the model to perform denoising.
+      </p>
+      <ul>
+        <li><b>Objective:</b> Train a denoiser to denoise noisy image $z$ with $\sigma = 0.5$ applied to a clean image $x$.</li>
+        
+        <li><b>Dataset and dataloader:</b> Use the MNIST dataset via <code>torchvision.datasets.MNIST</code> with flags to access training and test sets. Shuffle the dataset before creating the dataloader. Recommended batch size: 256. We'll train over our dataset for 5 epochs.
+
+          <ul>
+            <li>We recommend only noising the image batches when fetched from the dataloader.</li>
+          </ul>
+        
+        </li>
+        
+        <li><b>Model:</b> Use the UNet architecture defined in section 1.1 with recommended hidden dimension of 128 (this is <code>D</code> in the diagrams above).</li>
+        
+        <li><b>Optimizer:</b> Use Adam optimizer with learning rate of 1e-4.</li>
+      </ul>
+      <div style="text-align: center;">
+        <img src="assets/training_losses_uncond.png" alt="Training Loss Curve"
+          height="400"
+          style="display: block; margin-left: auto; margin-right: auto" />
+        <p class="text">Figure 4. Training Loss Curve</p>
+      </div>
+
+      <p class="text"></p>
+      You should visualize denoised results on the test set at the end of
+      training. Display sample results after the 1st and 5th epoch.
+    </p>
+    <p class="text">
+      They should look something like these:
+    </p>
+    <div style="text-align: center;">
+      <img src="assets/unet_sample_epoch0.png" alt="After the first epoch"
+        height="400"
+        style="display: block; margin-left: auto; margin-right: auto" />
+      <p class="text">Figure 5. Results on digits from the test set after 1 epoch of training</p>
+    </div>
+    <div style="text-align: center;">
+      <img src="assets/unet_sample_epoch5.png" alt="After the 5-th epoch"
+        height="400"
+        style="display: block; margin-left: auto; margin-right: auto" />
+      <p class="text">Figure 6. Results on digits from the test set after 5 epochs of training</p>
+    </div>
+
+    <h2>1.2.2 Out-of-Distribution Testing</h2>
+
+    <p class="text">
+      Our denoiser was trained on MNIST digits noised with $\sigma = 0.5$. Let's see how the denoiser performs on different $\sigma$'s that it wasn't trained for.
+    </p>
+    <p class="text">
+      Visualize the denoiser results on test set digits with varying levels of noise $\sigma = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$.
+    </p>
+    <div style="text-align: center;">
+      <img src="assets/out_of_distribution2.png" alt="Varying Sigmas" 
+        style="max-width: 90%; height: auto; display: block; margin-left: auto; margin-right: auto" />
+      <p class="text">Figure 7. Results on digits from the test set with varying noise levels.</p>
+    </div>
+
+    <h2> 1.3 Deliverables </h2>
+    <ul>
+      <li>A visualization of different noising process over $\sigma = [0.0,
+        0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$. (figure 3)</li>
+      <li>A training loss curve plot every few iterations during the whole
+        training process (figure 4). That means you are in charge of:
+        <ul>
+          <li>Successfully implementing the UNet.</li>
+          <li>Dataset and dataloader creation on MNIST with train/test
+            split.</li>
+          <li>Optimizer and model creation.</li>
+          <li>Training loop.</li>
+        </ul>
+        <li>Sample results on the test set after the first and the 5-th epoch
+          (staff solution takes ~7 minutes for 5 epochs on a Colab T4 GPU).
+          (figure 5, 6)</li>
+        <li>Sample results on the test set with out-of-distribution noise levels after the model is trained. Keep the same image and
+          vary $\sigma = [0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]$. (figure 7)</li>
+      </ul>
+
+      <b>Hint</b>
+      <ul>
+        <li>Since training can take a while, <b>we strongly recommend that you
+            checkpoint your model</b> every epoch onto your personal Google
+          Drive.
+          This is because Colab notebooks aren't persistent such that if you are
+          idle for a while, you will lose connection and your training progress.
+          This consists of: <ul>
+            <li>Google Drive mounting.</li>
+            <li>Epoch-wise model & optimizer checkpointing.</li>
+            <li>Model & optimizer resuming from checkpoints.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h1>Part 2: Training a DDPM Denoising UNet</h1>
+      Now, we are ready for diffusion, where we can iteratively denoise the image. We will implement <a href="https://arxiv.org/abs/2006.11239">DDPM</a> in this part. 
+      
+      <p class="text">
+        One small change is that we're going to change our UNet from part 1 to predict the noise instead of the clean image (like in part 4A of the project).
+      </p>
+
+      <h2> 2.0 Problem Formulation </h2>
+
+      <p class="text">
+        Let's reconsider the problem in part 1, but to its extreme:
+      </p>
+      <p class="text">
+        Given a pure noise image $\epsilon \sim N(0, I)$, we aim to train a denoiser
+        $D_{\theta}$ such that it maps the noise image to a clean image $x$.
+        To do so, we can still apply a simple L2 loss:
+      </p>
+      <p class="text" style="text-align: center;">
+        $$L = \mathbb{E}_{\epsilon,x} \|D_{\theta}(\epsilon) - x\|^2.$$
+      </p>
+      <p class="text">
+        The difference here, compared to part 1, is that $\epsilon$ is
+        <i>pure</i> noise.
+        If we can learn to remove pure noise, this will allow us to generate novel images, not just those in our training set.
+      </p>
+
+      <p class="text">However, we saw in part A that one-step denoising does not yield good results. Instead, we can <em>iteratively</em> denoise the image for better results.</p>
+
+      <p class="text">
+        For iterative denoising, we condition our model on timestep $t$ such that it can learn time-specific denoising. We can equivalently predict the noise added to the image rather than the denoised image itself.
+      </p>
+      <p class="text" style="text-align: center;">
+        $$L = \mathbb{E}_{\epsilon,x_0,t} \|\epsilon_{\theta}(x_t, t) -
+        \epsilon\|^2. \tag{3}$$
+      </p>
+      <p class="text" style="text-align: center;">
+        $$\text{where }x_t = a_t x_0 + b_t \epsilon,~x_T := \epsilon$$ $$~t \in \{0, 1, \cdots, T\},~\epsilon \sim N(0, I).$$
+      </p>
+      <p class="text">
+        For now, $a_t$ and $b_t$ can be thought of as some random function of $t$.
+      </p>
+      <p class="text">
+        You can imagine that, with a time-conditioned denoising UNet, we can go from one-step denoising to iterative denoising:
+      </p>
+      <p class="text" style="text-align: center;">
+        $$x_{T-1} = x_T - \epsilon_\theta(x_T; T)$$
+        $$x_{T-2} = x_{T-1} - \epsilon_\theta(x_{T-1}; T-1)$$
+        $$\cdots$$
+        $$x_0 = x_{1} - \epsilon_\theta(x_{1}; 1).$$
+      </p>
+      <p class="text">
+        We can therefore perform iterative denoising to get better results than a one-step denoiser as shown in part 1, which is especially useful when our noisy inputs are pure Gaussian noise.
+      </p>
+
+      <p class="text">In practice, our model is predicting the entire noise added to $x_0$ to get $x_t$ rather than intermediate amounts of noise, but the coefficients $a_t$ and $b_t$ will appropriately scale such that we recover intermediate noise samples $x_i$ for $i \in \{1, \cdots, T-1\}$.
+        Additionally, because of this scaling we cannot directly subtract the noise as shown above, but will instead do so under a different process shown later.
+      </p>
+
+      <h2> 2.1 Refactoring Your Unconditional UNet for DDPM</h2>
+      In order to do iterative denoising, we first need to add condition $t$
+      into our model.
+      We will also add a class-label condition $c$ into our model for when we
+      later do class-conditioned denoising with classifier-free guidance.
+
+      <p class="text">Let's first define a new operator called
+        <b><tt>FCBlock</tt></b> (fully-connected block):</p>
+      <div style="text-align: center;">
+        <img src="assets/fc_new.png" alt="FCBlock" height="200"
+          style="display: block; margin-left: auto; margin-right: auto" />
+        <p class="text">Figure 8. FCBlock for conditioning</p>
+      </div>
+      Here  <b><tt>L(F_in, F_out)</tt></b> is a linear layer with
+      <b><tt>F_in</tt></b> input features and <b><tt>F_out</tt></b> output
+      features. You can implement it using <code>nn.Linear</code>.
+
+      <p class="text">To condition our network on time and class-label, we can apply conditioning after unflattening and the first upsample:</p>
+      <br>
+      <br>
+      <div style="text-align: center;">
+        <img src="assets/conditional_new.png" alt="UNet Highlighted"
+          height="500"
+          style="display: block; margin-left: auto; margin-right: auto" />
+        <p class="text">Figure 9. Conditional UNet</p>
+      </div>
+
+      <p class="text">
+        You can embed $t$ and $c$ by following this pseudo code:
+      </p>
+      <div style="width: 20%;">
+        <pre><code class="language-python">
+fc1_t = FCBlock(...)
+fc1_c = FCBlock(...)
+fc2_t = FCBlock(...)
+fc2_c = FCBlock(...)
+
+t1 = fc1_t(t)
+c1 = fc1_c(c)
+t2 = fc2_t(t)
+c2 = fc2_c(c)
+
+# Follow diagram to get unflatten.
+# Replace the original unflatten with modulated unflatten.
+unflatten = fc1_c * unflatten + fc1_t
+# Follow diagram to get up1.
+...
+# Replace the original up1 with modulated up1.
+up1 = fc2_c * up1 + fc2_t
+# Follow diagram to get the output.
+...
+    </code></pre>
+      </div>
+      <p class="text">
+        Note that the class-label $c$ should be encoded as one-hot vector.
+      </p>
+      <p class="text">
+        Another modification you need to make is to make model take in a
+        <b>batch-wise</b> mask vector which is either 0 or 1.
+        It indicates whether or not to drop the condition $c$: drop when mask
+        is 0, not drop when mask is 1.
+        It can be null, which means just using the condition. This is so we
+        can perform line 6 of algorithm 1.
+      </p>
+
+      <h2> 2.2 Implementing DDPM Forward and Reverse Process</h2>
+      Now that we have some intuition from part 2.0, it's time to implement
+      the forward and reverse process of DDPM.
+
+      <br>
+      DDPM considers a very specific noising and denoising process:
+      <div style="text-align: center;">
+        <img src="assets/ddpm_markov.png" alt="DDPM Markov Process"
+          style="width: 50%; max-width: 1000px; display: block; margin-left: auto; margin-right: auto" />
+        <p class="text">Figure 10: DDPM markov chain. The forward process is
+          denoted by $q(x_t\mid x_{t-1})$ and the reverse process is denoted
+          by $p_\theta(x_{t-1}\mid x_t)$.
+          <br>(Image source: Ho et al. 2020 with a few additional annotations
+          from Lilian Weng)</p>
+      </div>
+
+      <p class="text">
+        Specifically, each forward step adds Gaussian noise in a
+        variance-preserving way for some variance schedule
+        $\{\beta_t\}_{t=1}^T$:
+      </p>
+      <div style="text-align: center;">
+        $$
+        q(\mathbf{x}_{1:T}|\mathbf{x}_0) := \prod_{t=1}^{T}
+        q(\mathbf{x}_t|\mathbf{x}_{t-1}),
+        \quad q(\mathbf{x}_t|\mathbf{x}_{t-1}) := N (\mathbf{x}_t; \sqrt{1 -
+        \beta_t}\mathbf{x}_{t-1}, \beta_t \mathbf{I}). \tag{4}
+        $$
+      </div>
+      <p class="text">
+        Using the reparamaterization trick presented in section 2 of the DDPM
+        paper, we can compute effective one step noising function, since a
+        Gaussian convolved with a Gaussian is still Gaussian (see <a
+          href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/#forward-diffusion-process">here</a>
+        for more details).
+      </p>
+      <p class="text">
+        Concretely, let $\alpha_t := 1 -\beta_t$ and $\bar{\alpha_t} :=
+        \prod^t_{s=1}\alpha_s$, then we can sample a noisy $x_t$ for an
+        arbitrary $t$:
+      </p>
+      <div style="text-align: center;">
+        $$
+        q(\mathbf{x}_t|\mathbf{x}_0) = N(\mathbf{x}_t; \sqrt{\bar{\alpha}_t}
+        \mathbf{x}_0, (1 - \bar{\alpha}_t)\mathbf{I}). \tag{5}
+        $$
+      </div>
+      <!-- <p class="text">
+      The important takeaway is that instead of learning to predict the cleaner image itself, it is more practical to learn to predict the noise directly, hence the objective shown in Eq. 3.
+    </p> -->
+
+      <h3>DDPM Scheduler</h3>
+      <p class="text">
+        Let's first implement the DDPM scheduler to fetch all relevant
+        variables.
+        Given $(\beta_0, \beta_T, T)$, follow the doc-string to get all useful
+        values.
+        You will use them in a bit!
+      </p>
+
+      <b>TODO: </b> Implement <code>ddpm_schedule()</code>
+
+      <br>
+      <br>
+      <h3>DDPM Forward Process</h3>
+
+      <p class="text">For brevity, we don't show the mathematical details
+        here. If you'd like to see the mathematical details, check out <a
+          href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/#forward-diffusion-process">here</a>.</p>
+
+      <b>TODO: </b> Implement our <code>ddpm_forward()</code> function by
+      following algorithm 1:
+      <br>
+      <br>
+      <div style="text-align: center;">
+        <img src="assets/algo1.1.png" alt="Algorithm Diagram"
+          style="width: 50%; max-width: 1000px; display: block; margin-left: auto; margin-right: auto" />
+      </div>
+
+      <br>
+      <br>
+      <h3>DDPM Reverse Process</h3>
+      Recall that in the reverse process we progressively work backwards to
+      reconstruct the original image $x_0$ from noise $x_T$.
+      We can sample from this process following:
+      $$p(\mathbf{x}_{t-1} | \mathbf{x}_t) = \mathcal{N}(\mathbf{x}_{t-1};
+      \tilde{\mu}_t(\mathbf{x}_t, \mathbf{x}_0), \tilde{\beta}_t
+      \mathbf{I}),\tag{6}$$
+      $$\text{where} \quad \tilde{\mu}_t(\mathbf{x}_t, \mathbf{x}_0) :=
+      \frac{\sqrt{\bar{\alpha}_{t-1}} \beta_t}{1 - \bar{\alpha}_t}
+      \mathbf{x}_0 + \frac{\sqrt{\alpha_t}(1 - \bar{\alpha}_{t-1})}{1 -
+      \bar{\alpha}_t} \mathbf{x}_t,\text{and} \quad \tilde{\beta}_t := \frac{1
+      - \bar{\alpha}_{t-1}}{1 - \bar{\alpha}_t} \beta_t. \tag{7}$$
+
+      We can think of $\tilde{\mu}_t(\mathbf{x}_t, \mathbf{x}_0)$ as a linear
+      combination of $x_0$ and $x_t$:
+      <div style="text-align: center;">
+        <img src="assets/interpolation.png" alt="Linear Combination" width="300"
+          style="display: block; margin-left: auto; margin-right: auto" />
+        <p class="text">Figure 11: Interpolation of $x_0$ and $x_t$<br>(<a
+            href="https://arxiv.org/abs/2403.18103">Image source</a>)</p>
+      </div>
+
+      <p class="text">
+        Using the same reparamaterization trick from equation 5, we can solve
+        for $x_0$:
+        $$x_0 = \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \mathbf{x}_t - \sqrt{1
+        - \bar{\alpha}_t} \epsilon_t \right),\tag{8}$$
+        <p>
+          <p class="text">
+            If we plug this back into equation 7, we get:
+            $$\tilde{\mu}_(\mathbf{x}_t, x_0) :=
+            \frac{1}{\sqrt{\alpha_t}}(\mathbf{x}_t - \frac{1 -
+            \alpha_t}{\sqrt{1 - \bar{\alpha}_t}}\epsilon_t)\tag{9}$$
+          </p>
+          Thus, by using the reparameterization trick and following equation
+          6, we can cleanly represent $x_{t-1}$ as:
+          $$\mathbf{x}_{t-1} = \tilde{\mu}_t(\mathbf{x}_t, \mathbf{x}_0) +
+          \sqrt{\tilde{\beta}_t} \mathbf{z}, \quad \mathbf{z} \sim
+          \mathcal{N}(0, \mathbf{I})\tag{10}$$
+          $$\implies \mathbf{x}_{t-1} = \frac{1}{\sqrt{\alpha_t}}(\mathbf{x}_t
+          - \frac{1 - \alpha_t}{\sqrt{1 - \bar{\alpha}_t}}\epsilon_t) +
+          \sigma_t \mathbf{z}, \quad \text{where } \sigma_t =
+          \sqrt{\tilde{\beta}_t}\tag{11}$$
+          <p class="text">
+            To model this, we train network $\mu_\theta(x_t, x_0)$ We don't
+            need to learn the $\sigma_t$ term (since it is defined by the
+            schedule), therefore we only optimize $\mu_\theta(x_t, x_0)$.
+          </p>
+          <p>Similarly, we have access to $\mathbf{x}_t$ and $\alpha$ terms,
+            so we only need to optimize a network $\epsilon_\theta(x_t, t)$ to
+            predict the noise term.</p>
+
+          <b>TODO: </b> Implement the reverse sampling process
+          <code>ddpm_sample()</code>:
+          <div style="text-align: center;">
+            <br>
+            <br>
+            <img src="assets/algo2.3.png" alt="Algorithm Diagram"
+              style="width: 50%; max-width: 1000px; display: block; margin-left: auto; margin-right: auto" />
+          </div>
+          <p class="text">
+            Again, if you are interested in the math, check out <a
+              href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/#reverse-diffusion-process">here</a>.
+          </p>
+          <p class="text">
+            Some important details:
+          </p>
+          <ul>
+            <li>At each of your denoising iteration, you want to use different
+              random seed. So a good strategy for reproduction is that you
+              first sample with the input <code>seed</code>, then shift your
+              <code>seed</code> by 1 each denoising step.</li>
+            <li>During sample CFG, you will need to forward the
+              <code>unet</code> twice, one with <code>mask =
+                torch.ones(...)</code> and one with <code>mask =
+                torch.zeros(...)</code>. You could do it in one batch, but it
+              is easy to make mistake. So I would suggest to just forward it
+              twice.</li>
+            <li>Note that we will return <code>caches</code>. It is just the
+              cache for some intermediate sampling results for animation. How
+              to cache this is your choice, but we suggest the following
+              way:</li>
+          </ul>
+          <div style="width: 30%;">
+            <pre><code>if t[0] % 20 == 0 or t[0] == num_ts or t[0] < 8:
+    caches.append(x)
+</code></pre>
+          </div>
+
+          <h2> 2.3 Putting It All Together</h2>
+
+          <p class="text">
+            We have all the pieces, let's now train our diffusion model.
+            Please consider this pseudo code for your training step.
+          </p>
+          <div style="width: 50%;">
+            <pre><code>def train_step():
+    x0 = sample_from_data()
+
+    t = uniform_sample_T()
+    loss = diffusion_forward(x0, t)
+
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+</code></pre>
+          </div>
+          <p class="text">
+            Use the same network hyperparameters as in part 1.
+            You might need to increase <code>num_epochs = 20</code> to get
+            good results (staff solution takes ~26 minutes on a Colab T4 GPU)
+          </p>
+
+          <h2> 2.4 Deliverables</h2>
+          <p class="text">
+            Your deliverables should include the following for this problem:
+          </p>
+          <ul>
+            <li>A training loss curve plot every few iterations during the
+              whole training process.</li>
+            <li>Sample results after the 1-st, 5-th, and your final epoch,
+              with <code>guidance_scale = 5</code>.</li>
+            <li>Sample results after the model is trained,
+              <code>guidance_scale = [0, 5, 10]</code>.</li>
+            <li>Describe what you see and what you think CFG is doing.</li>
+          </ul>
+
+          For reference, here are the staff solution results (without skip
+          connections) for epochs 1, 5, 10, 15, and 20 with guidance scale
+          5.0.
+          Note: you do not need to generate gifs (this can be done as B&W
+          below).
+          <!-- First row with 2 videos -->
+          <div class="image-container" style="justify-content: center; max-width: 1200px; margin: 0 auto;">
+            <div style="width: 100%; max-width: 600px;">
+              <p style="text-align: left;">Epoch 1</p>
+              <video id="video1" width="100%" muted loop playbackRate="0.75"
+                style="display: block; margin-left: 0;">
+                <source type="video/mp4" src="assets/staff_solution_epoch1.mp4" />
+              </video>
+            </div>
+            <div style="width: 100%; max-width: 600px;">
+              <p style="text-align: left;">Epoch 5</p>
+              <video id="video2" width="100%" muted loop playbackRate="0.75"
+                style="display: block; margin-left: 0;">
+                <source type="video/mp4" src="assets/staff_solution_epoch5.mp4" />
+              </video>
+            </div>
+          </div>
+
+          <!-- Second row with 2 videos -->
+          <div class="image-container" style="justify-content: center; max-width: 1200px; margin: 20px auto 0;">
+            <div style="width: 100%; max-width: 600px;">
+              <p style="text-align: left;">Epoch 10</p>
+              <video id="video3" width="100%" muted loop playbackRate="0.75"
+                style="display: block; margin-left: 0;">
+                <source type="video/mp4" src="assets/staff_solution_epoch10.mp4" />
+              </video>
+            </div>
+            <div style="width: 100%; max-width: 600px;">
+              <p style="text-align: left;">Epoch 15</p>
+              <video id="video4" width="100%" muted loop playbackRate="0.75"
+                style="display: block; margin-left: 0;">
+                <source type="video/mp4" src="assets/staff_solution_epoch15.mp4" />
+              </video>
+            </div>
+          </div>
+
+          <!-- Third row with 1 centered video -->
+          <div class="image-container" style="justify-content: center; max-width: 1200px; margin: 20px auto 0;">
+            <div style="width: 100%; max-width: 600px;">
+              <p style="text-align: left;">Epoch 20</p>
+              <video id="video5" width="100%" muted loop playbackRate="0.75"
+                style="display: block; margin-left: 0;">
+                <source type="video/mp4" src="assets/staff_solution_epoch20.mp4" />
+              </video>
+            </div>
+          </div>
+
+          <script>
+  window.addEventListener('load', function() {
+    // Handle video autoplay and playback speed for all videos
+    var videos = document.querySelectorAll('video');
+    videos.forEach(function(video) {
+      video.playbackRate = 1;
+      video.loop = false;
+      video.play();
+
+      // Add hover behavior to each video
+      video.addEventListener('mouseover', function() {
+        // Pause normal playback
+        video.pause();
+        
+        // Play in reverse by decreasing currentTime
+        const rewindInterval = setInterval(() => {
+          if (video.currentTime <= 0) {
+            clearInterval(rewindInterval);
+          } else {
+            video.currentTime -= 0.05; // Slow rewind speed
+          }
+        }, 40); // Smooth interval
+
+        // Store the interval ID so we can clear it on mouseout
+        video.rewindInterval = rewindInterval;
+      });
+
+      video.addEventListener('mouseout', function() {
+        // Clear the rewind interval if it exists
+        if (video.rewindInterval) {
+          clearInterval(video.rewindInterval);
+          video.rewindInterval = null;
+        }
+        // Play forward normally
+        video.play();
+      });
+    });
+  });
+
+  // These handlers are no longer needed since we're handling everything in the load event
+  function handleMouseOver(video) {
+    // Empty or can be removed
+  }
+
+  function handleMouseOut(video) {
+    // Empty or can be removed
+  }
+</script>
+          <h2> Bells & Whistles </h2>
+          <ul>
+            <li><b>Sampling Gifs (.1 Cookie Points)</b><br>
+              Create your own sampling gifs similar to the ones shown above.</li>
+            
+            <li><b>Improve the UNet Architecture (.15 Cookie Points)</b><br>
+              For ease of explanation and implementation, our UNet architecture
+              above is pretty simple.
+              Modify the UNet (e.g. with skip connections) such that it can fit
+              better during training.</li>
+            
+            <li><b>Implement Rectified Flow(.25 Cookie Points)</b>
+              <ul>
+                <li>Implement <a href="https://arxiv.org/abs/2209.03003">rectified flow</a>, which is the state of art diffusion model.</li>
+                <li>You can reference any code on github, but your implementation needs to follow the same code structure as our DDPM implementation.</li>
+                <li>In other words, the code change required should be minimal: only changing the forward and sample functions.</li>
+              </ul>
+            </li>
+            
+            <li><b>Your own ideas (N Cookie Points): be creative!</b></li>
+          </ul>
+          <h3>Acknowledgements</h3>
+          <p>This project was a joint effort by <a
+              href="https://dangeng.github.io/">Daniel Geng</a>, <a
+              href="https://hangg7.com/">Hang Gao</a>, and <a
+              href="https://ryantabrizi.com/">Ryan Tabrizi</a>, advised by <a
+              href="https://liyueshen.engin.umich.edu/">Liyue Shen</a>, <a
+              href="https://andrewowens.com/">Andrew Owens</a>, and <a
+              href="https://people.eecs.berkeley.edu/~efros/">Alexei
+              Efros</a>. </p>
+        </body>
+      </html>
