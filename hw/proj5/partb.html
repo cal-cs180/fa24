@@ -337,7 +337,7 @@
     <br>
     <br>
     <div style="text-align: center;">
-      <img src="assets/unconditional_new2.png" alt="UNet Architecture" height="500"
+      <img src="assets/unconditional_arch.png" alt="UNet Architecture" height="500"
         style="display: block; margin-left: auto; margin-right: auto" />
       <p class="text">Figure 1: Unconditional UNet</p>
     </div>
@@ -362,6 +362,8 @@
           <code>nn.ConvTranspose2d()</code></li>
         <li><b><tt>AvgPool(kernel_size)</tt></b> is
           <code>nn.AvgPool2d()</code></li>
+          <li><code>D</code> is the number of hidden channels and is a
+            hyperparameter that we will set ourselves.</li>
       </ul>
 
       At a high level, the blocks do the following:
@@ -379,9 +381,7 @@
           unflattens/upsamples a 1x1 tensor into a 7x7 tensor.</li>
         <li><b><tt>(6) Concat</tt></b> is a channel-wise concatenation between
           tensors with the same 2D shape. This is simply
-          <code>torch.cat</code>.</li>
-        <li><code>D</code> is the number of hidden channels and is a
-          hyperparameter that we will set ourselves.</li>
+          <code>torch.cat()</code>.</li>
       </ul>
 
       <p class="text">
@@ -606,8 +606,8 @@
 
   <div style="text-align: center;"></div>
     <div style="text-align: center;">
-      <img src="assets/conditional_new2.png" alt="UNet Highlighted" height="500" />
-      <p class="text">Figure 8: Time-Conditioned UNet</p>
+      <img src="assets/conditional_arch.png" alt="UNet Highlighted" height="500" />
+      <p class="text">Figure 8: Conditioned UNet</p>
     </div>
   </div>
 
@@ -975,8 +975,8 @@ up1 = c2 * up1 + t1
       <h3>Acknowledgements</h3>
       <p>This project was a joint effort by <a
           href="https://dangeng.github.io/">Daniel Geng</a>, <a
-          href="https://hangg7.com/">Hang Gao</a>, and <a
-          href="https://ryantabrizi.com/">Ryan Tabrizi</a>, advised by <a
+          href="https://ryantabrizi.com/">Ryan Tabrizi</a>, and <a
+          href="https://hangg7.com/">Hang Gao</a>, advised by <a
           href="https://liyueshen.engin.umich.edu/">Liyue Shen</a>, <a
           href="https://andrewowens.com/">Andrew Owens</a>, and <a
           href="https://people.eecs.berkeley.edu/~efros/">Alexei
