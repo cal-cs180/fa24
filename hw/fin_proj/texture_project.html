@@ -1,0 +1,127 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>CS180: Intro to Computer Vision and Computational Photography</title>
+    <link rel="StyleSheet" href="../style.css" type="text/css" media="all" />
+  </head>
+  <body>
+    <h1>
+      <img src="../../463_files/ucbseal_139_540.png" alt="berkeley logo" height="75" width="75" />
+      Final Project<br />
+      <a href="../../">CS180: Intro to Computer Vision and Computational Photography</a>
+    </h1>
+    <h2>
+      Pyramid-Based Texture Analysis/Texture:<br />
+      <i>Matching and generating texture using image pyramids</i><br />
+    </h2>
+    <h3>Background</h3>
+    <p>
+      This project revolves around re-implementing key portions of the paper
+      <a href="https://www.cns.nyu.edu/heegerlab/content/publications/Heeger-siggraph95.pdf">"Pyramid-Based Texture Analysis/Texture"</a>.
+      This paper uses a slightly modified laplacian pyramid, which will decompose the image into frequency bands AND orientations in the
+      frequency domain (can imagine splitting the plotted frequency domain amplitudes into our circular frequency bands AND quadrants). By
+      using histogram matching, we are able to generate oriented textures matching the source image. By matching histograms of not just the
+      source and noisy images, but also the oriented laplace pyramid, we are able to generate a texture image which has actual structure to
+      it instead of just pixels with similar values.
+    </p>
+    <h3>Overview</h3>
+    <p>
+      The goal of this project is to try and re-create the basic results of this paper in mimicing a 2D texture. You will lean on your
+      previous code for the laplacian pyramid, making small modifications to get orientation bands. You will also implement the algorithm
+      described with pseudocode in the paper. If everything goes right, you will be able to showcase your ability to match textures!
+    </p>
+
+    <h3>Details</h3>
+
+    <p>
+      For starters, you will need to use the oriented filters talked about in the paper. In many implementations and in the steerable
+      filters paper, the filters are defined in the frequency domain. For simplicity, we will take the approach of defining the filters in
+      the spatial domain. To get these filters, you can use pyrtools's (a python pyramid tools library) pre-calculated oriented filters, as
+      shown
+      <a href="https://pyrtools.readthedocs.io/en/latest/tutorials/03_steerable_pyramids.html">here</a>. While you can use the filters from
+      this library, we still expect you to implement the steerable pyramid yourself, so these filters are the only part of the library you
+      are allowed to use.
+    </p>
+    <p>
+      Once you have the aligned filters working, you will need to implement the oriented pyramid. This should be similar to the laplacian
+      pyramid, and you can follow the paper's diagram for how to construct it. You will start with one laplace layer, and on the low
+      frequency component, you will recurse with the oriented pyramid.
+    </p>
+    <p>
+      With the actual pyramid working, you will need to implement the histogram matching, which is named <code>match-histogram</code> in the
+      paper and is outlined in pseudocode. Because this is all cumulative, make sure to unit test this code and all your code before. Make
+      sure the histogram for some randomly initialized gaussian noise ends up matching the histogram of some source image of your choosing,
+      and make sure before continuing that your oriented laplace pyramid is behaving as expected in the way it was demonstrated to work in
+      the paper with the pac-man-like example (figure 4).
+    </p>
+    <p>
+      Finally, you will need to implement the texture synthesis algorithm, which is also outlined in pseudocode, named
+      <code>match-texture</code>. This will require you to use all the code you've implemented up until now.
+    </p>
+    <p>
+      Some extra considerations are needed to make this work. You will likely need to use same or wrap padding when convolving, and color
+      images need to be dealt with properly. As described in the paper, for color images you will need to transform the 3-dimensional pixel
+      values (RGB) of your source image into a PCA basis in order to de-correlate and normalize the pixel values, enabling you to operate on
+      the RGB channels independently. For extra reading into practical considerations and greater detail on pseudocode (ignore their math
+      for the filters, the library we provided you should be all you need) and other misc, see this link
+      <a href="https://www.ipol.im/pub/art/2014/79/article_lr.pdf">here</a>, but this shouldn't be required to get the basic code running.
+    </p>
+    <h3>Bells &amp; Whistles (Extra Credit)</h3>
+    <p>Here are some ideas, but we will give credit for other clever ideas:</p>
+    <ul>
+      <li>
+        Hyperparameter tuning. We made several design choices: operating in the spatial domain instead of the frequency domain, the kind of
+        padding we used, the number of iterations, the number of oriented filters, etc. Ablate some of these and compare their performance.
+      </li>
+      <li>Implement the 3D texture map generation that the paper shows off</li>
+    </ul>
+    <p>For all extra credit, be sure to demonstrate on your web page cases where your extra credit has improved image quality.</p>
+    <h3>Deliverables</h3>
+    For this project you must turn in both your code and a project webpage as described <a href="../submitting.html">here</a>.
+    <ul>
+      <li>
+        For every assignment you should create a main.py, main.ipynb, or main.m that can be used to run all your code for the assignment,
+        and a README.txt file that contains a description of each code file, your name, SID, school email. Submit all source code used to
+        generate your results, as well as the README.txt file, to Gradescope (Entry Code: 57Y3YJ). Please be sure to appropriately comment
+        your code so that the graders can appropriately identify where your implementations lie and what they do.
+      </li>
+      <li>Additionally, upload a web page index.html as the report:</li>
+      <ul>
+        <li>
+          Text giving a brief overview of the project, and text describing your approach. If you ran into problems on images, describe how
+          you tried to solve them. The website does not need to be pretty; you just need to explain what you did.
+        </li>
+        <li>
+          Explain the oriented filters, and show how the sum of all oriented filters for a given band is the same as a standard laplacian
+          band pass. Show some sample images convolved with the oriented filters.
+        </li>
+        <li>
+          A clear visual demonstration of the oriented pyramid. Take some sample image of your choosing and demonstrate that each of your
+          orientations correspond to different oriented frequencies.
+        </li>
+        <li>
+          A clear visual demonstration of the histogram matching. Take some sample image of your choosing and demonstrate that the histogram
+          of the noisy image matches the histogram of the source image. This will likely still look like noise, but the colors should
+          roughly match (not to be confused with texture which will not match). This can be greyscale or color, but is best demonstrated
+          with color images.
+        </li>
+        <li>The result of your full <code>match-texture</code> algorithm on a few examples of your own choosing.</li>
+        <li>If your algorithm failed on any images, show them as well, and talk about why you think they didnt work so well.</li>
+        <li>Describe any bells and whistles you implemented. For maximum credit, show before and after images.</li>
+        <li>
+          Remember<strong> not to use any absolute links</strong> to images etc on your computer, as these will not work online. Only use
+          relative links within your folder.
+        </li>
+      </ul>
+    </ul>
+    <p>&nbsp;</p>
+    <p>This assignment will be graded out of <b>100</b> points, as follows:</p>
+    <ul>
+      <li><b>20 points</b> for demonstrating how the oriented filters work when colvolved on an image</li>
+      <li><b>40 points</b> for demonstrating the oriented pyramid.</li>
+      <li><b>20 points</b> for demonstrating the histogram matching.</li>
+      <li><b>20 points</b> for demonstrating the full texture synthesis.</li>
+    </ul>
+  </body>
+</html>
