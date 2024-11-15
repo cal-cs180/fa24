@@ -1019,6 +1019,7 @@
       </div>
 
       <h3>1.7 Image-to-image Translation</h3>
+      <b style="color: red;">Note: You should use CFG from this point forward.</b> 
       <p class="text">
         In part 1.4, we take a real image, add noise to it, and then denoise.
         This
@@ -1062,7 +1063,6 @@
             original image</li>
         </ul>
       </p>
-      <b>Note: You should use CFG from this point forward.</b> 
 
       <div class="image-container">
         <div>
@@ -1279,7 +1279,7 @@
 
       <h3>1.7.3 Text-Conditional Image-to-image Translation</h3>
 
-      <p>Now, we will do the same thing as the previous section, but guide the
+      <p>Now, we will do the same thing as SDEdit, but guide the
         projection with a text prompt. This is no longer pure
         "projection to the natural image manifold" but also adds control using
         language. This is simply a matter of changing the prompt from
@@ -1385,7 +1385,7 @@
 
     <b>Hints</b>
     <ul>
-      <li>- You may have to run multiple times to get a really good result for
+      <li>You may have to run multiple times to get a really good result for
         the same reasons as above.</li>
     </ul>
 
@@ -1442,9 +1442,7 @@
 
     <b>Hints</b>
     <ul>
-      <li>use torchvision.transforms.functional.gaussian_blur. The
-        documentation can be found <a
-          href="https://pytorch.org/vision/0.16/generated/torchvision.transforms.functional.gaussian_blur.html">here</a>.</li>
+      <li>use <code>torchvision.transforms.functional.gaussian_blur</code> </li>
       <li>You may have to run multiple times to get a really good result for the
         same reasons as above</li>
     </ul>
@@ -1493,11 +1491,12 @@
     <h3>Acknowledgements</h3>
     <p>This project was a joint effort by <a
         href="https://dangeng.github.io/">Daniel Geng</a>, <a
-        href="https://hangg7.com/">Hang Gao</a>, and <a
-        href="https://ryantabrizi.com/">Ryan Tabrizi</a>, advised by <a
+        href="https://ryantabrizi.com/">Ryan Tabrizi</a>, and <a
+        href="https://hangg7.com/">Hang Gao</a>, advised by <a
         href="https://liyueshen.engin.umich.edu/">Liyue Shen</a>, <a
         href="https://andrewowens.com/">Andrew Owens</a>, and <a
-        href="https://people.eecs.berkeley.edu/~efros/">Alexei Efros</a>. </p>
+        href="https://people.eecs.berkeley.edu/~efros/">Alexei
+        Efros</a>. </p>
     <grammarly-desktop-integration
       data-grammarly-shadow-root="true"></grammarly-desktop-integration>
   </html>
