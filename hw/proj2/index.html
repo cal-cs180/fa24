@@ -1,5 +1,7 @@
-
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>CS180: Intro to Computer Vision and Computational Photography</title>
 <link rel="StyleSheet" href="./files/style.css" type="text/css" media="all">
 </head>
@@ -10,10 +12,12 @@
 </a>
 </h1>
 
-<h2><b>Due Date: 11:59pm on Monday, Sep 23, 2024 [START EARLY]</b></h2>
+<h2 style="opacity: 1; color: rgb(255, 0, 0); background-color: rgb(255, 255, 255);">
+  Due Date: 11:59pm on Monday, Sep 23, 2024 [START EARLY]
+ 
+</h2>
 
 <center>
-<h1>&nbsp;</h1>
 <h1>Fun with Filters and Frequencies!</h1>
 </center>
 
@@ -69,10 +73,8 @@ First, show the partial derivative in x and y of the <a href="https://inst.eecs.
 
 Pick your favorite blurry image and get ready to "sharpen" it! We will derive the unsharp masking technique. Remember our favorite Gaussian filter from class. This is a low pass filter that retains only the low frequencies. We can subtract the blurred version from the original image to get the high frequencies of the image. An image often looks sharper if it has stronger high frequencies. So, lets add a little bit more high frequencies to the image! Combine this into a single convolution operation which is called the unsharp mask filter. Show your result on the following image (download <a href="./files/taj.jpg">here</a>) plus other images of your choice -- </p></div><br>
 <center>
-  <h1>&nbsp;</h1>
 
 <img src="./files/taj.jpg" alt="taj"><br>
-  <h1>&nbsp;</h1>
 
 </center>
 
@@ -125,7 +127,7 @@ the perceptual grouping (read the paper for details).</p>
 <p class="text">Try using color to enhance the effect.
 Does it work better to use color for the high-frequency component, the
 low-frequency component, or both? <b>(0.07 cookie points)</b>
-</p><h3 align="left">&nbsp;</h3>
+</p>
 <p class="text">
 <h2>Multi-resolution Blending and the Oraple journey</h3>
 </p><p class="text">
