@@ -324,7 +324,7 @@
         style="display: block; margin-left: auto; margin-right: auto;"
         onmouseover="handleMouseOver(this)"
         onmouseout="handleMouseOut(this)">
-        <source type="video/mp4" src="assets/mnist.mp4" />
+        <source type="video/mp4" src="assets/new_c_20_fm.mp4" />
       </video>
     </div>
     <h1 style="text-align: center">Part B: Flow Matching from Scratch!</h1>
@@ -534,7 +534,7 @@
     </div>
 
     <h2>1.2.3 Denoising Pure Noise</h2>
-    <p>To make denoising a generative task, we'd like to be able to denoise pure, random Gaussian noise. We can think of this as starting with a blank canvas $\epsilon \sim N(0, I)$ and denoising it to get a clean image $x$.</p>
+    <p>To make denoising a generative task, we'd like to be able to denoise pure, random Gaussian noise. We can think of this as starting with a blank canvas $z = \epsilon$ where $\epsilon \sim N(0, I)$ and denoising it to get a clean image $x$.</p>
 
     <p>Repeat the same denoising process as in part 1.2.1, but start with pure noise $\epsilon \sim N(0, I)$ and denoise it for 5 epochs. Display your results after 1 and 5 epochs.</p>
 
@@ -549,7 +549,7 @@
       <li>A training loss curve plot every few iterations during the whole
         training process (figure 4).</li>
       <li>Sample results on the test set after the first and the 5-th epoch
-        (staff solution takes ~7 minutes for 5 epochs on a Colab T4 GPU).
+        (staff solution takes ~3 minutes for 5 epochs on a Colab T4 GPU).
         (figure 5, 6)</li>
       <li>Sample results on the test set with out-of-distribution noise levels
         after the model is trained. Keep the same image and
