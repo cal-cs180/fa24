@@ -340,7 +340,7 @@
     </h4>
 
     <h2>Overview</h2>
-    In part B you will train your own flow matching model on MNIST. Starter code can
+    In part B you will train your own <a href="https://arxiv.org/abs/2210.02747">flow matching</a> model on MNIST. Starter code can
     be found in the <a
       href="https://colab.research.google.com/drive/1w_ZbIU_0Irr1iqSdD0R58DkPRxCLRi6y?usp=sharing">provided
       notebook</a>.
@@ -574,7 +574,7 @@
     </ul>
 
     <h1>Part 2: Training a Flow Matching Model</h1>
-    We just saw that one-step denoising does not work well for generative tasks. Instead, we need to iteratively denoise the image, and we will do so with flow matching. 
+    We just saw that one-step denoising does not work well for generative tasks. Instead, we need to iteratively denoise the image, and we will do so with <a href="https://arxiv.org/abs/2210.02747">flow matching</a>. 
     Here, we will iteratively denoise an image by training a UNet model to predict the `flow' from our noisy data to clean data.
 
     In our flow matching setup, we sample a pure noise image $x_0 \sim \mathcal{N}(0, I)$ and generate a realistic image $x_1$. 
