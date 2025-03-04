@@ -327,11 +327,11 @@
         <source type="video/mp4" src="assets/new_c_20_fm.mp4" />
       </video>
     </div>
-    <h1 style="text-align: center">Part B: Flow Matching from Scratch!</h1>
-    <h3 style="text-align: center;">The first part of a <a
-        href="./index.html">larger project</a>.</h3>
+    <h1 style="text-align: center">Flow Matching from Scratch!</h1>
+    <!-- <h3 style="text-align: center;">The first part of a <a
+        href="./index.html">larger project</a>.</h3> -->
     <h2 style="text-align: center">
-      <b style="color: red;">Due: 11/19/24 11:59pm</b>
+      <b style="color: red;">Due: 03/12/25 11:59pm</b>
     </h2>
     <h4 style="text-align: center">
       <b>We recommend using GPUs from <a
@@ -585,10 +585,9 @@
     x_t = (1-t)x_0 + tx_1 \quad \text{where } x_0 \sim \mathcal{N}(0, 1), t \in [0, 1]. \tag{B.3}
     \end{equation}
 
-    Intuitively, we see that for small $t$, we remain close to noise, while for larger $t$, we approach the clean distribution.
+    This is a vector field describing the position of a point $x_t$ at time $t$ relative to the clean data distribution $p_1(x_1)$ and the noisy data distribution $p_0(x_0)$. Intuitively, we see that for small $t$, we remain close to noise, while for larger $t$, we approach the clean distribution.
 
-
-    <p>Flow can be thought of as a vector field pointing towards the clean data distribution $p_1(x_1)$ from a noisy distribution $p_t(x_t)$ for some timestep $t$:
+    <p>Flow can be thought of as the velocity (change in posiiton w.r.t. time) of this vector field, describing how to move from $x_0$ to $x_1$:
 
         \begin{equation} u(x_t, t) = \frac{d}{dt} x_t = x_1 - x_0. \tag{B.4}\end{equation}</p>
 
@@ -665,8 +664,7 @@ up1 = up1 * t2
     <li><b>Dataset and dataloader:</b> Use the MNIST dataset via
       <code>torchvision.datasets.MNIST</code> with flags to access training
       and test sets. Train only on the training set. Shuffle the dataset
-      before creating the dataloader. Recommended batch size: 64. We'll
-      train over our dataset for 20 epochs since this task is more difficult than part A.
+      before creating the dataloader. Recommended batch size: 64.
       <ul>
         <li>As shown in algorithm B.1, You should only noise the image batches when fetched from the
           dataloader.</li>
@@ -687,7 +685,7 @@ up1 = up1 * t2
 
 
 <h2> 2.3 Sampling from the UNet</h2>
-The sampling process is very similar to part A, except we don't need to predict the variance like in the DeepFloyd model. Instead, we can use our list $\beta$. 
+We can now use our UNet for iterative denoising using the algorithm below!
 <br>
 <br>
 <div style="text-align: center;">
@@ -818,7 +816,8 @@ up1 = c2 * up1 + t1
       </div>
 
       <h2> 2.5 Sampling from the Class-Conditioned UNet</h2>
-      The sampling process is the same as part A, where we saw that conditional results aren't good unless we use classifier-free guidance. Use classifier-free guidance with $\gamma = 5.0$ for this part.
+      <!-- The sampling process is the same as part A, where we saw that conditional results aren't good unless we use classifier-free guidance. Use classifier-free guidance with $\gamma = 5.0$ for this part. -->
+       Now we will sample with class-conditioning and will use classifier-free guidance with $\gamma = 5.0$.
 
       <div style="text-align: center;">
         
@@ -949,8 +948,10 @@ up1 = c2 * up1 + t1
           href="https://ryantabrizi.com/">Ryan Tabrizi</a>, and <a
           href="https://hangg7.com/">Hang Gao</a>, advised by <a
           href="https://liyueshen.engin.umich.edu/">Liyue Shen</a>, <a
-          href="https://andrewowens.com/">Andrew Owens</a>, and <a
+          href="https://andrewowens.com/">Andrew Owens</a>, 
+          <a href="https://people.eecs.berkeley.edu/~kanazawa/">Angjoo Kanazawa</a>,
+          and <a
           href="https://people.eecs.berkeley.edu/~efros/">Alexei
-          Efros</a>. </p>
+          Efros</a>. We also thank <a href="https://mcallisterdavid.com/">David McAllister</a> and <a href="https://songweige.github.io/">Songwei Yi</a> for their helpful feedback and suggestions.</p>
     </body>
   </html>
